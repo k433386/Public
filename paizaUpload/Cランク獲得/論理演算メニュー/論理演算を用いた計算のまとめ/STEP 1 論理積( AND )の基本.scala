@@ -6,5 +6,9 @@ object Main extends App {
     val numA = line(0).toInt
     val numB = line(1).toInt
 
-    println(s"${numA-numB} ${numA*numB}")
+    if (numA == 1 && numB == 1){
+        println(1)
+    } else {
+        println(0)
+    }  
 }
