@@ -1,14 +1,9 @@
-import scala.io.StdIn._
-
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val line1 = Array(1, 2, 3, 4)
+    val line2 = Array(6, 5, 4, 3)
+    val line3 = Array(3, 1, 8, 1)
+    val Dline = Array(line1, line2, line3)
 
-    if (!(numA == numB)){
-        println(1)
-    } else {
-        println(0)
-    }  
+    println(Dline(0).length)
 }

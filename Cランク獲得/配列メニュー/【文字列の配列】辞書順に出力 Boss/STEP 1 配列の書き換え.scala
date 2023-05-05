@@ -3,12 +3,15 @@ import scala.io.StdIn._
 object Main extends App {
 
     val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val numA = line(0)
+    val numB = line(1)
+    val numN = line(2).toInt
+    var lineA = readLine().split(" ")
 
-    if (numA == 1 && numB == 1){
-        println(1)
-    } else {
-        println(0)
-    }  
+    for (i <- 0 until numN){
+        if (lineA(i) == numA){
+            lineA(i) = numB
+        }
+        println(lineA(i))
+    }
 }

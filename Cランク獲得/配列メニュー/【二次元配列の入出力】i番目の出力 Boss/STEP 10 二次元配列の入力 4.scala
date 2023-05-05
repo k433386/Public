@@ -3,30 +3,18 @@ import scala.io.StdIn._
 object Main extends App {
 
     val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val numN = line(0).toInt
+    val numM = line(1).toInt
+    var Dline = Array.ofDim[String](numN, numM)
 
-    def halfF(x: Int, y: Int, z: String): Int = {
-        if (z == "C"){
-            andF(x, y)
-        } else {
-            xorF(x, y)
-        }
+    for (i <- 0 until numN){
+        val line = readLine().split(" ")
+        Dline(i) = line
     }
-    def andF(x: Int, y: Int): Int = {
-        if (x == 1 && y == 1){ // AND C
-            1
-        } else {
-            0
-        }
+    for (i <- 0 until Dline.length){
+        println(Dline(i).mkString(" "))
     }
-    def xorF(x: Int, y: Int): Int = {
-        if (!(x == y)){ // XOR S
-            1
-        } else {
-            0
-        }
-    }
-
-    println(s"${halfF(numA, numB, "C")} ${halfF(numA, numB, "S")}")
 }
+
+//https://b0npu.hatenablog.com/entry/2016/09/24/202330
+//https://www.ne.jp/asahi/hishidama/home/tech/scala/array.html

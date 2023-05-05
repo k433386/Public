@@ -3,11 +3,12 @@ import scala.io.StdIn._
 object Main extends App {
 
     val line = readLine().split(" ")
-    val numA = line(0).toInt
+    val numM = line(1)
+    val lineA = readLine().split(" ")
 
-    if (numA == 1){
-        println(0)
+    if (lineA.contains(numM)){
+        println("Yes")
     } else {
-        println(1)
-    }  
+        println("No")
+    }
 }

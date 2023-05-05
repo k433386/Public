@@ -2,13 +2,8 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val num = readLine.toInt
+    val line = "1 3 5 4 6 2 1 7 1 5".split(" ")
 
-    if (numA >= 10 && !(numB >= 10)) {
-        println("YES")
-    } else {
-        println("NO")
-    }  
+    println(line(num-1))
 }

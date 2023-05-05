@@ -1,14 +1,10 @@
-import scala.io.StdIn._
-
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val line = Array(10, 13, 21, 1, 6, 51, 10, 8, 15, 6)
 
-    if (numA == 1 && numB == 1){
-        println(1)
+    if (line.contains(6)){
+        println("Yes")
     } else {
-        println(0)
-    }  
+        println("No")
+    }
 }

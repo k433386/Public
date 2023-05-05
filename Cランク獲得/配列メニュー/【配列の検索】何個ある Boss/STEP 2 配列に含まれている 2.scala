@@ -2,13 +2,12 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val num = readLine().toInt
+    val line = Array(5, 12, 6, 84, 14, 25, 44, 3, 7, 20)
 
-    if (numA == 1 || numB == 1){
-        println(1)
+    if (line.contains(num)){
+        println("Yes")
     } else {
-        println(0)
-    }  
+        println("No")
+    }
 }

@@ -1,14 +1,10 @@
-import scala.io.StdIn._
-
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val line = Array(1, 10, 2, 9, 3, 8, 4, 7, 5, 6)
 
-    if (!(numA == numB)){
-        println(1)
-    } else {
-        println(0)
-    }  
+    for (i <- 0 until line.length){
+        if (line(i) == 8){
+            println(i+1)
+        }
+    }
 }

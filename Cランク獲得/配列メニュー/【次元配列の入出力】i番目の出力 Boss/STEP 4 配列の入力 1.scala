@@ -1,14 +1,8 @@
-import scala.io.StdIn._
-
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val line = "8 1 3 3 8 1 1 3 8 8".split(" ")
 
-    if (!(numA == numB)){
-        println(1)
-    } else {
-        println(0)
-    }  
+    for (i <- 0 until line.length.toInt){
+        println(line(i))
+    }
 }

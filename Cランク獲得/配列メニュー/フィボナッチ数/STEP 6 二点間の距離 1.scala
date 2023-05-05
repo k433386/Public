@@ -1,14 +1,13 @@
 import scala.io.StdIn._
+import Math._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val num = readLine().toInt
 
-    if (numA == numB){
-        println(1)
-    } else {
-        println(0)
-    }  
+    for (i <- 0 until num){
+        val line = readLine().split(" ").map(_.toInt)
+        val result = abs(line(0)-2) + abs(line(1)-3)
+        println(result)
+    }
 }

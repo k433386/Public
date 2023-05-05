@@ -4,10 +4,16 @@ object Main extends App {
 
     val line = readLine().split(" ")
     val numA = line(0).toInt
+    val numB = line(1).toInt
+    val numN = line(2).toInt
+    var lineA = readLine().split(" ")
+    var tmp = ""
 
-    if (numA == 1){
-        println(0)
-    } else {
-        println(1)
-    }  
+    tmp = lineA(numA-1)
+    lineA(numA-1) = lineA(numB-1)
+    lineA(numB-1) = tmp
+
+    for (i <- 0 until numN){
+        println(lineA(i))
+    }
 }

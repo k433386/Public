@@ -1,13 +1,9 @@
-import scala.io.StdIn._
-
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
+    val line1 = Array(1, 2, 3)
+    val line2 = Array(4, 5, 6)
+    val line3 = Array(8, 1, 3)
+    val Dline = Array(line1, line2, line3)
 
-    if (numA == 1){
-        println(0)
-    } else {
-        println(1)
-    }  
+    println(Dline.length)
 }

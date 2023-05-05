@@ -1,14 +1,10 @@
-import scala.io.StdIn._
-
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
+    val line1 = Array(1, 3, 5, 7)
+    val line2 = Array(8, 1, 3, 8)
+    val Dline = Array(line1, line2)
 
-    if (numA >= 10 && !(numB >= 10)) {
-        println("YES")
-    } else {
-        println("NO")
-    }  
+    for (i <- 0 until Dline.length){
+        println(Dline(i).mkString(" "))
+    }
 }
