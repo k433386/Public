@@ -5,6 +5,14 @@
 
 .sorted //配列を昇順で並び替える
 
+.distinct //重複を除いた新リストを取得
+
+.indexOf() //インデックスを取得
+
+.mkString() //配列を文字列として結合
+
 for (i <- Array) // 配列の要素を直接取り出す
 
 Array.ofDim[]() //N次元配列の定義
+
+var X : Array[] = Array.empty //空の配列の定義
