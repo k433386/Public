@@ -2,19 +2,11 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    val N = num(0).toInt
-    val K = num(1).toInt
-    val F = num(2).toInt
-    var Aline = Array.ofDim[Int](K)
+    val N = readLine().toInt
+    var Aline : Array[String] = Array.empty
 
-    for (i <- 0 until K){
-        Aline(i) = readLine().toInt
+    for (i <- 0 until N){
+        Aline = Aline ++ Array("paiza")
     }
-
-    Aline = Aline.drop(F).distinct
-
-    for (i <- Aline){
-        println(i)
-    }
+    println(Aline.mkString(" "))
 }

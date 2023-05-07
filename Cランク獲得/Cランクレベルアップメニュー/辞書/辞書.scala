@@ -2,19 +2,26 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    val numN = num(0).toInt
-    val numK = num(1).toInt
-    var Aline = Array.ofDim[Int](numN)
+    val line = readLine().split(" ")
+    val p = line(0).toInt
+    val q = line(1).toInt
+    val r = line(2).toInt
+    var ijMap = Map.empty[Int, Int]
+    var jkMap = Map.empty[Int, Int]
 
-    for (i <- 0 until numN){
-        val Anum = readLine().toInt
-        Aline(i) = Anum
+    for (i <- 0 until p){
+        val tmp1 = readLine.split(" ").map(_.toInt)
+        ijMap = ijMap + (tmp1(0) -> tmp1(1))
+    }
+    for (i <- 0 until q){
+        val tmp2 = readLine.split(" ").map(_.toInt)
+        jkMap = jkMap + (tmp2(0) -> tmp2(1))
     }
 
-    val Bline = Aline.filter(_ >= numK)
-    
-    for (i <- Bline){
-        println(i)
+    for (i <- 1 to p){
+        println(s"${i} ${jkMap(ijMap(i))}")
     }
+
 }
+
+//https://gside.org/articles/scala/map/

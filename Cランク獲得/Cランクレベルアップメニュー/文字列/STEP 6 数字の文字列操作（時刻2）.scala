@@ -2,23 +2,26 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line710 = readLine().reverse
-    val line46 = readLine().reverse
-    val line23 = readLine().reverse
-    val line1 = readLine()
+    var S = readLine().split(":").map(_.toInt)
+    
+    if (S(1) < 30){
+        S(1) = S(1) + 30
+    } else {
+        S(0) = S(0) + 1
+        S(1) = S(1) - 30
+    }
 
-    val Allline = (s"${line1} ${line23} ${line46} ${line710}").split(" ").map(_.toInt)
-    var count = 0
-    var flag = 0
-
-    for (i <- 0 until 10){
-        if (Allline(i) == 1){
-            if  (flag == 0){
-                println(i+1)
-                flag = 1
-            }
-            count = count + 1
+    if (S(0) < 10){
+        if (S(1) < 10){
+            println(s"0${S(0)}:0${S(1)}")
+        } else {
+            println(s"0${S(0)}:${S(1)}")
+        }
+    } else {
+        if (S(1) < 10){
+            println(s"${S(0)}:0${S(1)}")
+        } else {
+            println(s"${S(0)}:${S(1)}")
         }
     }
-    println(count)
 }

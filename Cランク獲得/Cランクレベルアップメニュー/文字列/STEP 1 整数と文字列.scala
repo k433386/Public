@@ -2,23 +2,13 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    val Mline = readLine().split(" ").map(_.toInt)
-    var Aline = Array.ofDim[Int](num, 5)
-    var Rline = Array.ofDim[Int](num)
+    val N = readLine().toInt 
+    var Aline = Array.ofDim[String](N)
 
-    for (i <- 0 until num){
-        val Anum = readLine().split(" ").map(_.toInt)
-        Aline(i) = Anum
+    for (i <- 0 until N){
+        Aline(i) = readLine()
     }
-
-    for (i <- 0 until num){
-        var sum = 0
-        for (j <- 0 until 5){
-            sum = sum + Mline(j) * Aline(i)(j)
-        }
-        Rline(i) = sum
+    for (i <- Aline){
+        println(s"${i.length}")
     }
-
-    println(Rline.max)
 }

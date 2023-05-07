@@ -2,40 +2,42 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    val N = num(0).toInt    
-    val Q = num(1).toInt    
-    var Sline = Array.ofDim[Int](Q, 3)
-    var people = (1 to N).toArray
+    val N = readLine().toInt
+    var tL = Array.ofDim[Int](N, 2)
+    var hL = Array.ofDim[Int](N)
+    var mL = Array.ofDim[Int](N)
 
-    for (i <- 0 until Q){
-        var tmp = readLine()
-        if (tmp == "reverse"){
-            Sline(i) = Array(1, 0, 0)
-        } else {
-            val line = tmp.split(" ")
-            if (line(0) == "resize"){
-                Sline(i) = Array(2, line(1).toInt, 0)
+    for (i <- 0 until N){
+        var tmp = readLine().split(" ")
+        tL(i) = tmp(0).split(":").map(_.toInt)
+        hL(i) = tmp(1).toInt
+        mL(i) = tmp(2).toInt
+    }
+
+    for (i <- 0 until N){
+        tL(i)(0) = tL(i)(0) + hL(i)
+        tL(i)(1) = tL(i)(1) + mL(i)
+
+        if(tL(i)(1) >= 60){
+            tL(i)(1) = tL(i)(1) - 60
+            tL(i)(0) = tL(i)(0) + 1
+        }
+        if(tL(i)(0) >= 24){
+            tL(i)(0) = tL(i)(0) - 24
+        }
+    
+        if (tL(i)(0) < 10){
+            if (tL(i)(1) < 10){
+                println(s"0${tL(i)(0)}:0${tL(i)(1)}")
             } else {
-                Sline(i) = Array(0, line(1).toInt, line(2).toInt)
+                println(s"0${tL(i)(0)}:${tL(i)(1)}")
+            }
+        } else {
+            if (tL(i)(1) < 10){
+                println(s"${tL(i)(0)}:0${tL(i)(1)}")
+            } else {
+                println(s"${tL(i)(0)}:${tL(i)(1)}")
             }
         }
-    }
-    for (i <- Sline){
-        if (i(0) == 0){
-            var tmp2 = 0
-            tmp2 = people(i(1)-1)
-            people(i(1)-1) = people(i(2)-1)
-            people(i(2)-1) = tmp2
-
-        } else if (i(0) == 1){
-            people = people.reverse
-
-        } else if (i(0) == 2 && people.length > i(1)){
-            people = people.take(i(1))
-        }
-    }
-    for (i <- people){
-        println(i)
     }
 }

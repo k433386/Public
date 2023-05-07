@@ -2,14 +2,15 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    var numX = num(0).toInt
-    var numY = num(1).toInt
-    var tmp = 0
+    val n = readLine().toInt
+    var Aline = Array.ofDim[Int](n)
 
-    tmp = numX
-    numX = numY
-    numY = tmp
+    for (i <- 0 until n){
+        Aline(i) = readLine().toInt
+    }
+    val Bline = Aline.sorted.reverse
 
-    println(s"${numX} ${numY}")    
+    for (i <- Bline){
+        println(i)
+    }
 }

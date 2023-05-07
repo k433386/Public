@@ -2,14 +2,27 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    var numX = num(0).toInt
-    var numY = num(1).toInt
-    var tmp = 0
+    val n = readLine().toInt
+    var Sline = Array.ofDim[String](n)
 
-    tmp = numX
-    numX = numY
-    numY = tmp
+    for (i <- 0 until n){
+        Sline(i) = readLine()
+    }
+    
+    val m = readLine().toInt
+    var Pline = Array.ofDim[String](m,2)
 
-    println(s"${numX} ${numY}")    
+    for (i <- 0 until m){
+        Pline(i) = readLine().split(" ")
+    }
+
+    val S = readLine()
+    var count = 0
+
+    for (i <- Pline){
+        if (i(0) == S){
+            count = count + i(1).toInt
+        }
+    }
+    println(count)
 }

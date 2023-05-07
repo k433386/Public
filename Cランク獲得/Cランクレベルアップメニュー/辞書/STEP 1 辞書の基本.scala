@@ -2,16 +2,18 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    var Aline = Array.ofDim[Int](num)
+    val n = readLine().toInt
+    var Sline = Array.ofDim[String](n,2)
 
-    for (i <- 0 until num){
-        val Anum = readLine().toInt
-        Aline(i) = Anum
+    for (i <- 0 until n){
+        Sline(i) = readLine().split(" ")
     }
-    val Bline = Aline.reverse
+    
+    val S = readLine()
 
-    for (i <- Bline){
-        println(i)
-    }
+    for (i <- Sline){
+        if (i(0) == S){
+            println(i(1))
+        }
+    }    
 }

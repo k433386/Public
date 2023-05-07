@@ -2,24 +2,10 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var Sline = Array.ofDim[String](N)
-    var Aline : Array[Any] = Array.empty
+    val S = readLine().split("").map(_.toInt)
 
-    for (i <- 0 until N){
-        Sline(i) = readLine()
-    }
+    val a = S(0) + S(3)
+    val b = S(1) + S(2)
 
-    for (i <- 0 until N){
-        if (Sline(i).length == 3 && Aline != Array.empty){
-            Aline = Aline.drop(1)
-
-        } else if (Sline(i).length != 3){
-            val tmp = Sline(i).split(" ")
-            Aline = Aline ++ Array(tmp(1).toInt) 
-        }
-    }
-    for (i <- Aline){
-        println(i)
-    }
+    println(s"${a}${b}")
 }

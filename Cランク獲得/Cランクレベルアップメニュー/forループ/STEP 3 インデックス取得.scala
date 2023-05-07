@@ -2,14 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    var tmp = 0
+    val n = readLine().toInt
+    var Aline = Array.ofDim[Int](n)
 
-    for (i <- 0 until num){
-        val Anum = readLine().toInt
-        if (Anum > tmp){
-            tmp = Anum
-        }
+    for (i <- 0 until n){
+        Aline(i) = readLine().toInt
     }
-    println(tmp)
+    
+    val k = readLine().toInt
+    
+    println(Aline.indexOf(k)+1)
 }

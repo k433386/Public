@@ -2,16 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine.split(" ")
-    val numN = num(0).toInt
-    val numK = num(1).toInt
+    val n = readLine().toInt
+    var Aline = readLine().split(" ").map(_.toInt)
     var count = 0
 
-    for (i <- 0 until numN){
-        val Anum = readLine().toInt
-        if (Anum == numK){
+    for (i <- Aline){
+        if (i%3 == 0){
             count = count + 1
-        }
+        }  
     }
     println(count)
 }
