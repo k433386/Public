@@ -14,5 +14,14 @@
 for (i <- Array) // 配列の要素を直接取り出す
 
 Array.ofDim[]() //N次元配列の定義
+Array.fill()() //初期値埋め
 
 var X : Array[] = Array.empty //空の配列の定義
+
+toUpper
+toLower //char
+toUpperCase
+toLowerCase //string
+
+string " "
+char ' '
