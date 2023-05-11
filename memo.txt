@@ -31,4 +31,8 @@ toLowerCase //string
 string " "
 char ' '
 
+
+---注意---
 classの継承用に空のメソッドを作ること
+割り算はDoubleでキャストしておいたほうが吉
+Int/Longを疑うこと
