@@ -3,7 +3,7 @@ import scala.io.StdIn._
 object Main extends App {
 
     val N = readLine().toInt
-    val Aline = Array.ofDim[Int](N, N)
+    val Aline = Array.ofDim[Int](N, N, N)
     val Bline = Array.ofDim[Int](N, N)
     val Cline = Array.ofDim[Int](2, N)
     val result = Array.ofDim[Int](2*N+2)

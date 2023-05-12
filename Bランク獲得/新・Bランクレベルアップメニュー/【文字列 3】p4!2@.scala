@@ -6,21 +6,23 @@ object Main extends App {
 
     def leet(S : String) : Boolean = {
         var line = S.split("")
-        if (line.contains("4")){
-            line(line.indexOf("4")) = "a"
+
+        def replace(Sen: Array[String], From: String, To: String) : Array[String] = {
+            val result = Array.ofDim[String](Sen.length)
+            for (i <- 0 until Sen.length){
+                if (Sen(i) == From){
+                    result(i) = To 
+                } else {
+                    result(i) = Sen(i)
+                }
+            }
+            return result
         }
-        if (line.contains("@")){
-            line(line.indexOf("@")) = "a"
-        }
-        if (line.contains("1")){
-            line(line.indexOf("1")) = "i"
-        }
-        if (line.contains("!")){
-            line(line.indexOf("!")) = "i"
-        }
-        if (line.contains("2")){
-            line(line.indexOf("2")) = "z"
-        }
+        line = replace(line, "4", "a")
+        line = replace(line, "@", "a")
+        line = replace(line, "1", "i")
+        line = replace(line, "!", "i")
+        line = replace(line, "2", "z")
         
         if (line.mkString("").contains("paiza")){
             return true
