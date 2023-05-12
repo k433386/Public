@@ -3,6 +3,13 @@
 .take(n) //最初のn個の要素からなるリストを求める
 .drop(n) //最初のn個の要素を除いたリストを求める
 
+.combinations(n) //n個選択する組み合わせを生成する
+.permutations //順列の組み合わせを生成する
+
+.max
+.min
+.product
+
 .sorted //配列を昇順で並び替える
 .sortBy(_.X) //指定した要素で配列を並び替える
 
@@ -27,6 +34,8 @@ toUpper
 toLower //char
 toUpperCase
 toLowerCase //string
+
+.isDigit //数値であることを判定する
 
 string " "
 char ' '

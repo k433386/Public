@@ -2,11 +2,38 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val S = readLine().toArray
-    val line = readLine().split(" ")
-    val i = line(0).toInt
-    val j = line(1).toInt
+    val S = readLine()
 
-    val result = S.drop(i-1).take(j-i+1)
-    println(result.mkString(""))
+    def leet(S : String) : Boolean = {
+        var line = S.split("")
+        if (line.contains("4")){
+            line(line.indexOf("4")) = "a"
+        }
+        if (line.contains("@")){
+            line(line.indexOf("@")) = "a"
+        }
+        if (line.contains("1")){
+            line(line.indexOf("1")) = "i"
+        }
+        if (line.contains("!")){
+            line(line.indexOf("!")) = "i"
+        }
+        if (line.contains("2")){
+            line(line.indexOf("2")) = "z"
+        }
+        
+        if (line.mkString("").contains("paiza")){
+            return true
+        } else {
+            return false
+        }
+    }
+
+    if (S.contains("paiza")){
+        println("paiza")
+    } else if (leet(S)){
+        println("leet")
+    } else {
+        println("nothing")
+    }
 }

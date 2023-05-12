@@ -2,54 +2,20 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val S = readLine()
-    var Sch : Array[Char] = Array.empty
-    var result : Array[Char] = Array.empty
-    var top : Array[Char] = Array.empty
-    var bottom : Array[Char] = Array.empty
+    val X = readLine().split("")
+    val line1 = Array.ofDim[String](8)
+    val line2 = Array.ofDim[String](8)
+    val line3 = Array.ofDim[String](8)
+    val line4 = Array.ofDim[String](8)
 
-    if (S.contains(".")){
-        for (i <-0 until  S.length){
-            if (i == S.indexOf(".") || S(i) != '.'){
-                Sch = Sch ++ Array(S(i))
-            }
-        }
-        var flag = 0
-        for (i <- Sch){
-            if (i != '0' && flag == 0){
-                flag = 1
-                top = top ++ Array(i)
-            } else if (flag == 1){
-                top = top ++ Array(i)
-            }
-        }
-        if (top(0) == '.'){
-            top = Array('0') ++ top.drop(0)
-        }
-        
-        flag = 0
-        for (i <- top.reverse){
-            if (i != '0' && flag == 0){
-                flag = 1
-                bottom = bottom ++ Array(i)
-            } else if (flag == 1){
-                bottom = bottom ++ Array(i)
-            }
-        }
-        val rFloat = bottom.reverse.mkString("")
-        println(rFloat)
-
-    } else {
-        var flag = 0
-        for (i <- S){
-            if (i != '0' && flag == 0){
-                flag = 1
-                result = result ++ Array(i)
-            } else if (flag == 1){
-                result = result ++ Array(i)
-            }
-       }
-        val rInt = result.mkString("")
-        println(rInt)    
+    for (i <- 0 until 8){
+        line1(i) = X(i+0)
+        line2(i) = X(i+8)
+        line3(i) = X(i+16)
+        line4(i) = X(i+24)
     }
+
+    val result = line1.mkString("").toInt + line2.mkString("").toInt + line3.mkString("").toInt + line4.mkString("").toInt
+
+    println(result)
 }

@@ -2,27 +2,54 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val S = readLine()
-    val Snum = S.split(Array('+', '-')).map(_.toInt)
-    var Smiplus : Array[Int] = Array.empty
-    var result : Array[Int] = Array.empty
-    var count = -1
+    val N = readLine().toInt
+    var TA : Array[String] = Array.empty
+    var TB : Array[String] = Array.empty
+    var TC : Array[String] = Array.empty
+    var TD : Array[String] = Array.empty
 
-    for (i <- S){
-        if (i == '+'){
-            Smiplus =  Smiplus ++ Array(1)
-        } else if (i == '-'){
-            Smiplus =  Smiplus ++ Array(-1)
+    for (i <- 0 until N){
+        val io = readLine().split(" ")
+        if (io(0) == "TA"){
+            TA = TA ++ Array(io(1))
+        } else if (io(0) == "TB"){
+            TB = TB ++ Array(io(1))
+        } else if (io(0) == "TC"){
+            TC = TC ++ Array(io(1))
+        } else if (io(0) == "TD"){
+            TD = TD ++ Array(io(1))
         }
     }
 
-    for (i <-0 until Snum.length){
-        if (i == 0){
-            result = Array(Snum(i).toInt)
-        }else{
-            result = result ++ Array(Smiplus(count)*(Snum(i)))
+    def TestFun(test: Array[String]) : Int = {
+        var ok = 0
+        var ng = 0
+        for (i <- test){
+            if (i == "ok"){
+                ok = ok + 1
+            } else if (i == "ng"){
+                ng = ng + 1        
+            }
+
+            if (ok == 2 && ng < 2){
+                return 1
+            }
         }
-        count = count + 1
+        return 0
     }
-    println(result.sum)
+
+    def printOut(rA:Int, rB:Int, rC:Int, rD:Int) = {
+        if (rA == 1){
+            println("A")
+        } else if (rB == 1){
+            println("B")
+        } else if (rC == 1){
+            println("C")
+        } else if (rD == 1){
+            println("D")
+        } else {
+            println("E")
+        }
+    }
+    printOut(TestFun(TA), TestFun(TB), TestFun(TC), TestFun(TD))
 }
