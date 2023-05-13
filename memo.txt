@@ -12,6 +12,7 @@
 
 .sorted //配列を昇順で並び替える
 .sortBy(_.X) //指定した要素で配列を並び替える
+.sortBy(_._2) //mapの要素で並び替え？
 
 .filter(x => X) //指定した要素で新しい配列を取得
 
@@ -23,12 +24,15 @@
 
 .count(x => X) //条件を満たす要素を数える
 
-for (i <- Array) // 配列の要素を直接取り出す
+for (X <- Array) // 配列の要素を直接取り出す
+for ((name, amount) <- result) //複数を同時に取ることもある
 
 Array.ofDim[]() //N次元配列の定義
 Array.fill()() //初期値埋め
 
 var X : Array[] = Array.empty //空の配列の定義
+var X : Map[] = Map.empty //空のマップの定義
+Map = Map - key //キーと要素の消去
 
 toUpper
 toLower //char
@@ -36,6 +40,8 @@ toUpperCase
 toLowerCase //string
 
 .isDigit //数値であることを判定する
+
+String.format("%10s", x).replace(" ", "0") //文字のゼロ桁埋め
 
 string " "
 char ' '
@@ -45,3 +51,4 @@ char ' '
 classの継承用に空のメソッドを作ること
 割り算はDoubleでキャストしておいたほうが吉
 Int/Longを疑うこと
+mapの要素はArrayにしないほうが吉
