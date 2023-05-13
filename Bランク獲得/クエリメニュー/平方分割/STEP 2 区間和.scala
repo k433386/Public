@@ -2,37 +2,20 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class Employee(var number: Int, var name: String){
-        def getnum() : Int = {
-            number
-        }
-        def getname() : String = {
-            name
-        }
-        def change_num(cNum: Int) = {
-            number = cNum
-        }        
-        def change_name(cName: String) = {
-            name = cName
-        }
-    }
-    var employees : Array[Employee] = Array.empty    
-    
-    val N = readLine().toInt
+    val NK = readLine().split(" ").map(_.toInt)
+    val N = NK(0)
+    val K = NK(1)
+    val An = Array.ofDim[Int](N+1)
 
-    for(i <- 0 until N){
-        val line = readLine().split(" ")
-        if (line(0) == "make"){
-            val employee = new Employee(line(1).toInt, line(2))
-            employees = employees ++ Array(employee)  
-        } else if (line(0) == "getnum"){
-            println(employees(line(1).toInt-1).getnum())
-        } else if (line(0) == "getname"){
-            println(employees(line(1).toInt-1).getname())
-        } else if (line(0) == "change_num"){
-            employees(line(1).toInt-1).change_num(line(2).toInt)
-        } else if (line(0) == "change_name"){
-            employees(line(1).toInt-1).change_name(line(2))
-        }
+    for(i <- 1 to N){
+        val tmp = readLine().toInt
+        An(i) = An(i-1) + tmp
+    }
+
+    for(i <- 0 until K){
+        val lr = readLine().split(" ").map(_.toInt)
+        val start = lr(0)
+        val end = lr(1)
+        println(An(end) - An(start-1))
     }
 }
