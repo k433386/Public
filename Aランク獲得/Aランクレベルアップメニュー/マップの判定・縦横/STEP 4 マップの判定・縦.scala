@@ -1,38 +1,37 @@
 import scala.io.StdIn._
 
 object Main extends App {
+    
+    val HW = readLine().split(" ").map(_.toInt)
+    val H = HW(0)
+    val W = HW(1)
+    val Sh = Array.ofDim[String](H, W)
 
-    val main = Array.ofDim[String](5, 5)
-    val trans = Array.ofDim[String](5, 5)
-    val result = Array.ofDim[String](5)
-
-    for (i <- 0 until 5){
-        main(i) = readLine().split("")
-    }
-    for (i <- 0 until 5){
-        for (j <- 0 until 5){
-            trans(i)(j) = main(j)(i)
-        }
+    for(i <- 0 until H){
+        Sh(i) = readLine().split("")
     }
 
-    for (j <- 0 until 5){
-        val i = trans(j)
-        if (i(0) == i(1) && i(0) == i(2) && i(0) == i(3) && i(0) == i(4) && i(0) == "O"){
-            result(j) = "O"
+    def TrueFalse(y: Int, x: Int) : Boolean = {
+        if (Sh(y)(x) == "#"){ true }
+        else { false }
+    }
+    def UpDown(y: Int, x: Int) : Boolean = { 
+        if (0 < y && y < H-1){
+            if (TrueFalse(y+1, x) && TrueFalse(y-1, x)){ true }
+            else { false } 
 
-        } else if (i(0) == i(1) && i(0) == i(2) && i(0) == i(3) && i(0) == i(4) && i(0) == "X"){
-            result(j) = "X"
-        
-        } else {
-            result(j) = "D"
-        }
+        } else if (y == 0){
+            if (TrueFalse(y+1, x)){ true }
+            else { false } 
+
+        } else if (y == H-1){
+            if (TrueFalse(y-1, x)){ true }
+            else { false } 
+          
+        } else { false } 
     }
 
-    if (result.contains("O")){
-        println("O")
-    } else if (result.contains("X")){
-        println("X")
-    } else {
-        println("D")
+    for (i <- 0 until H; j <- 0 until W){
+        if (UpDown(i, j)){ println(s"${i} ${j}") }
     }
 }
