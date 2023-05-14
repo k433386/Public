@@ -25,7 +25,7 @@
 .count(x => X) //条件を満たす要素を数える
 
 for (X <- Array) // 配列の要素を直接取り出す
-for ((name, amount) <- result) //複数を同時に取ることもある
+for ((name, amount) <- result) //複数を同時に取ることもある (タプル)
 
 Array.ofDim[]() //N次元配列の定義
 Array.fill()() //初期値埋め
