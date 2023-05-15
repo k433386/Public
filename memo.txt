@@ -10,6 +10,8 @@
 .min
 .product
 
+.update
+
 .sorted //配列を昇順で並び替える
 .sortBy(_.X) //指定した要素で配列を並び替える
 .sortBy(_._2) //mapの要素で並び替え？
