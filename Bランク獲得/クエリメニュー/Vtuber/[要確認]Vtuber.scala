@@ -7,16 +7,17 @@ object Main extends App {
     var supName : Array[String] = Array.empty
     var supData : Map[String, Long] = Map.empty
 
-    for (i <- 0 until N){
+    for (_ <- 0 until N){
         val E = readLine().split(" ")
         val name = E(0)
         val select = E(1)
         if (select == "give"){
+            val amount = E(2).toLong
             if (supData.contains(name)){
-                supData = supData ++ Map(name -> (supData(name) + E(2).toLong)) 
+                supData = supData.updated(name, supData(name) + amount)
             } else {
                 supName = supName ++ Array(name)
-                supData = supData ++ Map(name -> E(2).toLong)
+                supData = supData ++ Map(name -> amount)
             }
 
         } else if (select == "join"){
@@ -25,8 +26,10 @@ object Main extends App {
     }
 
     val result =  supData.toSeq.sortBy(_._2).reverse
-    for ((name, amount) <- result) {
+    for ((name, _) <- result) {
         println(name)
     }
     for (i <- memName.sorted){ println(i) }
 }
+
+//どこかが違う
