@@ -25,11 +25,24 @@ object Main extends App {
         }
     }
 
-    val result =  supData.toSeq.sortBy(_._2).reverse
-    for ((name, _) <- result) {
-        println(name)
+    def withSort(x: Map[String, Long]) : Seq[(String, Long)] = {
+        val tmp = x.toSeq.sortWith {
+            case ((name1, amount1), (name2, amount2)) => {
+                if (amount1 != amount2) {
+                    amount1 > amount2
+                } else {
+                    name1 > name2
+                }
+            } 
+        }
+        tmp       
     }
+    
+    //val result =  supData.toSeq.sortBy(_._2).reverse
+    val result = withSort(supData)
+
+    for ((name, _) <- result) { println(name) }
     for (i <- memName.sorted){ println(i) }
 }
 
-//どこかが違う
+//sortWithは安心
