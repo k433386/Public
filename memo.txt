@@ -26,6 +26,8 @@
 
 .count(x => X) //条件を満たす要素を数える
 
+.groupBy(x => (i, j)) //要素でグループ化
+
 for (X <- Array) // 配列の要素を直接取り出す
 for ((name, amount) <- result) //複数を同時に取ることもある (タプル)
 
@@ -49,7 +51,15 @@ string " "
 char ' '
 
 scala.collection.immutable.Queue[Int]()
+import scala.collection.mutable.Queue
+queue.dequeue()
+queue.enqueue()
 
+val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
+    (acc, i) => (0 until W).foldLeft(acc){
+        (innerAcc, j) => if (Y) {(i, j) :: innerAcc} else {innerAcc}
+    }
+} 
 
 ---注意---
 classの継承用に空のメソッドを作ること
@@ -58,3 +68,5 @@ Int/Longを疑うこと
 mapの要素はArrayにしないほうが吉
 sortByを多用するよりもsortWithを関数化するほうが安定するかも
 returnを明示したほうが安定するかも
+
+foldLeftの使い方を確認すること
