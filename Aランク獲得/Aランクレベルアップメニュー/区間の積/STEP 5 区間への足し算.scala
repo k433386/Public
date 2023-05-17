@@ -21,7 +21,7 @@ object Main extends App {
     for (i <- 0 until N){
         println(An(i)+add(i))
         if (i+1 < N+1){
-            add(i+1) = add(i+1) + add(i)            
+            add(i+1) = add(i+1) + add(i)
         }
     }
 }
