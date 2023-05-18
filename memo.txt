@@ -61,6 +61,8 @@ val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
     }
 } 
 
+.foreach(println) //全要素プリント
+
 ---注意---
 classの継承用に空のメソッドを作ること
 割り算はDoubleでキャストしておいたほうが吉
@@ -70,3 +72,4 @@ sortByを多用するよりもsortWithを関数化するほうが安定するか
 returnを明示したほうが安定するかも
 
 foldLeftの使い方を確認すること
+式が値を持つせいで関数内の順番がシビアかも
