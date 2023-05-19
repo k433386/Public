@@ -1,8 +1,32 @@
+//テスト3の入力値の末尾にのみ、なぜか指定にない空白が挿入されているため、数値型に変換するとエラーになる
+
+import scala.io.StdIn._
+import math.sqrt
+
+object Main extends App {
+
+    var N = readLine().toInt
+    var primeFactor: Array[Int] = Array.empty
+    println(N)
+    
+    for (i <- 2 until sqrt(N).toInt+1){
+        while(N % i == 0){
+            primeFactor = primeFactor ++ Array(i)
+            N = N / i
+        }
+    }
+    if (N != 1){
+        primeFactor = primeFactor ++ Array(N)
+    }
+    primeFactor.foreach(println)
+}
+
+
 import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
+    val N = readLine().trim().toInt
     val isPrime = Array.fill(N+1)(true)
     eratosthenes(N)
 

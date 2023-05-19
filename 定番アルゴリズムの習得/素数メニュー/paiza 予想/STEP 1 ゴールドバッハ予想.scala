@@ -1,39 +1,36 @@
 import scala.io.StdIn._
+import math.abs
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
-    var count = 0
+    val N = readLine().trim().toInt
+    val isPrime = Array.fill(N+1)(true)
 
-    def quickSort(A: Array[Int], left: Int, right: Int): Array[Int] = {
-        def swap(i: Int, j: Int) = {
-            val tmp = A(i)
-            A(i) = A(j)
-            A(j) = tmp
-        }
-
-        if (left+1 >= right){
-            return A
-        }
-        
-        val pivot = A(right-1)
-        var cursol = left
-        for (i <- left until right-1){
-            if(A(i) < pivot){
-                swap(cursol, i)
-                cursol = cursol + 1
-                count = count + 1
+    def eratosthenes(N: Int) = {
+        isPrime(0) = false
+        isPrime(1) = false
+        for (i <- 2 until N+1){
+            if (isPrime(i)){
+                for (j <- i*2 until N+1 by i){
+                    isPrime(j) = false
+                }
             }
         }
-
-        swap(cursol, right-1)
-        val newA = quickSort(A, left, cursol)
-        val newnewA = quickSort(newA, cursol+1, right)
-        return newnewA
     }
-
-    val result = quickSort(An, 0, n)
-    println(result.mkString(" "))
-    println(count)
+    def findPrimes(N: Int): (Int, Int) = {
+        var result = Array(1, 1, 2L)
+        for (i <- 2 until N){
+            val (p1, p2) = (i, abs(N-i))
+            if (isPrime(p1) && isPrime(p2)){
+                if (result(2) < p1.toLong*p2.toLong){
+                    result = Array(p1, p2, p1.toLong*p2.toLong)
+                }
+            }
+        }
+        return (result(0).toInt, result(1).toInt)
+    }
+    eratosthenes(N)
+    val (prime1, prime2) = findPrimes(N)
+    println(prime1)
+    println(prime2)
 }

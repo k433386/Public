@@ -2,31 +2,39 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
-    val k = readLine().toInt
-    val Hk = readLine().split(" ").map(_.toInt)
+    val N = readLine().trim().toInt
+    val isPrime = Array.fill(N+1)(true)
+    var primeList: Array[Int] = Array.empty
+    eratosthenes(N)
 
-    def insertionSort(A: Array[Int], n: Int, h: Int) = {
-        var num_of_move = 0
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - h
-
-            while (j >= 0 && A(j) > x){
-                A(j+h) = A(j)
-                j = j - h
-                num_of_move = num_of_move + 1
+    def eratosthenes(N: Int) = {
+        isPrime(0) = false
+        isPrime(1) = false
+        for (i <- 2 until N+1){
+            if (isPrime(i)){
+                for (j <- i*2 until N+1 by i){
+                    isPrime(j) = false
+                }
             }
-            A(j+h) = x
-        }
-        println(num_of_move)
-    }
-    def shellSort(A: Array[Int], n: Int, H: Array[Int]) = {
-        for (h <- H){
-            insertionSort(A, n, h)
         }
     }
 
-    shellSort(An, n, Hk)
+    def primeFactor(N: Int, isPrime:Array[Boolean], i: Int): Unit = {
+        if (N >= i){
+            if (isPrime(i) && N % i == 0){
+                primeList = primeList ++ Array(i)
+                primeFactor(N/i, isPrime, i)
+            } else {
+                primeFactor(N, isPrime, i+1)
+            }
+        }         
+    }
+    primeFactor(N, isPrime, 2)
+    
+    var result = 1
+    for (i <- primeList.distinct){
+        val tmp = primeList.count(_ == i) + 1
+        result = result * tmp
+    }
+    println(result)
 }

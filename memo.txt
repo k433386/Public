@@ -33,6 +33,8 @@ for ((name, amount) <- result) //複数を同時に取ることもある (タプ
 
 Array.ofDim[]() //N次元配列の定義
 Array.fill()() //初期値埋め
+Array.fill(N)(Array.empty[Int]) //配列を空の配列で満たす
+X.flatMap(_.toList) //配列の要素を一行にまとめる
 
 var X : Array[] = Array.empty //空の配列の定義
 var X : Map[] = Map.empty //空のマップの定義
@@ -63,6 +65,8 @@ val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
 
 .foreach(println) //全要素プリント
 
+.trim() //入力の前後の空白をトリミングする
+
 ---注意---
 classの継承用に空のメソッドを作ること
 割り算はDoubleでキャストしておいたほうが吉
@@ -73,3 +77,4 @@ returnを明示したほうが安定するかも
 
 foldLeftの使い方を確認すること
 式が値を持つせいで関数内の順番がシビアかも
+空白をトリミングしておくと吉

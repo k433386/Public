@@ -1,32 +1,36 @@
 import scala.io.StdIn._
+import math.sqrt
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
-    val k = readLine().toInt
-    val Hk = readLine().split(" ").map(_.toInt)
+    val N = 100000000
+    val isPrime = Array.fill(N+1)(true)
+    eratosthenes(N)
 
-    def insertionSort(A: Array[Int], n: Int, h: Int) = {
-        var num_of_move = 0
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - h
-
-            while (j >= 0 && A(j) > x){
-                A(j+h) = A(j)
-                j = j - h
-                num_of_move = num_of_move + 1
+    def eratosthenes(N: Int) = {
+        isPrime(0) = false
+        isPrime(1) = false
+        for (i <- 2 until N+1){
+            if (isPrime(i)){
+                for (j <- i*2 until N+1 by i){
+                    isPrime(j) = false
+                }
             }
-            A(j+h) = x
-        }
-        println(num_of_move)
-    }
-    def shellSort(A: Array[Int], n: Int, H: Array[Int]) = {
-        for (h <- H){
-            insertionSort(A, n, h)
         }
     }
 
-    shellSort(An, n, Hk)
+    var ans : Array[Int] = Array.empty
+    for (i <- 3 until sqrt(N).toInt+1 by 2){
+        if (!(isPrime(i*i-2))){
+            ans = ans ++ Array(i*i)
+        }
+    }
+    if (ans.length == 0){
+        println("paiza's conjecture is correct.")
+    } else {
+        for(i <- ans){
+            println(i)
+        } 
+    }
 }
+//解答例使用済み
