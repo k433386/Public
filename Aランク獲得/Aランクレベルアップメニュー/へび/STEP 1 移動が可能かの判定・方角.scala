@@ -11,33 +11,27 @@ object Main extends App {
     val Sh = Array.ofDim[String](H, W)
 
     for (i <- 0 until H){
-        Sh(i) = readLine().split(" ")
+        Sh(i) = readLine().split("")
     }
 
     def noObject(y: Int, x: Int) : Boolean = {
-        Sh(y)(x) != "#"
+        return (Sh(y)(x) != "#")
     }
     def inMap(y: Int, x: Int) : Boolean = {
         if (0 <= y && y < H && 0 <= x && x < W){
-            if (Sh(y)(x) != "#") {
-                true
-            } else { false }
-        } else { false }
+            return noObject(y, x)
+        } else {
+            return false
+        }
     }
     def nextPlot(m: String, y: Int, x: Int) : (Int, Int) = {
-        if (m == "N"){
-            (y-1, x)
+        val (a, b) = m match{
+            case "N" => (y-1, x)
+            case "S" => (y+1, x)
+            case "W" => (y, x-1)
+            case "E" => (y, x+1)
         }
-        else if (m == "S"){
-            (y+1, x)
-        }
-        else if (m == "E"){
-            (y, x+1)
-        }
-        else if (m == "W"){
-            (y, x-1)
-        }
-        else { (y, x) }
+        return (a, b)
     }
     
     val (newY, newX) = nextPlot(m, sy, sx)

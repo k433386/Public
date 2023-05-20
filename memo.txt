@@ -2,6 +2,7 @@
 
 .take(n) //最初のn個の要素からなるリストを求める
 .drop(n) //最初のn個の要素を除いたリストを求める
+.slice(from, until) //切り出し
 
 .combinations(n) //n個選択する組み合わせを生成する
 .permutations //順列の組み合わせを生成する
@@ -9,6 +10,7 @@
 .max
 .min
 .product
+X = X.min(newX) //XとnewXで最小値
 
 .update
 .updated
@@ -62,6 +64,8 @@ val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
         (innerAcc, j) => if (Y) {(i, j) :: innerAcc} else {innerAcc}
     }
 } 
+
+for ((x, y) <- array1.zip(array2)) 
 
 .foreach(println) //全要素プリント
 

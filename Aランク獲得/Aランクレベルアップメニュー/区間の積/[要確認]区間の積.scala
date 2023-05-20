@@ -2,6 +2,43 @@ import scala.io.StdIn._
 
 object Main extends App {
 
+    val Array(n, k) = readLine().split(" ").map(_.toLong)
+    val numbers = readLine().split(" ").map(_.toLong)
+
+    def whileMain(): Long = {
+        var count = n+1
+        var start = 0L
+        var end = 0L
+        var product = 1L
+            
+        while (end < n) {
+            if (numbers(end.toInt) == 0) {
+                start = end + 1
+                end = start
+                product = 1L
+            } else {
+                product = product * numbers(end.toInt)
+                while (product >= k && start <= end) {
+                    count = count.min(end - start + 1)
+                    product = product / numbers(start.toInt)
+                    start = start + 1
+                }
+                end = end + 1
+            }
+        }
+        return count
+    }
+    println(whileMain())
+}
+
+//解答例使用済み
+//テスト通過に誤差あり？
+//.filter(_ != 0)
+/*
+import scala.io.StdIn._
+
+object Main extends App {
+
     val line = readLine().split(" ").map(_.toInt)
     val N = line(0)
     val K = line(1)
@@ -49,4 +86,5 @@ object Main extends App {
     println(ans)
 }
 
-//解答例使用済み
+
+*/
