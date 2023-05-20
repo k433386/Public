@@ -63,7 +63,7 @@ val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
     (acc, i) => (0 until W).foldLeft(acc){
         (innerAcc, j) => if (Y) {(i, j) :: innerAcc} else {innerAcc}
     }
-} 
+}
 
 for ((x, y) <- array1.zip(array2)) 
 
