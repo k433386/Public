@@ -1,4 +1,80 @@
 import scala.io.StdIn._
+
+object Main extends App {
+
+    val HW = readLine().split(" ").map(_.toInt)
+    val H = HW(0)
+    val W = HW(1)
+    val s = Array.ofDim[String](H, W)
+    var count = 0
+    var aadd = 0
+    var sums = Array(1, 1)
+    var flag_pass = true
+    val ab_point = Array.fill(2)(List.empty[(Int, Int, Int)])
+
+    if (readLine() == "B") {
+        count = 1
+        aadd = 1
+    }
+
+    for (y <- 0 until H) {
+        s(y) = readLine().split("")
+        for (x <- 0 until W) {
+            if (s(y)(x) == "A") {
+                ab_point(0) = ab_point(0) ++ List((y, x, aadd))
+            }
+            if (s(y)(x) == "B") {
+                ab_point(1) = ab_point(1) ++ List((y, x, 0))
+            }
+        }
+    }
+
+    while (ab_point(0).nonEmpty || ab_point(1).nonEmpty) {
+        if (ab_point(count % 2).isEmpty) {
+            count = count + 1
+            flag_pass = false
+        }
+
+        var (y, x, n) = ab_point(count % 2).head
+        if (count / 2 < n && flag_pass) {
+            count = count + 1
+            val tmp = ab_point(count % 2).head
+            y = tmp(0)
+            x = tmp(1)
+            n = tmp(2)
+        }
+
+        ab_point(count % 2) = ab_point(count % 2).tail
+        val ab = if (count % 2 == 0) "A" else "B"
+
+        def addToAbPoint(y: Int, x: Int, n: Int): Unit = {
+            if (y >= 0 && y < H && x >= 0 && x < W && s(y)(x) == ".") {
+                s(y)(x) = ab
+                sums(count % 2) = sums(count % 2) + 1
+                ab_point(count % 2) = ab_point(count % 2) ++ List((y, x, n + 1))
+            }
+        }
+
+        addToAbPoint(y - 1, x, n)
+        addToAbPoint(y + 1, x, n)
+        addToAbPoint(y, x - 1, n)
+        addToAbPoint(y, x + 1, n)
+    }
+
+    println(s"${sums(0)} ${sums(1)}")
+    if (sums(0) > sums(1)) {
+        println("A")
+    } else if (sums(0) == sums(1)) {
+        println("Draw")
+    } else {
+        println("B")
+    }
+}
+
+//解答例使用済み
+//断念
+/*
+import scala.io.StdIn._
 import scala.collection.mutable.Queue
 import math.abs
 
@@ -123,3 +199,4 @@ object Main extends App {
     val (x, y) = resultCount(result)
     printOut(x, y)
 }
+*/
