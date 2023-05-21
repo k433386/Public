@@ -1,68 +1,64 @@
 import scala.io.StdIn._
 
 object Main extends App {
- 
-    val line = readLine().split(" ")
-    val H = line(0).toInt
-    val W = line(1).toInt
-    val Y = line(2).toInt
-    val X = line(3).toInt
-    val Sh = Array.ofDim[String](H, W)
+    val Array(h, w, y, x) = readLine().split(" ").map(_.toInt)
+    val s = Array.ofDim[String](h, w)
 
-    for (i <- 0 until H){
-        Sh(i) = readLine().split("")
+    for (y <- 0 until h) {
+        s(y) = readLine().split("")
     }
 
-    def checkRow(x: Int, y: Int, s: Array[Array[String]]): Array[Array[String]] = {
+    def checkRow(x: Int, y: Int, s: Array[Array[String]]): Unit = {
         for (lr <- List(-1, 1)) {
-            var i = 0
-            while (true) {
-                i = i + 1
-                if (x + i * lr < 0 || x + i * lr >= W){
-                    return s
-                }
-                if (s(y)(x + i * lr) == "*"){
-                    for (j <- 0 to i){
-                        s(y)(x + j * lr) = "*"
+            innerFunc()
+            def innerFunc(): Unit = {
+                var i = 0
+                while (true) {
+                    i = i + 1
+                    if (x + i * lr < 0 || x + i * lr >= w) {
+                        return
                     }
-                    return s
+                    if (s(y)(x + i * lr) == "*") {
+                        for (j <- (Array(x + i * lr, x).min to Array(x + i * lr, x).max)) {
+                            s(y)(j) = "*"
+                        }
+                        return
+                    }
                 }
             }
-            return s
         }
-        return s
     }
 
-    def checkColumn(x: Int, y: Int, s: Array[Array[String]]): Array[Array[String]] = {
+    def checkColumn(x: Int, y: Int, s: Array[Array[String]]): Unit = {
         for (lr <- List(-1, 1)) {
-            var i = 0
-            while (true) {
-                i = i + 1
-                if (y + i * lr < 0 || y + i * lr >= H) {
-                    return s
-                }
-                if (s(y + i * lr)(x) == "*") {
-                    for (j <- 0 to i) {
-                        s(y + j * lr)(x) = "*"
+            innerFunc()
+            def innerFunc(): Unit = {
+                var i = 0
+                while (true) {
+                    i = i + 1
+                    if (y + i * lr < 0 || y + i * lr >= h) {
+                        return
                     }
-                    return s
+                    if (s(y + i * lr)(x) == "*") {
+                        for (j <- (Array(y + i * lr, y).min to Array(y + i * lr, y).max)) {
+                            s(j)(x) = "*"
+                        }
+                        return
+                    }
                 }
             }
-            return s
         }
-        return s
     }
-    Sh(Y)(X) = "*"
-    val res1 = checkRow(X, Y, Sh)
-    val res2 = checkColumn(X, Y, res1)
 
-    for (i <- 0 until H) {
-        println(res2(i).mkString(""))
+    s(y)(x) = "*"
+    checkRow(x, y, s)
+    checkColumn(x, y, s)
+
+    for (i <- s) {
+        println(i.mkString(""))
     }
 }
-
-
-
+//解答例使用済み
 
 /*
 import scala.io.StdIn._

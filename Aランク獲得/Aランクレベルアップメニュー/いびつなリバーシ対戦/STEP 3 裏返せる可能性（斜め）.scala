@@ -1,32 +1,33 @@
 import scala.io.StdIn._
+import math.abs
 
 object Main extends App {
- 
-    val line = readLine().split(" ")
-    val H = line(0).toInt
-    val W = line(1).toInt
-    val Y = line(2).toInt
-    val X = line(3).toInt
-    val Sh = Array.ofDim[String](H, W)
+    val Array(h, w, y, x) = readLine().split(" ").map(_.toInt)
 
-    def nextToPlot(board: Array[Array[String]], yx: (Int, Int)): Array[Array[String]] = {
-        val (y, x) = yx
-
-        for (i <- 0 until H; j <- 0 until W){
+    def nextToPlot(h: Int, w: Int, y: Int, x: Int): Array[Array[String]] = {
+        val board =  Array.ofDim[String](h, w)
+        
+        for (i <- 0 until h; j <- 0 until w){
             if (i == y && j == x){
                 board(i)(j) = "!" 
+            } else {
+                innerFunc(i, j)
             }
-            else if (i == y || j == x){
-                board(i)(j) = "*" 
-            }
-            else {
+        }
+        def innerFunc(i: Int, j: Int) = {
+            val Y = abs(y - i)
+            val X = abs(x - j)
+
+            if (Y == X){
+                board(i)(j) = "*"
+            } else {
                 board(i)(j) = "."
             }
         }
         return board
     }
 
-    val result = nextToPlot(Sh, (Y, X))
+    val result = nextToPlot(h, w, y, x)
     for (i <- result){
         println(i.mkString(""))
     }
