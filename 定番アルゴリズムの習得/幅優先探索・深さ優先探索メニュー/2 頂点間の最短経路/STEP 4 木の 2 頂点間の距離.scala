@@ -1,22 +1,29 @@
 import scala.io.StdIn._
-
+import scala.collection.mutable.Queue
 object Main extends App {
 
-    val n = readLine().toInt
-    val an = readLine().split(" ").map(_.toInt)
-    val k = readLine().toInt
+    val Array(n, x, y) = readLine().split(" ").map(_.toInt)
+    val graph = Array.fill(n)(Array.empty[Int])
+    for (_ <- 0 until n - 1) {
+        val Array(a, b) = readLine().split(" ").map(_.toInt)
+        graph(a - 1) = graph(a - 1) ++ Array(b - 1)
+        graph(b - 1) = graph(b - 1) ++ Array(a - 1)
+    }
 
-    if (an.count(_ == k) == 1){
-        println(an.indexOf(k)+1)
-    } else if (an.count(_ == k) > 1){
-        var tmp = 0
-        for (i <- 0 until n){
-            if(an(i) == k ){
-                tmp = i
+    val l = Array.fill(n)(-1)
+    l(x - 1) = 0
+    val q = Queue[Int]()
+    q.enqueue(x - 1)
+    while (q.nonEmpty) {
+        val prev = q.dequeue()
+        for (nxt <- graph(prev)) {
+            if (l(nxt) == -1) {
+                l(nxt) = l(prev) + 1
+                q.enqueue(nxt)
             }
         }
-        println(tmp+1)        
-    } else {
-        println(an.indexOf(k)+1)
     }
+
+    println(l(y-1))
 }
+//解答例使用済み
