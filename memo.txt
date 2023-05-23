@@ -33,13 +33,13 @@ X = X.min(newX) //XとnewXで最小値
 for (X <- Array) // 配列の要素を直接取り出す
 for ((name, amount) <- result) //複数を同時に取ることもある (タプル)
 
-Array.ofDim[]() //N次元配列の定義
-Array.fill()() //初期値埋め
-Array.fill(N)(Array.empty[Int]) //配列を空の配列で満たす
+Array.ofDim[]() //N次元配列の定義 val
+Array.fill()() //初期値埋め val
+Array.fill(N)(Array.empty[]) //配列を空の配列で満たす val
 X.flatMap(_.toList) //配列の要素を一行にまとめる
 
-var X : Array[] = Array.empty //空の配列の定義
-var X : Map[] = Map.empty //空のマップの定義
+var X : Array[] = Array.empty //空の配列の定義 var
+var X : Map[] = Map.empty //空のマップの定義 var
 Map = Map - key //キーと要素の消去
 
 toUpper
@@ -82,3 +82,5 @@ returnを明示したほうが安定するかも
 foldLeftの使い方を確認すること
 式が値を持つせいで関数内の順番がシビアかも
 空白をトリミングしておくと吉
+
+containsなど走査するときはSetが速い
