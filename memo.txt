@@ -30,6 +30,8 @@ X = X.min(newX) //XとnewXで最小値
 
 .groupBy(x => (i, j)) //要素でグループ化
 
+.sameElements(i) //配列を比較
+
 for (X <- Array) // 配列の要素を直接取り出す
 for ((name, amount) <- result) //複数を同時に取ることもある (タプル)
 
