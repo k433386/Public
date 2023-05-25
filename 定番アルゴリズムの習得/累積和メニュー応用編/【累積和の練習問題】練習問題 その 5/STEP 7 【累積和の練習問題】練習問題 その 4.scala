@@ -2,11 +2,11 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val Array(n, a, b) = readLine().split(" ").map(_.toInt)
-    val str = readLine().split("")
-    val an = Array.ofDim[Int](n)
-    for (i <- 0 until n - 2) {
-        if (str(i) == "p" && str(i + 1) == "i" && str(i + 2) == "z") {
+    val q = readLine().toInt
+    val an = Array.ofDim[Int](1010)
+
+    for (i <- 0 until an.length){
+        if ((i)%3 == 0 && (i)%5 == 0) {
             an(i) = 1
         } else {
             an(i) = 0
@@ -37,7 +37,11 @@ object Main extends App {
         return max
     }
 
-    val s = makeCumulativeSum(an, n)
-    val result = useCumulativeSum(s, a-1, b-3)
-    println(result)
+    for (i <- 0 until q){
+        val Array(l, r) = readLine().split(" ").map(_.toInt)
+        val s = makeCumulativeSum(an, an.length)
+        val result = useCumulativeSum(s, l, r)
+        println(result)
+    }
 }
+//解答例使用済み
