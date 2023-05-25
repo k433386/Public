@@ -1,22 +1,21 @@
 import scala.io.StdIn._
-import math._
 
 object Main extends App {
 
     val n = readLine().toInt
-    val data = Array.ofDim[Int](n, 2)
-    for (i <- 0 until n){
-        data(i) = readLine().split(" ").map(_.toInt)
-    }
-    val k = readLine().toInt
+    val an = readLine().split(" ").map(_.toInt)
 
-    def Manhattan(x: Array[Int], tar: Array[Int], k: Int): Boolean = {
-        val result = abs(x(0)-tar(0)) + abs(x(1)-tar(1)).toInt
-        return (result <= k)
+    def countUp() = {
+        var count = 0
+        for (i <- an.sliding(3).toList){
+            if (i(0) < i(1) && i(1) > i(2)){
+                count = count + 1
+            }
+            if (i(0) > i(1) && i(1) < i(2)){
+                count = count + 1
+            }
+        }
+        println(count)
     }
-
-    val count = (0 to n-1).foldLeft(0) { (count, i) =>
-        if (Manhattan(data(i), data(n-1), k)) count + 1 else count
-    }
-    println(count)
+    countUp()
 }

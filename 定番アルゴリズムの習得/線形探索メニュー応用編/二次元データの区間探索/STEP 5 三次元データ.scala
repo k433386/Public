@@ -1,10 +1,15 @@
 import scala.io.StdIn._
-import math._
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toLong)
+    val Array(n, m, h, x) = readLine().split(" ").map(_.toInt)
 
-    println(An.sorted.reverse.take(2)(1))
+    def countUp() = {
+        var count = 0
+        for (i <- 0 until h; j <- 0 until n){
+            count = count + readLine().split(" ").map(_.toInt).count(_ == x)
+        }
+        println(count)
+    }
+    countUp()
 }

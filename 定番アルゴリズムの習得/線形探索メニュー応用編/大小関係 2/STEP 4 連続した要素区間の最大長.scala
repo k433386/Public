@@ -2,24 +2,26 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val Array(n, x) = readLine().split(" ").map(_.toInt)
+    val n = readLine().toInt
     val a = readLine().split(" ").map(_.toInt)
 
-    def maxLength(a: Array[Int], x: Int): Int = {
+    def maxLength(a: Array[Int]): Int = {
         var max = 0
         var current = 0
+        var tmp = a(0)
 
         for (num <- a) {
-            if (num < x) {
+            if (num == tmp) {
                 current = current + 1
                 max = Array(max, current).max
             } else {
-                current = 0
+                current = 1
+                tmp = num
             }
         }
         return max
     }
 
-    val result = maxLength(a, x)
+    val result = maxLength(a)
     println(result)
 }
