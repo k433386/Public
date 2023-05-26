@@ -2,10 +2,16 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val a = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    val n = a.length
-    val l = Array(1, 1, 3, 3, 7)
-    val r = Array(3, 8, 8, 6, 9)
+    val Array(n, q) = readLine().split(" ").map(_.toInt)
+    val l = Array.ofDim[Int](q)
+    val r = Array.ofDim[Int](q)
+    val a = Array.fill(n+1)(0)
+
+    for (i <- 0 until q){
+        val Array(x, y) = readLine().split(" ").map(_.toInt)
+        l(i) = x
+        r(i) = y
+    }
 
     def imos(a: Array[Int], l: Array[Int], r: Array[Int]): Array[Int] = {
         for (i <- l){

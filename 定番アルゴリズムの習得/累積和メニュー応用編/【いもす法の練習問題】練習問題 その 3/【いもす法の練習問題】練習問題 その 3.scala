@@ -2,23 +2,25 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val Array(n, q) = readLine().split(" ").map(_.toInt)
+    val q = readLine().toInt
     val l = Array.ofDim[Int](q)
     val r = Array.ofDim[Int](q)
-    val a = Array.fill(n)(0)
+    val p = Array.ofDim[Int](q)
+    val a = Array.fill(1000)(0)
 
     for (i <- 0 until q){
-        val Array(x, y) = readLine().split(" ").map(_.toInt)
+        val Array(x, y, z) = readLine().split(" ").map(_.toInt)
         l(i) = x
         r(i) = y
+        p(i) = z
     }
 
-    def imos(a: Array[Int], l: Array[Int], r: Array[Int]): Array[Int] = {
-        for (i <- l){
-            a(i-1) = a(i-1) + 1
+    def imos(a: Array[Int], l: Array[Int], r: Array[Int], p: Array[Int]): Array[Int] = {
+        for ((i,k) <- l.zip(p)){
+            a(i-1) = a(i-1) + k
         }
-        for (j <- r){
-            a(j) = a(j) - 1
+        for ((j,k) <- r.zip(p)){
+            a(j) = a(j) - k
         }
         return a
     }
@@ -39,8 +41,11 @@ object Main extends App {
         return (s(r+1)-s(l))
     }
 
-    val board = imos(a, l, r)
-    val s = makeCumulativeSum(board, n)
-    val result = s.max
-    println(result)
+    val board = imos(a, l, r, p)
+    val s = makeCumulativeSum(board, board.length)
+    for (i <- 0 until (s.length)){
+        if (s(i) == s.max){
+            println(i)
+        }
+    }
 }

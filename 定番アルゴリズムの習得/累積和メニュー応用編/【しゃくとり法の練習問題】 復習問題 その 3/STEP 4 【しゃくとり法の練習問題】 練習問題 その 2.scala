@@ -2,31 +2,22 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val k = readLine().toInt
-    val an = readLine().split(" ").map(_.toInt)
-    val n = an.length
+    val n = readLine().toInt
+    val a = readLine().split(" ").map(_.toInt)
 
-    def twoPointersCount(a: Array[Int], n: Int, k: Int): Int = {
+    def twoPointersCount(a: Array[Int], n: Int): Int = {
         var right = 0
-        var sum = 0
         var count = 0
         for (left <- 0 until n){
-            while (right < n && sum + a(right) <= k){
-                sum = sum + a(right)
+            while (right < n && (right==left || a(right-1) <= a(right))){
                 right = right + 1
             }
             count = count + (right - left)
-
-            if (right == left){
-                right = right + 1
-            } else {
-                sum = sum - a(left)
-            }
         }
         return count
     }
 
-
-    val result = twoPointersCount(an, n, k)
+    val result = twoPointersCount(a, n)
     println(result)
 }
+//解答例使用済み

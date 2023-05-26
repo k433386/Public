@@ -2,12 +2,12 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val a = Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-    val n = a.length
-    val l = Array.ofDim[Int](5)
-    val r = Array.ofDim[Int](5)
+    val Array(n, q) = readLine().split(" ").map(_.toInt)
+    val l = Array.ofDim[Int](q)
+    val r = Array.ofDim[Int](q)
+    val a = Array.fill(n+1)(0)
 
-    for (i <- 0 until 5){
+    for (i <- 0 until q){
         val Array(x, y) = readLine().split(" ").map(_.toInt)
         l(i) = x
         r(i) = y
@@ -40,7 +40,13 @@ object Main extends App {
     }
 
     val board = imos(a, l, r)
-    val s = makeCumulativeSum(board, n)
-    val result = s.max
-    println(result)
+    val s = makeCumulativeSum(board, board.length)
+    var maxTmp = 0
+    for (i <- s){
+        if (i%2 == 1){
+            maxTmp = maxTmp + 1
+        }
+    }
+    println(maxTmp)
 }
+//解答例使用済み

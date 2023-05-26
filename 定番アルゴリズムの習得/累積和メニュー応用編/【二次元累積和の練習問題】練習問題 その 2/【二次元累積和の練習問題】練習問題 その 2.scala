@@ -2,13 +2,13 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val Array(n, m, q) = readLine().split(" ").map(_.toInt)
+    val Array(n, p) = readLine().split(" ").map(_.toInt)
+    val board = Array.ofDim[Int](n, n)
 
-    val board = Array.ofDim[Int](n, m)
     for (i <- 0 until n){
         board(i) = readLine().split(" ").map(_.toInt)
     }
-    
+
     def make2DCumulativeSum(a: Array[Array[Int]], n: Int, m: Int): Array[Array[Int]] = {
         val s = Array.ofDim[Int](n+1, m+1)
         for (i <- 0 until n; j <- 0 until m){
@@ -21,10 +21,20 @@ object Main extends App {
         return (s(gy+1)(gx+1) - s(sy)(gx+1) - s(gy+1)(sx) + s(sy)(sx))
     }
 
-    for (i <- 0 until q){
-        val Array(sy, sx, gy, gx) = readLine().split(" ").map(_.toInt)
-        val s = make2DCumulativeSum(board, n, m)
-        val result = use2DCumulativeSum(s, sx, sy, gx, gy)
-        println(result)
+    def maxSearch(s: Array[Array[Int]], n: Int, m: Int, p: Int): Int = {
+        var maxTmp = 0
+        for (sx <- 0 until n; sy <- 0 until n; ex <- 0 until n; ey <- 0 until n){
+            val tmp = use2DCumulativeSum(s, sx, sy, ex, ey)
+            val area = (ex - sx + 1) * (ey - sy + 1)
+            if (area <= p){
+                maxTmp = maxTmp.max(tmp)
+            }
+        }
+        return maxTmp
     }
+
+    val s = make2DCumulativeSum(board, n, n)
+    val result = maxSearch(s, n, n, p)
+    println(result)
 }
+//解答例使用済み

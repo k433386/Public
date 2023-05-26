@@ -2,18 +2,12 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val Array(n, m) = readLine().split(" ").map(_.toInt)
-    val board = Array.ofDim[Int](n, m)
-    val Array(a, b, c, d) = readLine().split(" ").map(_.toInt)
+    val Array(n, w, h) = readLine().split(" ").map(_.toInt)
+    val board = Array.ofDim[Int](n, n)
 
     for (i <- 0 until n){
         board(i) = readLine().split(" ").map(_.toInt)
     }
-    
-    val sx = b
-    val sy = a
-    val gx = d
-    val gy = c
 
     def make2DCumulativeSum(a: Array[Array[Int]], n: Int, m: Int): Array[Array[Int]] = {
         val s = Array.ofDim[Int](n+1, m+1)
@@ -27,7 +21,16 @@ object Main extends App {
         return (s(gy+1)(gx+1) - s(sy)(gx+1) - s(gy+1)(sx) + s(sy)(sx))
     }
 
-    val s = make2DCumulativeSum(board, n, m)
-    val result = use2DCumulativeSum(s, sx, sy, gx, gy)
+    def maxSearch(s: Array[Array[Int]], n: Int, m: Int, w: Int, h: Int): Int = {
+        var maxTmp = 0
+        for (y <- 0 until n-h+1; x <- 0 until m-w+1){
+            maxTmp = maxTmp.max(use2DCumulativeSum(s, x, y, x+w-1, y+h-1))
+        }
+        return maxTmp
+    }
+
+    val s = make2DCumulativeSum(board, n, n)
+    val result = maxSearch(s, n, n, w, h)
     println(result)
 }
+//解答例使用済み
