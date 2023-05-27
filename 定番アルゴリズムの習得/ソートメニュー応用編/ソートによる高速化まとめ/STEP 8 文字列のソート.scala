@@ -3,26 +3,27 @@ import scala.io.StdIn._
 object Main extends App {
 
     val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
+    val s = Array.ofDim[String](n)
 
-    def selectionSort(A: Array[Int], n: Int) = {
-        for (i <- 0 until n-1){
-            var minI = i
-
-            for (j <- i+1 until n){
-                if(A(j) < A(minI)){
-                    minI = j
-                }
-            }
-            swap(i, minI)
-            println(A.mkString(" "))
-        }
-        def swap(i: Int, j: Int) = {
-            var tmp = A(i)
-            A(i) = A(j)
-            A(j) = tmp
-        }
+    for (i <- 0 until n) {
+        s(i) = readLine()
     }
 
-    selectionSort(An, n)
+    def withSort(x: Array[String]): Array[String] = {
+        val tmp = x.sortWith {
+            case (value1, value2) => {
+                if (value1.length != value2.length) {
+                    value1.length < value2.length
+                } else {
+                    value1 < value2
+                }
+            } 
+        }
+        return tmp
+    }
+
+    val result = withSort(s)
+    for (i <- result){
+        println(i)
+    }
 }

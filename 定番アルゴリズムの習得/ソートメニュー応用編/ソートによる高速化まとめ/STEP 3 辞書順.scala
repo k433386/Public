@@ -2,22 +2,53 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
-
-    def insertionSort(A: Array[Int], n: Int) = {
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - 1
-
-            while (j >= 0 && A(j) > x){
-                A(j+1) = A(j)
-                j = j - 1
+    def findKString(k: Int): String = {
+        var count = 0
+        for (c1 <- 'a' to 'z'; c2 <- 'a' to 'z'; c3 <- 'a' to 'z') {
+            count = count + 1
+            if (count == k) {
+                return s"${c1}${c2}${c3}"
             }
-            A(j+1) = x
-            println(A.mkString(" "))
         }
+        ""
     }
 
-    insertionSort(An, n)
+    val k = readLine().toInt
+    val result = findKString(k)
+    println(result)
 }
+//解答例使用済み
+
+
+/*
+import scala.io.StdIn._
+import scala.collection.mutable.ArrayDeque
+
+object Main extends App {
+    
+    def convertTo26base(x: Int): Array[Int] = {
+        val base = 26
+        val tmp = ArrayDeque[Int]()
+
+        var q = x
+        while(q > 0){
+            tmp.append((q-1) % base)
+            q = (q-1) / base
+        }
+        while (tmp.length < 3){
+            tmp.append(0)
+        }
+        println(tmp.mkString(" "))
+        return tmp.toArray.reverse
+    }
+
+    def convertToAlpha(st: Array[Int]): Array[Char] = {
+        st.map(x => ('a' + x).toChar)
+    }
+
+    val k = readLine().toInt
+    val result = convertToAlpha(convertTo26base(k))
+    println(result.mkString(""))
+}
+
+*/

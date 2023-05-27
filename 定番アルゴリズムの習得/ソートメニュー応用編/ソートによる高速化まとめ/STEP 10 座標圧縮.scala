@@ -1,23 +1,14 @@
 import scala.io.StdIn._
 
 object Main extends App {
+    val Array(n, q) = readLine().split(" ").map(_.toInt)
+    val a = readLine().split(" ").map(_.toInt)
+    val x = readLine().split(" ").map(_.toInt)
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
+    val compressed = a.sorted.zipWithIndex.map { case (a_i, i) => a_i -> (i + 1) }.toMap
 
-    def insertionSort(A: Array[Int], n: Int) = {
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - 1
-
-            while (j >= 0 && A(j) > x){
-                A(j+1) = A(j)
-                j = j - 1
-            }
-            A(j+1) = x
-            println(A.mkString(" "))
-        }
+    for (i <- x) {
+        println(compressed(i))
     }
-
-    insertionSort(An, n)
 }
+//解答例使用済み

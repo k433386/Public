@@ -2,7 +2,7 @@
 
 .take(n) //最初のn個の要素からなるリストを求める
 .drop(n) //最初のn個の要素を除いたリストを求める
-.slice(from, until) //切り出し
+.slice(from, to) //切り出し
 
 .combinations(n) //n個選択する組み合わせを生成する
 .permutations //順列の組み合わせを生成する
@@ -16,7 +16,8 @@ X = X.min(newX) //XとnewXで最小値
 .updated
 
 .sorted //配列を昇順で並び替える
-.sortBy(_.X) //指定した要素で配列を並び替える
+.sortBy(_(X)) //指定した列でn次元配列を並び替える
+.sortBy { case (x, _, _) => x } //指定した場所でタプル入り配列を並び替える
 
 .filter(x => X) //指定した要素で新しい配列を取得
 
@@ -56,10 +57,21 @@ String.format("%10s", x).replace(" ", "0") //文字のゼロ桁埋め
 string " "
 char ' '
 
-scala.collection.immutable.Queue[Int]()
 import scala.collection.mutable.Queue
-queue.dequeue()
-queue.enqueue()
+    queue.dequeue()
+    queue.enqueue()
+
+import scala.collection.mutable.ArrayDeque
+    ArrayDeque.append(X)
+    ArrayDeque.prepend(X)
+    ArrayDeque.removeLast()
+    ArrayDeque.removeHead(X)
+
+import scala.collection.mutable.ListBuffer
+    ListBuffer += X //先頭
+    X +=: ListBuffer //末尾
+    ListBuffer.remove(0) //先頭
+    ListBuffer.remove(dumbbell.length - 1) //末尾
 
 val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
     (acc, i) => (0 until W).foldLeft(acc){
@@ -88,3 +100,6 @@ foldLeftの使い方を確認すること
 空白をトリミングしておくと吉
 
 containsなど走査するときはSetが速い
+
+要素に再代入する分にはイミュータブル
+配列あるいはリスト自体を書き換えるのはミュータブル

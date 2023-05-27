@@ -3,23 +3,24 @@ import scala.io.StdIn._
 object Main extends App {
 
     val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
+    val campaign = Array.ofDim[Int](n, 2)
 
-    def bubbleSort(A: Array[Int], n: Int) = {
-        for (i <- 0 until n-1){
-            for (j <- n-1 until i by -1){
-                if(A(j-1) > A(j)){
-                    swap(j-1, j)
-                }
-            }
-            println(A.mkString(" "))
-        }
-        def swap(i: Int, j: Int) = {
-            var tmp = A(i)
-            A(i) = A(j)
-            A(j) = tmp
+    for (i <- 0 until n) {
+        campaign(i) = readLine().split(" ").map(_.toInt)
+    }
+
+    val campaignSorted = campaign.sortBy(_(1))
+    var participated = 0
+    var lastday = 0
+
+    for (i <- 0 until n) {
+        if (lastday < campaignSorted(i)(0)) {
+            participated = participated + 1
+            lastday = campaignSorted(i)(1)
         }
     }
 
-    bubbleSort(An, n)
+    println(participated)
 }
+//解答例使用済み
+//断念

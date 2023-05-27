@@ -2,24 +2,20 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
+    val Array(n, x) = readLine().split(" ").map(_.toLong)
+    val a = readLine().split(" ").map(_.toLong)
 
-    def bubbleSort(A: Array[Int], n: Int) = {
-        for (i <- 0 until n-1){
-            for (j <- n-1 until i by -1){
-                if(A(j-1) > A(j)){
-                    swap(j-1, j)
-                }
+    def searchSumMinCount(line: Array[Long], target: Long): Long = {
+        var count = 0L
+        var tmp = 0L
+        for (i <- line){
+            tmp = tmp + i
+            count = count + 1
+            if (tmp >= target){
+                return count
             }
-            println(A.mkString(" "))
         }
-        def swap(i: Int, j: Int) = {
-            var tmp = A(i)
-            A(i) = A(j)
-            A(j) = tmp
-        }
+        return -1L
     }
-
-    bubbleSort(An, n)
+    println(searchSumMinCount(a.sorted.reverse, x))
 }

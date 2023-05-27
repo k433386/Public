@@ -1,23 +1,22 @@
 import scala.io.StdIn._
 
 object Main extends App {
+    val Array(n, q) = readLine().split(" ").map(_.toInt)
+    val a = readLine().split(" ").map(_.toInt)
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
-
-    def insertionSort(A: Array[Int], n: Int) = {
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - 1
-
-            while (j >= 0 && A(j) > x){
-                A(j+1) = A(j)
-                j = j - 1
+    for (_ <- 0 until q) {
+        val Array(query, k, x) = readLine().split(" ")
+        val index = k.toInt - 1
+        val data = x.toInt
+        query match {
+            case "get" => {
+                val Asorted = a.sorted.reverse
+                println(Asorted(index))
             }
-            A(j+1) = x
-            println(A.mkString(" "))
+
+            case "update" => {
+                a(index) = data
+            }
         }
     }
-
-    insertionSort(An, n)
 }

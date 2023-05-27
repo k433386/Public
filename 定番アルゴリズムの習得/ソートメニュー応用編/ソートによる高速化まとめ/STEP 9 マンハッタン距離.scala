@@ -1,23 +1,22 @@
 import scala.io.StdIn._
+import math.abs
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
-
-    def insertionSort(A: Array[Int], n: Int) = {
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - 1
-
-            while (j >= 0 && A(j) > x){
-                A(j+1) = A(j)
-                j = j - 1
-            }
-            A(j+1) = x
-            println(A.mkString(" "))
-        }
+    def manhattahDist(x: Array[Int]): (Int, Int, Int) = {
+        val res = abs(x(0)-0) + abs(x(1)-0).toInt
+        return (res, x(0), x(1))
     }
 
-    insertionSort(An, n)
+    val n = readLine().toInt
+    val tmp = Array.ofDim[(Int, Int, Int)](n)
+    
+    for (i <- 0 until n){
+        tmp(i) = manhattahDist(readLine().split(" ").map(_.toInt))
+    }
+    
+    val result = tmp.sortBy { case (x, _, _) => x }
+    for ((_, x, y) <- result){
+        println(s"${x} ${y}")
+    }
 }

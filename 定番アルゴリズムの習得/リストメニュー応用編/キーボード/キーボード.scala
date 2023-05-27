@@ -1,23 +1,40 @@
 import scala.io.StdIn._
+import scala.collection.mutable.ArrayBuffer
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
+    def operationKeyboard(): Unit = {
+        val n = readLine().toInt
+        val op = readLine().split(" ")
+        val line = ArrayBuffer[String]()
+        var index = 0
 
-    def insertionSort(A: Array[Int], n: Int) = {
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - 1
-
-            while (j >= 0 && A(j) > x){
-                A(j+1) = A(j)
-                j = j - 1
+        for (i <- op){
+            i match {
+                case "Left" => {
+                    if(index != 0){
+                        index = index - 1
+                    }
+                }
+                case "Right" => {
+                    if(index != line.length){
+                        index = index + 1
+                    }
+                }
+                case "Delete" => {
+                    if(index != 0 && line.nonEmpty){
+                        line.remove(index-1)
+                        index = index - 1
+                    }
+                }
+                case _ => {
+                    line.insert(index, i)
+                    index = index + 1
+                }
             }
-            A(j+1) = x
-            println(A.mkString(" "))
         }
+        println(line.mkString(" "))
     }
 
-    insertionSort(An, n)
+    operationKeyboard()
 }

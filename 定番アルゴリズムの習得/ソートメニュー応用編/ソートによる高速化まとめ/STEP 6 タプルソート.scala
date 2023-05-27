@@ -2,22 +2,37 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toInt)
+    val Array(n, m, k) = readLine().split(" ").map(_.toInt)
+    val a = Array.ofDim[Int](n, m)
 
-    def insertionSort(A: Array[Int], n: Int) = {
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - 1
-
-            while (j >= 0 && A(j) > x){
-                A(j+1) = A(j)
-                j = j - 1
-            }
-            A(j+1) = x
-            println(A.mkString(" "))
-        }
+    for (i <- 0 until n){
+        a(i) = readLine().split(" ").map(_.toInt)
     }
 
-    insertionSort(An, n)
+    def withSort(x: Array[Array[Int]]): Array[Array[Int]] = {
+        val m = a(0).length
+
+        val sorted = a.sortWith { (row1, row2) =>
+            if (row1(k - 1) != row2(k - 1)) {
+                row1(k - 1) < row2(k - 1)
+            } else {
+                var i = 0
+                while (i < m && row1(i) == row2(i)) {
+                    i = i + 1
+                }
+                if (i == m) {
+                    false
+                } else {
+                    row1(i) < row2(i)
+                }
+            }
+        }
+        return sorted
+    }
+
+    val result = withSort(a)
+    for (line <- result){
+        println(line.mkString(" "))
+    }
 }
+//解答例使用済み

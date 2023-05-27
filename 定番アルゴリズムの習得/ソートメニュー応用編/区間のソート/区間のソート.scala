@@ -2,22 +2,10 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val n = readLine().toInt
+    val Array(n, l, r) = readLine().split(" ").map(_.toInt)
     val An = readLine().split(" ").map(_.toInt)
 
-    def insertionSort(A: Array[Int], n: Int) = {
-        for (i <- 1 until n){
-            val x = A(i)
-            var j = i - 1
-
-            while (j >= 0 && A(j) > x){
-                A(j+1) = A(j)
-                j = j - 1
-            }
-            A(j+1) = x
-            println(A.mkString(" "))
-        }
-    }
-
-    insertionSort(An, n)
+    val sortedAnSlice = An.slice(l - 1, r - 1).sorted
+    val result = An.take(l-1) ++ sortedAnSlice ++ An.drop(r-1)
+    println(result.mkString(" "))
 }
