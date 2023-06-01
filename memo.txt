@@ -3,6 +3,7 @@
 .take(n) //最初のn個の要素からなるリストを求める
 .drop(n) //最初のn個の要素を除いたリストを求める
 .slice(from, to) //切り出し
+.dropRight(n) //末尾からn個除く
 
 .combinations(n) //n個選択する組み合わせを生成する
 .permutations //順列の組み合わせを生成する
@@ -32,6 +33,8 @@ X = X.min(newX) //XとnewXで最小値
 .groupBy(x => (i, j)) //要素でグループ化
 
 .sameElements(i) //配列を比較
+
+.forall //与えられた条件がコレクションのすべてに成り立つか判定する
 
 for (X <- Array) // 配列の要素を直接取り出す
 for ((name, amount) <- result) //複数を同時に取ることもある (タプル)
@@ -84,6 +87,7 @@ for ((x, y) <- array1.zip(array2))
 .foreach(println) //全要素プリント
 
 .trim() //入力の前後の空白をトリミングする
+readLine().trim().split(" ").map(_.toInt)
 
 .flatten //二次元配列を一次元に落とす
 
@@ -99,7 +103,15 @@ foldLeftの使い方を確認すること
 式が値を持つせいで関数内の順番がシビアかも
 空白をトリミングしておくと吉
 
-containsなど走査するときはSetが速い
+.containsなど走査するときはSetが速い
+.existsにより関数で走査できる
 
 要素に再代入する分にはイミュータブル
 配列あるいはリスト自体を書き換えるのはミュータブル
+
+for文やwhile文を再帰にしていくことが大切
+再帰の限界はforより早い？
+
+.zipWithIndexとfilterの組み合わせを学ぶこと
+
+x => y //xを受け取りyを返す関数
