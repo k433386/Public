@@ -1,10 +1,43 @@
 import scala.io.StdIn._
-import math._
 
 object Main extends App {
+    
+    val Array(n, m) = readLine().trim().split(" ").map(_.toInt)
+    val graph = Array.fill(n)(List.empty[Int])
+    for (_ <- 0 until m) {
+        val Array(a, b) = readLine().trim().split(" ").map(_.toInt)
+        graph(a - 1) ::= b - 1
+        graph(b - 1) ::= a - 1
+    }
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toLong)
+    var ok = true
+    val color = Array.fill(n)(0)
 
-    println(An.sorted.reverse.take(2)(1))
+    def dfs(now: Int, num: Int): Unit = {
+        color(now) = num
+        for (i <- graph(now).indices) {
+            val next = graph(now)(i)
+            if (color(next) == 0) {
+                dfs(next, -num)
+            } else {
+                if (color(now) == color(next)) {
+                ok = false
+                }
+            }
+        }
+    }
+
+    for (i <- 0 until n) {
+        if (color(i) == 0) {
+            dfs(i, 1)
+        }
+    }
+
+    if (ok) {
+        println("Yes")
+    } else {
+        println("No")
+    }
 }
+
+//解答例使用済み

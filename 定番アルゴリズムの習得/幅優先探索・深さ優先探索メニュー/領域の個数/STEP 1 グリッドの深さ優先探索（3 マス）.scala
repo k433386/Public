@@ -1,10 +1,28 @@
 import scala.io.StdIn._
-import math._
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val An = readLine().split(" ").map(_.toLong)
+    val Array(h, w, y, x) = readLine().split(" ").map(_.toInt)
 
-    println(An.sorted.reverse.take(2)(1))
+    def dfs(times: Int, y: Int, x: Int): Unit = {
+        if (times == 3) {
+            println(s"$y $x")
+        } else {
+            if (y - 1 >= 0) {
+                dfs(times + 1, y - 1, x)
+            }
+            if (x + 1 < w) {
+                dfs(times + 1, y, x + 1)
+            }
+            if (y + 1 < h) {
+                dfs(times + 1, y + 1, x)
+            }
+            if (x - 1 >= 0) {
+                dfs(times + 1, y, x - 1)
+            }
+        }
+    }
+
+    dfs(0, y, x)
 }
+//解答例使用済み
