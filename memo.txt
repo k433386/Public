@@ -76,6 +76,14 @@ import scala.collection.mutable.ListBuffer
     ListBuffer.remove(0) //先頭
     ListBuffer.remove(dumbbell.length - 1) //末尾
 
+import scala.collection.mutable.ArrayBuffer
+    val X = ArrayBuffer.empty[]
+    X += x
+    .append
+
+import scala.collection.mutable.Map
+    Map.put(X, X)
+
 val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
     (acc, i) => (0 until W).foldLeft(acc){
         (innerAcc, j) => if (Y) {(i, j) :: innerAcc} else {innerAcc}
