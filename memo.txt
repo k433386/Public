@@ -123,3 +123,5 @@ for文やwhile文を再帰にしていくことが大切
 .zipWithIndexとfilterの組み合わせを学ぶこと
 
 x => y //xを受け取りyを返す関数
+
+BigIntが大きい
