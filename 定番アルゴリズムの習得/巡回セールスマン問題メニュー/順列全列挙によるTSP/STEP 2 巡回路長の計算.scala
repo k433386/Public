@@ -1,18 +1,29 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Queue
+import math._
 
 object Main extends App {
 
-    val Q = readLine().toInt
-    val A = Queue[Int]()
+    val n = readLine().trim().toInt
+    val city = Array.ofDim[Double](n, 2)
+    for (i <- 0 until n) {
+        city(i) = readLine().trim().split(" ").map(_.toDouble)
+    } 
+    val p = readLine().trim().split(" ").map(_.toInt - 1)
 
-    for (_ <- 0 until Q){
-        val line = readLine().split(" ")
-        if (line(0) == "1"){
-            A.enqueue(line(1).toInt)
-        } else {
-            A.dequeue
-        }
-        println(A.mkString(" "))
+    def Euclidean(a: Array[Double], b: Array[Double]):Double = {
+        val resEuc = sqrt(pow(a(0)-b(0), 2) + pow(a(1)-b(1), 2))
+        return resEuc
     }
+    def sumEuclidean(cnt: Int, sum: Double, leftCity: Array[Double]): Double = {
+        if (cnt < n-1){
+            val rightCity = city(p(cnt+1))
+            val resEuc = Euclidean(leftCity, rightCity)
+            sumEuclidean(cnt+1, sum+resEuc, rightCity)
+        } else {
+            return sum + Euclidean(leftCity, city(p(0)))
+        }
+    }
+    
+    val result = sumEuclidean(0, 0.0, city(p(0)))
+    println(result)
 }

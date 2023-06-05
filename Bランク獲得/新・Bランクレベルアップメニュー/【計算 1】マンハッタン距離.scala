@@ -22,12 +22,12 @@ object Main extends App {
     } 
 
     def Manhattan(x: Array[Int], index: Int) = {
-        val resMan = sqrt(pow(x(0)-Px , 2) + pow(x(1)-Py , 2)).toInt
+        val resMan = abs(x(0)-Px) + abs(x(1)-Py).toInt
         ManData = ManData ++ Array(resMan)
         ManIndex = ManIndex ++ Array(index+1)
     }
     def Euclidean(x: Array[Int], index: Int) = {
-        val resEuc = abs(x(0)-Px) + abs(x(1)-Py).toInt
+        val resMan = sqrt(pow(x(0)-Px , 2) + pow(x(1)-Py , 2)).toInt
         EucData = EucData ++ Array(resEuc)
         EucIndex = EucIndex ++ Array(index+1)
     }

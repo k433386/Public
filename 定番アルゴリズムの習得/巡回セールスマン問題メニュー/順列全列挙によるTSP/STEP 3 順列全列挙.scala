@@ -1,18 +1,9 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Queue
 
 object Main extends App {
 
-    val Q = readLine().toInt
-    val A = Queue[Int]()
-
-    for (_ <- 0 until Q){
-        val line = readLine().split(" ")
-        if (line(0) == "1"){
-            A.enqueue(line(1).toInt)
-        } else {
-            A.dequeue
-        }
-        println(A.mkString(" "))
+    val n = readLine().trim().toInt
+    for (i <- (1 to n).permutations){
+        println(i.mkString(" "))
     }
 }

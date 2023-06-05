@@ -1,18 +1,14 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Queue
+import math._
 
 object Main extends App {
 
-    val Q = readLine().toInt
-    val A = Queue[Int]()
-
-    for (_ <- 0 until Q){
-        val line = readLine().split(" ")
-        if (line(0) == "1"){
-            A.enqueue(line(1).toInt)
-        } else {
-            A.dequeue
-        }
-        println(A.mkString(" "))
+    def Euclidean(a: Array[Double], b: Array[Double]):Double = {
+        val resEuc = sqrt(pow(a(0)-b(0), 2) + pow(a(1)-b(1), 2))
+        return resEuc
     }
+
+    val a = readLine().trim().split(" ").map(_.toDouble)
+    val b = readLine().trim().split(" ").map(_.toDouble)
+    println(Euclidean(a, b))
 }
