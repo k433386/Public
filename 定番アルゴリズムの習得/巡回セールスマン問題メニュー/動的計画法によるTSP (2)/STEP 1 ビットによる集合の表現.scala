@@ -1,18 +1,19 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Stack
 
 object Main extends App {
 
-    val Q = readLine().toInt
-    val A = Stack[Int]()
+    val Array(n, k) = readLine().trim().split(" ").map(_.toInt)
+    if (k != 0){
+        val s = readLine().trim().split(" ").map(_.toInt)
+        val city = Array.fill[Int](n)(0)
 
-    for (_ <- 0 until Q){
-        val line = readLine().split(" ")
-        if (line(0) == "1"){
-            A.push(line(1).toInt)
-        } else {
-            A.pop
+        for (i <- s){
+            city(i) = 1
         }
-        println(A.reverse.mkString(" "))
+        
+        val result = Integer.parseInt(city.mkString("").reverse, 2)
+        println(result)        
+    } else {
+        println(0)
     }
 }

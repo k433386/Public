@@ -28,6 +28,8 @@ X = X.min(newX) //XとnewXで最小値
 
 .mkString() //配列を文字列として結合
 
+Integer.parseInt(String, X) //X進数を十進数に
+
 .count(x => X) //条件を満たす要素を数える
 
 .groupBy(x => (i, j)) //要素でグループ化

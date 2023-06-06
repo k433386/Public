@@ -1,20 +1,36 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Queue
+import math._
 
 object Main extends App {
 
-    val Q = readLine().toInt
-    val A = Queue[Int]()
+    val n = readLine().trim().toInt
+    val cityGlobal = Array.ofDim[Double](n, 2)
+    val start = 0
+    val reset = (Double.MaxValue, -1)
+    for (i <- 0 until n) {
+        cityGlobal(i) = readLine().trim().split(" ").map(_.toDouble)
+    } 
 
-    for (_ <- 0 until Q){
-        val line = readLine().split(" ")
-        if (line(0) == "1"){
-            A.enqueue(line(1).toInt)
+    def Euclidean(a: Array[Double], b: Array[Double]):Double = {
+        return sqrt(pow(a(0)-b(0), 2) + pow(a(1)-b(1), 2))
+    }
+    def pathSearch(min: (Double, Int), city: Array[Array[Double]], left: Int, right: Int):Unit = {
+        if (city.length < 2){
+            return
+        } else if (right < city.length){
+            val resEuc = Euclidean(city(left), city(right))
+            if (resEuc < min._1 && resEuc != 0){
+                pathSearch((resEuc, right), city, left, right+1)
+            } else {
+                pathSearch(min, city, left, right+1)
+            }
+        } else {
+            println(cityGlobal.indexOf(city(min._2)))
+            val newCity = city.filterNot(_.sameElements(city(left)))
+            pathSearch(reset, newCity, newCity.indexOf(city(min._2)), 0)
         }
     }
 
-    println(A.length)
-    while (A.nonEmpty){
-        println(A.dequeue())
-    }
+    println(start)
+    pathSearch(reset, cityGlobal, start, 0)
 }
