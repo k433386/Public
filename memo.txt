@@ -3,6 +3,9 @@
 .take(n) //最初のn個の要素からなるリストを求める
 .drop(n) //最初のn個の要素を除いたリストを求める
 .slice(from, to) //切り出し
+
+.take(a) ++ .slce(a, b) ++ drop(b) //元通り
+
 .dropRight(n) //末尾からn個除く
 
 .combinations(n) //n個選択する組み合わせを生成する
