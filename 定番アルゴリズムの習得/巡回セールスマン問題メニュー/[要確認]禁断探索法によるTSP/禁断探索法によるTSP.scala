@@ -21,11 +21,11 @@ object Main extends App {
 
         for (i <- 0 until q) {
             def bestABsearch(a: Int, b: Int, bestA: Int, bestB: Int, diff: Double):(Int, Int) = {
-                if (a == n){
-                    return (a, b)
+                if (a >= n){
+                    return (bestA, bestB)
                 } else if (tabuList.contains(tour(a))){
-                    bestABsearch(a+1, b, bestA, bestB, diff)
-                } else if (b == n){
+                    bestABsearch(a+1, a+1+2, bestA, bestB, diff)
+                } else if (b >= n){
                     bestABsearch(a+1, a+1+2, bestA, bestB, diff)
                 } else if (a == 0 && b == n - 1){
                     bestABsearch(a, b+1, bestA, bestB, diff)
@@ -42,23 +42,25 @@ object Main extends App {
             }
             val (aBest, bBest) = bestABsearch(0, 0+2, 0, 0, 99999999.0)
 
-           tabuList.append(tour(aBest))
+            tabuList.append(tour(aBest))
             if (tabuList.length > tl) {
                 tabuList.removeHead()
             }
-            val line = tour.take(aBest + 1) ++ tour.slice(aBest + 1, bBest + 1).reverse ++ tour.drop(bBest + 1)
 
-            for (i <- 0 until tour.length){
+            val line = tour.take(aBest + 1) ++ tour.slice(aBest + 1, bBest + 1).reverse ++ tour.drop(bBest + 1)
+            for (i <- 0 until n){
                 tour(i) = line(i)
             }
 
-            val tabLength = calcLength(tourBest, n, points, 0, 0.0)
-            if (tabLength < length) {
-                length = tabLength
-                tourBest.indices.foreach(i => tourBest(i) = tour(i))
+            val tabuLength = calcLength(tour, n, points, 0, 0.0)
+            if (tabuLength < length) {
+                length = tabuLength
+                for (i <- 0 until n) {
+                    tourBest(i) = tour(i)
+                }
             }
         }
-        return tour
+        return tourBest
     }
 
     val Array(n, q, tl) = readLine().trim().split(" ").map(_.toInt)
@@ -76,25 +78,4 @@ object Main extends App {
     result.foreach(println)
 }
 //解答例使用済み
-
-/*
-            for (a <- 0 until n) {
-                if (tabuList.contains(tour(a))) {
-                    
-                } else {
-                    for (b <- a + 2 until n) {
-                        if (a == 0 && b == n - 1) {
-                            
-                        } else {
-                            val dBefore = euclidean(points(tour(a)), points(tour((a + 1) % n))) + euclidean(points(tour(b)), points(tour((b + 1) % n)))
-                            val dAfter = euclidean(points(tour(a)), points(tour(b))) + euclidean(points(tour((a + 1) % n)), points(tour((b + 1) % n)))
-                            val tmpDiff = dAfter - dBefore
-                            if (tmpDiff < diff) {
-                                diff = tmpDiff
-                                val (aBest, bBest) = (a, b)
-                            }
-                        }
-                    }
-                }
-            }
-*/
+//おそらくaBest, bBestはすべてのケースで正しいが、特定のケースで結果が異なる
