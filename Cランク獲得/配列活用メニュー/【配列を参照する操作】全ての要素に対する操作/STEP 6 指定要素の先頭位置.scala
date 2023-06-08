@@ -2,22 +2,15 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine.split(" ")
-    val numN = num(0).toInt
-    val numK = num(1).toInt
-    var tmp = 0
-    var flag = 0
-
-    for (i <- 0 until numN){
-        val Anum = readLine().toInt
-        if (Anum == numK && flag == 0){
-            tmp = i + 1
-            flag = 1
-        }
+    val Array(n, k) = readLine.trim().split(" ").map(_.toInt)
+    val a = Array.ofDim[Int](n)
+    
+    for (i <- 0 until n){
+        a(i) = readLine().trim().toInt
     }
-    if (flag == 0){
+    if (a.indexOf(k) != -1){
+        println(a.indexOf(k) + 1)
+    } else {
         println(-1)
-    } else if (flag == 1){
-        println(tmp)
     }
 }

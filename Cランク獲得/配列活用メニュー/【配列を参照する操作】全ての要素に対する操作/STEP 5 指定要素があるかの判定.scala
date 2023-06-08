@@ -2,16 +2,16 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine.split(" ")
-    val numN = num(0).toInt
-    val numK = num(1).toInt
-    var result = "No"
-
-    for (i <- 0 until numN){
-        val Anum = readLine().toInt
-        if (Anum == numK){
-            result = "Yes"
-        }
+    val Array(n, k) = readLine.trim().split(" ").map(_.toInt)
+    val a = Array.ofDim[Int](n)
+    
+    for (i <- 0 until n){
+        a(i) = readLine().trim().toInt
     }
-    println(result)
+
+    if (a.count(_ == k) > 0){
+        println("Yes")
+    } else {
+        println("No")
+    }
 }

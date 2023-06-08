@@ -2,16 +2,19 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine.split(" ")
-    val numN = num(0).toInt
-    val numK = num(1).toInt
-    var count = 0
+    val Array(n, k) = readLine.trim().split(" ").map(_.toInt)
 
-    for (i <- 0 until numN){
-        val Anum = readLine().toInt
-        if (Anum == numK){
-            count = count + 1
+    def countTrue(cnt: Int, count: Int): Int = {
+        if (cnt == n){
+            return count
+        } else {
+            val tmp = readLine.trim().toInt
+            if (tmp == k){
+                countTrue(cnt+1, count+1)
+            } else {
+                countTrue(cnt+1, count)
+            }
         }
     }
-    println(count)
+    println(countTrue(0, 0))
 }

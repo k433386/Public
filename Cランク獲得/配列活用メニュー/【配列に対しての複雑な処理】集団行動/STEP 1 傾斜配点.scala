@@ -2,23 +2,26 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    val Mline = readLine().split(" ").map(_.toInt)
-    var Aline = Array.ofDim[Int](num, 5)
-    var Rline = Array.ofDim[Int](num)
+    val n = readLine().trim().toInt
+    val weights = readLine().trim().split(" ").map(_.toInt)
+    val aLine = Array.ofDim[Int](n, 5)
+    val rLine = Array.ofDim[Int](n)
 
-    for (i <- 0 until num){
-        val Anum = readLine().split(" ").map(_.toInt)
-        Aline(i) = Anum
+    for (i <- 0 until n){
+        aLine(i) = readLine().trim().split(" ").map(_.toInt)
     }
 
-    for (i <- 0 until num){
-        var sum = 0
-        for (j <- 0 until 5){
-            sum = sum + Mline(j) * Aline(i)(j)
+    def searchMax(cnt: Int, max: Int): Int = {
+        if (cnt == n){
+            return max
+        } else {
+            val score =  aLine(cnt).zip(weights).map { case (line, weight) => line * weight }
+            if (score.sum > max){
+                searchMax(cnt+1, score.sum)
+            } else {
+                searchMax(cnt+1, max)
+            }
         }
-        Rline(i) = sum
     }
-
-    println(Rline.max)
+    println(searchMax(0, 0))
 }

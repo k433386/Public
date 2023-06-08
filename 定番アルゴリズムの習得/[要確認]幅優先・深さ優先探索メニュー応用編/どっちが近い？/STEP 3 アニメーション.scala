@@ -3,10 +3,10 @@ import scala.collection.mutable.Queue
 
 object Main extends App {
 
-    val Array(n, m, x, y, k) = readLine().split(" ").map(_.toInt)
-    val s = Array.ofDim[Char](n, m)
+    val Array(n, m, x, y, k) = readLine().trim().split(" ").map(_.toInt)
+    val s = Array.ofDim[String](n, m)
     for (i <- 0 until n) {
-        s(i) = readLine().toCharArray
+        s(i) = readLine().trim().split("")
     }
 
     val dist = Array.fill(n, m)(-1)
@@ -27,7 +27,7 @@ object Main extends App {
 
             if (nextX < 0 || nextX >= n || nextY < 0 || nextY >= m) {
 
-            } else if (s(nextX)(nextY) == '#' || dist(nextX)(nextY) != -1) {
+            } else if (s(nextX)(nextY) == "#" || dist(nextX)(nextY) != -1) {
 
             } else {
                 dist(nextX)(nextY) = dist(nowX)(nowY) + 1
@@ -38,12 +38,11 @@ object Main extends App {
     for (t <- 0 until k; i <- 0 until n) {
         for (j <- 0 until m) {
             if (dist(i)(j) == t) {
-                s(i)(j) = '+'
+                s(i)(j) = "+"
             }
-            print(s(i)(j))
         }
-        println()
+        println(s(i).mkString(""))
     }
 }
 //解答例使用済み
-//String型だとうまくいかない？
+//テストデータがいい加減な場合にtrimしないとString型だとうまくいかない

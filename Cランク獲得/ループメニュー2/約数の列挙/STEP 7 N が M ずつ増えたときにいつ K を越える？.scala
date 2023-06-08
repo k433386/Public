@@ -2,15 +2,15 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    var numN = line(0).toInt
-    val numM = line(1).toInt
-    val numK = line(2).toInt
-    var count = 0
+    val Array(n, m, k) = readLine().trim().split(" ").map(_.toInt)
 
-    while(numN <= numK){
-        numN = numN + numM
-        count = count + 1
+    def test(cnt: Int, n: Int): Unit = {
+        if (n > k){
+            println(cnt)
+            return 
+        } else {
+            test(cnt+1, n+m)
+        }
     }
-    println(count)
+    test(0, n)
 }

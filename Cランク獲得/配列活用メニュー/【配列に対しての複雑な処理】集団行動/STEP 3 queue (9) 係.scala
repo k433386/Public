@@ -1,25 +1,25 @@
 import scala.io.StdIn._
+import scala.collection.mutable.ArrayDeque
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var Sline = Array.ofDim[String](N)
-    var Aline : Array[Any] = Array.empty
+    val n = readLine().trim().toInt
+    val s = Array.ofDim[String](n)
+    val line = ArrayDeque[Int]()
 
-    for (i <- 0 until N){
-        Sline(i) = readLine()
+    for (i <- 0 until n){
+        s(i) = readLine().trim()
     }
 
-    for (i <- 0 until N){
-        if (Sline(i).length == 3 && Aline != Array.empty){
-            Aline = Aline.drop(1)
-
-        } else if (Sline(i).length != 3){
-            val tmp = Sline(i).split(" ")
-            Aline = Aline ++ Array(tmp(1).toInt) 
+    for (i <- 0 until n){
+        if (s(i).length == 3){
+            if (line.nonEmpty){
+                line.removeHead()
+            }
+        } else {
+            val tmp = s(i).split(" ")
+            line.append(tmp(1).toInt) 
         }
     }
-    for (i <- Aline){
-        println(i)
-    }
+    line.foreach(println)
 }

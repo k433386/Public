@@ -2,12 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    var num = readLine().toInt
-    var count = 0
-
-    while (num % 2 == 0){
-        count = count + 1
-        num = num / 2
+    val n = readLine().trim().toInt
+    
+    def div2Count(cnt: Int, n: Int): Int = {
+        if (n % 2 != 0){
+            return cnt 
+        } else {
+            div2Count(cnt+1, n / 2)
+        }
     }
-    println(count)
+    println(div2Count(0, n))
 }

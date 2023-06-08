@@ -2,14 +2,19 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    var tmp = 0
+    val n = readLine().trim().toInt
 
-    for (i <- 0 until num){
-        val Anum = readLine().toInt
-        if (Anum > tmp){
-            tmp = Anum
+    def searchMax(cnt: Int, max: Int): Int = {
+        if (cnt == n){
+            return max
+        } else {
+            val tmp = readLine.trim().toInt
+            if (tmp > max){
+                searchMax(cnt+1, tmp)
+            } else {
+                searchMax(cnt+1, max)
+            }
         }
     }
-    println(tmp)
+    println(searchMax(0, 0))
 }

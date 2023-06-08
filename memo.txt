@@ -1,3 +1,6 @@
+Array.fill(n)(readLine().trim().toInt) //入力のmasterpiece
+
+
 .map(_.toInt) //与えられた関数を配列のすべての要素に対して呼び出す　+　toInt
 
 .take(n) //最初のn個の要素からなるリストを求める
@@ -95,7 +98,22 @@ val X: List[(Int, Int)] = (0 until H).foldLeft(List.empty[(Int, Int)]){
     }
 }
 
-for ((x, y) <- array1.zip(array2)) 
+def withSort(x: Array[Array[Int]]): Array[Array[Int]] = {
+    val tmp = x.sortWith {
+        case (Array(key1, value1), Array(key2, value2)) => {
+            if (key1 != key2) {
+                key1 > key2
+            } else {
+                value1 > value2
+            }
+        } 
+    }
+    return tmp
+} //sortのmasterpiece
+
+
+for ((x, y) <- array1.zip(array2))
+.mapと組み合わせて全要素の組に関数を当てる
 
 .foreach(println) //全要素プリント
 

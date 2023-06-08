@@ -1,16 +1,16 @@
 import scala.io.StdIn._
-import math._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    var numA = line(0).toDouble
-    val numB = line(1).toInt
-    var count = 0
+    val Array(a, b) = readLine().trim().split(" ").map(_.toDouble)
 
-    while(numA <= numB){
-        numA = (numA*1.1).floor
-        count = count + 1
+    def test(cnt: Int, a: Double): Unit = {
+        if (a > b){
+            println(cnt)
+            return 
+        } else {
+            test(cnt+1, (a*1.1).floor)
+        }
     }
-    println(count)
+    test(0, a)
 }

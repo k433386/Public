@@ -2,13 +2,11 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    var Aline = Array.ofDim[Int](num)
+    val n = readLine().toInt
+    val a = Array.ofDim[Int](n)
 
-    for (i <- 0 until num){
-        val Anum = readLine().toInt
-        Aline(i) = Anum
+    for (i <- 0 until n){
+        a(i) = readLine().toInt
     }
-    val result = Aline.toSet.toList.length
-    println(result)
+    println(a.toSet.toList.length)
 }

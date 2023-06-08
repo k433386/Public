@@ -2,14 +2,10 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val n = readLine().toInt
-    var Aline = Array.ofDim[String](n)
-
-    for (i <- 0 until n){
-        Aline(i) = readLine()
-    }
+    val n = readLine().trim().toInt
+    val a = Array.fill(n)(readLine().trim().toInt)
     
-    if (Aline.contains("7")){
+    if(a.count(_ == 7) > 0) {
         println("YES")
     } else {
         println("NO")

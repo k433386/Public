@@ -1,34 +1,33 @@
 import scala.io.StdIn._
+import scala.collection.mutable.ArrayDeque
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var Aline = Array.ofDim[Int](N)
-    var RRline : Array[Int] = Array.empty
-    var REline : Array[String] = Array.empty
+    val n = readLine().toInt
+    val a = Array.ofDim[Int](n)
+    val rr = ArrayDeque[Int]()
+    val re = ArrayDeque[String]()
 
-    for (i <- 0 until N){
-        Aline(i) = readLine().toInt
+    for (i <- 0 until n){
+        a(i) = readLine().toInt
     }
 
-    for (i <- 0 until N){
-        for (j <- 1 until N){
-            if (i < j){
-                var comp1 = Aline(i)
-                var comp2 = Aline(j)
-                if (comp1 > comp2){
-                    var tmp = comp1
-                    comp1 = comp2
-                    comp2 = tmp
+    for (i <- 0 until n; j <- 1 until n){
+        if (i < j){
+            val (com1, com2) = {
+                if (a(i) > a(j)){
+                    (a(j), a(i))
+                } else {
+                    (a(i), a(j))
                 }
-                RRline = RRline ++ Array(comp2 - comp1)
-                REline = REline ++ Array(s"${comp1} ${comp2}")
             }
+            rr.append(com2 - com1)
+            re.append(s"${com1} ${com2}")
         }
     }
 
-    val index = RRline.indexOf(RRline.min)
-    for (i <- REline(index).split(" ")){
+    val index = rr.indexOf(rr.min)
+    for (i <- re(index).split(" ")){
         println(i)
     }
 }

@@ -2,14 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    var numN = line(0).toInt
-    val numM = line(1).toInt
-    var count = 0
-
-    while (numN % numM == 0){
-        count = count + 1
-        numN = numN / numM
+    val Array(n, m) = readLine().trim().split(" ").map(_.toInt)
+    
+    def divmCount(cnt: Int, n: Int): Int = {
+        if (n % m != 0){
+            return cnt
+        } else {
+            divmCount(cnt+1, n / m)
+        }
     }
-    println(count)
+    println(divmCount(0, n))
 }
