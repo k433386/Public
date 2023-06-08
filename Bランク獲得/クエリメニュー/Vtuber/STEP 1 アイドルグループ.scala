@@ -2,23 +2,23 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-    var name : Set[String] = Set.empty
+    val Array(n, k) = readLine().trim().split(" ").map(_.toInt)
+    val name = Set.fill(n)(readLine().trim())
         
-    for (i <- 0 until N){
-        name = name ++ Set(readLine())
-    }
-
-    for (i <- 0 until K){
-        val op = readLine().split(" ")
-        if (op(0) == "join"){
-            name = name ++ Set(op(1))
-        } else if (op(0) == "leave") {
-            name = name -- Set(op(1))
+    def memberDB(cnt: Int, name: Set[String]): Unit ={
+        if (cnt == k){
+            return
         } else {
-            for (i <- name.toList.sorted){ println(i) }
+            val op = readLine().trim().split(" ")
+            if (op(0) == "join"){
+                memberDB(cnt+1, name ++ Set(op(1)))
+            } else if (op(0) == "leave") {
+                memberDB(cnt+1, name -- Set(op(1)))
+            } else {
+                for (i <- name.toList.sorted){ println(i) }
+                memberDB(cnt+1, name)
+            }
         }
     }
+    memberDB(0, name)
 }

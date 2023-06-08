@@ -8,7 +8,7 @@ object Main extends App {
     val Hk = readLine().split(" ").map(_.toInt)
 
     def insertionSort(A: Array[Int], n: Int, h: Int) = {
-        var num_of_move = 0
+        var nomOfMove = 0
         for (i <- 1 until n){
             val x = A(i)
             var j = i - h
@@ -16,11 +16,11 @@ object Main extends App {
             while (j >= 0 && A(j) > x){
                 A(j+h) = A(j)
                 j = j - h
-                num_of_move = num_of_move + 1
+                nomOfMove = nomOfMove + 1
             }
             A(j+h) = x
         }
-        println(num_of_move)
+        println(nomOfMove)
     }
     def shellSort(A: Array[Int], n: Int, H: Array[Int]) = {
         for (h <- H){

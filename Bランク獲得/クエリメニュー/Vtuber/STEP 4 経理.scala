@@ -2,35 +2,23 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-    var keyList : Array[String] = Array.empty
-    var keyData : Map[String, String] = Map.empty
+    val Array(n, k) = readLine().trim().split(" ").map(_.toInt)
+    val keyList = Array.fill(n)(readLine().trim())
 
-    for (i <- 0 until N){
-        keyList = keyList ++ Array(readLine())
-    }
-
-    for (i <- 0 until K){
-        val l = readLine().split(" ")
-        val A = l(0)
-        val P = l(1)
-        val M = l(2)
-        val PM = (P + "/" + M)
-        if (keyData.contains(A)){
-            val tmp = keyData(A).mkString("") + " " + PM
-            keyData = keyData ++ Map(A -> tmp)
+    val keyData: Map[String, String] = (0 until k).foldLeft(Map.empty[String, String]) { (map, _) =>
+        val Array(a, p, m) = readLine().split(" ")
+        val PM = p + "/" + m
+        if (map.contains(a)) {
+            map.updated(a, map(a) + " " + PM)
         } else {
-            keyData = keyData ++ Map(A -> PM)
+            map + (a -> PM)
         }
     }
 
-    for (i <- keyList){
+    for (i <- keyList) {
         println(i)
-
-        if (keyData.contains(i)){
-            for (j <- keyData(i).split(" ")){
+        if (keyData.contains(i)) {
+            for (j <- keyData(i).split(" ")) {
                 println(j.split("/").mkString(" "))
             }       
         }

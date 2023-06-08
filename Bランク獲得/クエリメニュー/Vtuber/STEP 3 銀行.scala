@@ -1,35 +1,38 @@
 import scala.io.StdIn._
 
 object Main extends App {
-     
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-    var keyList : Array[String] = Array.empty
-    var keyData : Map[String, String] = Map.empty
-    var valueData : Map[String, Int] = Map.empty
-    val GMWk = Array.ofDim[String](K, 3)
 
-    for (i <- 0 until N){
-        val line = readLine().split(" ")
-        keyList = keyList ++ Array(line(0))
-        keyData = keyData ++ Map(line(0) -> line(1))
-        valueData = valueData ++ Map(line(0) -> line(2).toInt)
-    }
-    for (i <- 0 until K){
-        GMWk(i) = readLine().split(" ")
-    }
+    val Array(n, k) = readLine().trim().split(" ").map(_.toInt)
+    val tmp = Array.fill(n)(readLine().trim().split(" "))
 
-    for (i <- 0 until K){
-        val ID = GMWk(i)(0)
-        val Pass = GMWk(i)(1)
-        val Cash = GMWk(i)(2).toInt
+    val keyList = tmp.map(_(0))
+    val bankData: Map[String, (String, Long)] = (0 until n).map 
+    { i =>
+        val Array(c, p, d) = tmp(i)
+        c -> (p, d.toLong)
+    }.toMap
+    val opList = Array.fill(k)(readLine().trim().split(" "))
 
-        if (keyData(ID) == Pass){
-            valueData = valueData ++ Map(ID -> (valueData(ID) - Cash))
+    def bankDB(cnt: Int, bankData: Map[String, (String, Long)]): Map[String, (String, Long)] = {
+        if (cnt == k){
+            return bankData
+        } else {
+            val ID = opList(cnt)(0)
+            val Pass = opList(cnt)(1)
+            val Cash = opList(cnt)(2).toLong
+
+            val newDB = {
+                if ((bankData(ID)._1) == Pass){
+                    bankData ++ Map(ID -> (bankData(ID)._1, bankData(ID)._2 - Cash))
+                } else {
+                    bankData
+                }
+            }
+            bankDB(cnt+1, newDB)
         }
     }
+    val result = bankDB(0, bankData)
     for (i <- keyList){
-        println(s"${i} ${valueData(i)}")
+        println(s"${i} ${result(i)._2}")
     }
 }

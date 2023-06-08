@@ -111,6 +111,11 @@ def withSort(x: Array[Array[Int]]): Array[Array[Int]] = {
     return tmp
 } //sortのmasterpiece
 
+val X: Map[String, String] = (0 until k).foldLeft(Map.empty[String, String]) { (map, _) =>
+        
+}
+//ミュータブルなコレクションを置換し得るmasterpiece
+
 
 for ((x, y) <- array1.zip(array2))
 .mapと組み合わせて全要素の組に関数を当てる

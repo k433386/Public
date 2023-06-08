@@ -2,26 +2,21 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-    val Sn = Array.ofDim[String](N)
-    val YCk = Array.ofDim[String](K)
+    val Array(n, k) = readLine().trim().split(" ").map(_.toInt)
+    val sn = Array.fill(n)(readLine().trim())
+    val yck = Array.ofDim[String](k)
 
     def padding(x: String) : String = {
         val tmp = String.format("%10s", x).replace(" ", "0")
         return tmp
     }
 
-    for (i <- 0 until N){
-        Sn(i) = readLine()
-    }
-    for (i <- 0 until K){
-        val line = readLine().split(" ")
-        YCk(i) = (padding(line(0)) + line(1))
+    for (i <- 0 until k){
+        val Array(y, c) = readLine().trim().split(" ")
+        yck(i) = padding(y) + c
     }
 
-    for (i <- YCk.sorted; j <- Sn){
+    for (i <- yck.sorted; j <- sn){
         if (i.contains(j)){
             println(j)
         }
