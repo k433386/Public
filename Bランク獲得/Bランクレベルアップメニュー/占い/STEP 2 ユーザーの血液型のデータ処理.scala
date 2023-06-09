@@ -3,15 +3,12 @@ import scala.io.StdIn._
 object Main extends App {
 
     val n = readLine().toInt
-    var userMap = Map.empty[String, String]
-    val name = Array.ofDim[String](n)
+    val tmp = Array.fill(n)(readLine().trim().split(" "))
 
-    for (i <- 0 until n){
-        val line = readLine().split(" ")
-        name(i) = line(0)
-        userMap = userMap + (line(0) -> line(1))
+    val name = tmp.map(_(0))
+    val userMap: Map[String, String] = tmp.foldLeft(Map.empty[String, String]) { (map, i) =>
+        map + (i(0) -> i(1))
     }
-    
     for (i <- name){
         println(i + " " + userMap(i))
     }

@@ -1,32 +1,28 @@
 import scala.io.StdIn._
 
 object Main extends App {
-
-    class basic(){
-
-    }
     
-    val NKS = readLine().split(" ")
-    val N = NKS(0).toInt
-    val K = NKS(1).toInt
-    val S = NKS(2).toInt
-    var arrMap = Map.empty[Int, Array[String]]
-    var result = Array.ofDim[String](K+1)
-    var pos = 0
-
-    for(i <- 1 to N){
-        arrMap = arrMap + (i -> readLine().split(" "))
+    val Array(n, k, s) = readLine().trim().split(" ").map(_.toInt)
+    val result = Array.ofDim[String](k+1)
+    val arrMap: Map[Int, Array[String]] = (1 to n).foldLeft(Map.empty[Int, Array[String]]) { (map, i) =>
+        map + (i -> readLine().split(" "))
     }
 
-    for(i <- 0 to K){
-        if (i == 0){
-            pos = S
+    def searchPath(cnt: Int, pos: Int): Unit = {
+        if (cnt == k+1){
+            return
         } else {
-            val M = readLine().toInt
-            pos = arrMap(pos)(M).toInt
+            val newPos = {
+                if (cnt == 0){
+                    s
+                } else {
+                    arrMap(pos)(readLine().trim().toInt).toInt
+                }
+            }
+            result(cnt) = arrMap(newPos)(0)
+            searchPath(cnt+1, newPos)
         }
-        result(i) = arrMap(pos)(0)
     }
-
+    searchPath(0, 0)
     println(result.mkString(""))
 }

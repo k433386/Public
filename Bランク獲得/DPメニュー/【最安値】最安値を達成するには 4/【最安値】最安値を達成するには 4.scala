@@ -2,15 +2,8 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val nxaybzc = readLine().split(" ").map(_.toInt)
-    val n = nxaybzc(0)
-    val x = nxaybzc(1)
-    val a = nxaybzc(2)
-    val y = nxaybzc(3)
-    val b = nxaybzc(4)
-    val z = nxaybzc(5)
-    val c = nxaybzc(6)
-    var dp = Array.fill[Int](n+z)(100000000)
+    val Array(n, x, a, y, b, z, c) = readLine().split(" ").map(_.toInt)
+    val dp = Array.fill[Int](n+z)(100000000)
 
     dp(0) = 0
     for (i <- x to n+z-1){

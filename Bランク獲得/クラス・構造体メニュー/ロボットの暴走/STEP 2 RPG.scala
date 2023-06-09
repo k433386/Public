@@ -2,7 +2,7 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class Hero(var states: Array[Int]){
+    class Hero(val states: Array[Int]){
         def levelup(h: String, a: String, d: String, s: String, c: String, f: String) = {
             states(0) = states(0) + 1
             states(1) = states(1) + h.toInt
@@ -31,19 +31,13 @@ object Main extends App {
         }
     }
 
-    var heroes : Array[Hero] = Array.empty    
-    
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-
-    for(i <- 0 until N){
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
+    val heroes: Array[Hero] = (0 until n).foldLeft(Array.empty[Hero]) { (heroes, _) =>
         val states = readLine().split(" ").map(_.toInt)
-        val hero = new Hero(states)
-        heroes = heroes ++ Array(hero)
+        heroes :+ new Hero(states)
     }
 
-    for(i <- 0 until K){
+    for(i <- 0 until k){
         val j = readLine().split(" ")
         val heroId = j(0).toInt - 1
         val eventName = j(1)

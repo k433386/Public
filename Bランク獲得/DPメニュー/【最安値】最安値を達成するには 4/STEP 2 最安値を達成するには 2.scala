@@ -2,16 +2,13 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val nab = readLine().split(" ")
-    val n = nab(0).toInt
-    val a = nab(1).toInt
-    val b = nab(2).toInt
-    var dp = Array.ofDim[Int](n+5)
+    val Array(n, a, b) = readLine().split(" ").map(_.toInt)
+    val dp = Array.ofDim[Int](n+5)
         
     dp(0) = 0
     dp(1) = a
     for (i <- 2 to n+4){
-        dp(i) = 100000000
+        dp(i) = Int.MaxValue
         if (i >= 2){
             dp(i) = Array(dp(i), dp(i-2) + a).min
         }

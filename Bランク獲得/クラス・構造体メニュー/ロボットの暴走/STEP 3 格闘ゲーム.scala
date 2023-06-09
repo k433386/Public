@@ -3,101 +3,89 @@ import scala.io.StdIn._
 object Main extends App {
 
     class Hero(val states: Array[Int]){
-        var HP = states(0)
-        var F1 = states(1)
-        var A1 = states(2)
-        var F2 = states(3)
-        var A2 = states(4)
-        var F3 = states(5)
-        var A3 = states(6)
+        //HP //F1 //A1 //F2 //A2 //F3 //A3
 
         def getF(x : Int) : Int = {
             if(x == 1){
-                F1
+                states(1)
             } else if(x == 2){
-                F2
+                states(3)
             } else if(x == 3){
-                F3
+                states(5)
             } else {
                 0
             }
         }
         def getA(x : Int) : Int = {
             if(x == 1){
-                A1
+                states(2)
             } else if(x == 2){
-                A2
+                states(4)
             } else if(x == 3){
-                A3
+                states(6)
             } else {
                 0
             }
         }
         def powerUp() = {
             def setF1() = {
-                if (F1 - 3 < 1){
-                    F1 = 1
+                if (states(1) - 3 < 1){
+                    states(1) = 1
                 } else {
-                    F1 = F1 - 3
+                    states(1) = states(1) - 3
                 }
-                A1 = A1 + 5
+                states(2) = states(2) + 5
             }
             def setF2() = {
-                if (F2 - 3 < 1){
-                    F2 = 1
+                if (states(3) - 3 < 1){
+                    states(3) = 1
                 } else {
-                    F2 = F2 - 3
+                    states(3) = states(3) - 3
                 }
-                A2 = A2 + 5
+                states(4) = states(4) + 5
             }
             def setF3() = {
-                if (F3 - 3 < 1){
-                    F3 = 1
+                if (states(5) - 3 < 1){
+                    states(5) = 1
                 } else {
-                    F3 = F3 - 3
+                    states(5) = states(5) - 3
                 }
-                A3 = A3 + 5
+                states(6) = states(6) + 5
             }
 
-            if (F1 == 0 && A1 == 0){
+            if (states(1) == 0 && states(2) == 0){
                 setF2()
                 setF3()
-            }else if (F2 == 0 && A2 == 0){
+            }else if (states(3) == 0 && states(4) == 0){
                 setF1()
                 setF3()
-            }else if (F3 == 0 && A3 == 0){
+            }else if (states(5) == 0 && states(6) == 0){
                 setF1()
                 setF2()
             }
         }
         def damage(x : Int) = {
-            HP = HP - x
+            states(0) = states(0) - x
         }
         def alive() : Boolean = {
-            if (HP > 0){
+            if (states(0) > 0){
                 true
             } else {
                 false
             }
         }
         def printout() = {
-            println(s"${HP} / ${F1} ${A1} ${F2} ${A2} ${F3} ${A3}")
+            println(s"${states(0)} / ${states(1)} ${states(2)} ${states(3)} ${states(4)} ${states(5)} ${states(6)}")
         }
     }
 
-    var heroes : Array[Hero] = Array.empty    
-    
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-
-    for(i <- 0 until N){
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
+    val heroes: Array[Hero] = (0 until n).foldLeft(Array.empty[Hero]) { (heroes, _) =>
         val states = readLine().split(" ").map(_.toInt)
-        val hero = new Hero(states)
-        heroes = heroes ++ Array(hero)
+        heroes :+ new Hero(states)
     }
 
-    for(i <- 0 until K){
+    for(i <- 0 until k){
         val j = readLine().split(" ").map(_.toInt)
         val p1 = j(0) - 1
         val t1 = j(1)
@@ -107,17 +95,20 @@ object Main extends App {
         if (heroes(p1).alive && heroes(p2).alive){
             if (heroes(p1).getF(t1) == 0 && heroes(p1).getA(t1) == 0 && heroes(p2).getF(t2) == 0 && heroes(p2).getA(t2) == 0){
                 heroes(p1).powerUp
-                heroes(p2).powerUp                           
+                heroes(p2).powerUp
             } else {
                 if (heroes(p1).getF(t1) == 0 && heroes(p1).getA(t1) == 0){
                     heroes(p1).powerUp
                     heroes(p1).damage(heroes(p2).getA(t2))
-                } else if (heroes(p2).getF(t2) == 0 && heroes(p2).getA(t2) == 0) {
+                } 
+                else if (heroes(p2).getF(t2) == 0 && heroes(p2).getA(t2) == 0) {
                     heroes(p2).powerUp
                     heroes(p2).damage(heroes(p1).getA(t1))
-                } else if(heroes(p1).getF(t1) < heroes(p2).getF(t2)){
+                } 
+                else if(heroes(p1).getF(t1) < heroes(p2).getF(t2)){
                     heroes(p2).damage(heroes(p1).getA(t1))
-                } else if(heroes(p1).getF(t1) > heroes(p2).getF(t2)){
+                } 
+                else if(heroes(p1).getF(t1) > heroes(p2).getF(t2)){
                     heroes(p1).damage(heroes(p2).getA(t2))  
                 }
             }

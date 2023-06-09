@@ -3,24 +3,20 @@ import scala.io.StdIn._
 object Main extends App {
 
     val n = readLine().toInt
-    var bloodMap = Map.empty[String, String]
-    var colorMap = Map.empty[String, String]
-    val name = Array.ofDim[String](n)
+    val tmp = Array.fill(n)(readLine().trim().split(" "))   
+    val name = tmp.map(_(0))
 
-    for (i <- 0 until n){
-        val line1 = readLine().split(" ")
-        name(i) = line1(0)
-        bloodMap = bloodMap + (line1(0) -> line1(1))
+    val bloodMap: Map[String, String] = tmp.foldLeft(Map.empty[String, String]) { (map, tmp1) =>
+        map + (tmp1(0) -> tmp1(1))
     }
 
     val m = readLine().toInt
-    for (i <- 0 until m){
-        val line2 = readLine().split(" ")
-        colorMap = colorMap + (line2(0) -> line2(1))
+    val colorMap: Map[String, String] = (0 until m).foldLeft(Map.empty[String, String]) { (map, _) =>
+        val tmp2 = readLine().trim().split(" ")
+        map + (tmp2(0) -> tmp2(1))
     }
     
     for (i <- name){
         println(i + " " + colorMap(bloodMap(i)))
     }
-
 }

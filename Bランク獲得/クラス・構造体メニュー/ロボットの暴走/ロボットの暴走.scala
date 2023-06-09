@@ -1,78 +1,69 @@
 import scala.io.StdIn._
+import scala.collection.mutable.Map
 
 object Main extends App {
 
-    class robot1(var level: Int, var W: Int, var H: Int, val data: Array[Array[Int]]){
-        var step = 1
+    class robot1(){
+        val data: Map[String, Int] = Map("level" -> 0, "w" -> 0, "h" -> 0, "step" -> 0)
+
+        def initialSet(level: Int, w: Int, h: Int) = {
+            data("level") = level
+            data("w") = w
+            data("h") = h
+        }
 
         def levelStep() = {
-            if (level == 1){
-                step = 1
-            } else if (level == 2){
-                step = 2
-            } else if (level == 3){
-                step = 5
-            } else if (level == 4){
-                step = 10
+            if (data("level") == 1){
+                data("step") = 1
+            } else if (data("level") == 2){
+                data("step") = 2
+            } else if (data("level") == 3){
+                data("step") = 5
+            } else if (data("level") == 4){
+                data("step") = 10
             }
         }
         def move(dir: String) = {
             levelStep()
             if (dir == "N"){
-                H = H - step
+                data("h") = data("h") - data("step")
             } else if (dir == "S"){
-                H = H + step
+                data("h") = data("h") + data("step")
             } else if (dir == "E"){
-                W = W + step
+                data("w") = data("w") + data("step")
             } else if (dir == "W"){
-                W = W - step
+                data("w") = data("w") - data("step")
             }
             conflict()
         }
         def conflict() = {
             for (i <- boxes){
-                if (i(0) == W && i(1) == H){
-                    level = level + 1
-                    if (level > 4){
-                        level = 4
+                if (i(0) == data("w") && i(1) == data("h")){
+                    data("level") = data("level") + 1
+                    if (data("level") > 4){
+                        data("level") = 4
                     }
                 }
             }
         }
-        def printout() = {
-            println(s"${W} ${H} ${level}")
+        def printOut() = {
+            println(s"${data("w")} ${data("h")} ${data("level")}")
         }
     }
 
-    var robots: Array[robot1] = Array.empty
-    var boxes = Array.ofDim[Int](10, 2)    
-    
-    val HWNK = readLine().split(" ")
-    val H = HWNK(0).toInt
-    val W = HWNK(1).toInt
-    val N = HWNK(2).toInt
-    val K = HWNK(3).toInt
-
-    for(i <- 0 until 10){
-        val box = readLine().split(" ").map(_.toInt)
-        boxes(i) = box
-    }
-
-    for(i <- 0 until N){
+    val Array(h, w, n, k) = readLine().trim().split(" ").map(_.toInt)
+    val boxes = Array.fill(10)(readLine().split(" ").map(_.toInt)) 
+    val robots: Array[robot1] = (0 until n).foldLeft(Array.empty[robot1]) { (robots, _) =>
         val data = readLine().split(" ").map(_.toInt)
-        val robot = new robot1(data(2), data(0), data(1), boxes)
-        robots = robots ++ Array(robot)
+        val robot = new robot1()
+        robot.initialSet(data(2), data(0), data(1))
+        robots :+ robot
     }
-    
-    for(i <- 0 until K){
-        val rd = readLine().split(" ")
-        val r = rd(0).toInt - 1
-        val d = rd(1)
 
-        robots(r).move(d)
+    for(i <- 0 until k){
+        val rd = readLine().split(" ")
+        robots(rd(0).toInt-1).move(rd(1))
     }
     
-    for(i <- robots){
-        i.printout
-    }
+    robots.foreach(_.printOut)
 }
