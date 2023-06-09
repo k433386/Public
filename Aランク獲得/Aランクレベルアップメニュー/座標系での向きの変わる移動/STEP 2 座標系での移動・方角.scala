@@ -2,33 +2,27 @@ import scala.io.StdIn._
 
 object Main extends App {
     
-    val YXN = readLine().split(" ").map(_.toInt)
-    var Y = YXN(0)
-    var X = YXN(1)
-    val N = YXN(2)
+    val Array(y, x, n) = readLine().trim().split(" ").map(_.toInt)
 
-    for(i <- 0 until N){
-        val Dn = readLine()
-        moving(Dn, Y, X)
-        println(s"${Y} ${X}")
-    }
-
-    def moving(dir: String, y: Int, x: Int) : Unit = {
+    def moving(dir: String, y: Int, x: Int) : (Int, Int) = {
         if (dir == "N"){
-            Y = y-1
-            X = x
-        }
-        if (dir == "S"){
-            Y = y+1
-            X = x
-        }
-        if (dir == "E"){
-            Y = y
-            X = x+1
-        }
-        if (dir == "W"){
-            Y = y
-            X = x-1
+            return (y-1, x)
+        } else if (dir == "S"){
+            return (y+1, x)
+        } else if (dir == "E"){
+            return (y, x+1)
+        } else {
+            return (y, x-1)
+        } 
+    }
+    def controlPin(cnt: Int, y: Int, x: Int): Unit = {
+        if (cnt == n){
+            return
+        } else {
+            val (resY, resX) = moving(readLine().trim(), y, x)
+            println(s"${resY} ${resX}")
+            controlPin(cnt+1, resY, resX)
         }
     }
+    controlPin(0, y, x)
 }

@@ -2,28 +2,18 @@ import scala.io.StdIn._
 
 object Main extends App {
  
-    val line = readLine().split(" ")
-    val H = line(0).toInt
-    val W = line(1).toInt
-    val sy = line(2).toInt
-    val sx = line(3).toInt
-    val N = line(4).toInt
-    val Sh = Array.ofDim[String](H, W)
-    var tdN : Map[Int, String] = Map.empty
-    
-    for (i <- 0 until H){
-        Sh(i) = readLine().split("")
-    }
-    for (i <- 0 until N){
+    val Array(h, w, sy, sx, n) = readLine().trim().split(" ").map(_.toInt)
+    val Sh = Array.fill(h)(readLine().trim().split(""))
+    val tdN: Map[Int, String] = (0 until n).foldLeft(Map.empty[Int, String]) { (map, _) =>
         val Array(t, d) = readLine().split(" ")
-        tdN = tdN ++ Map(t.toInt -> d)
+        map + (t.toInt -> d)
     }
 
     def noObject(y: Int, x: Int) : Boolean = {
         return (Sh(y)(x) == ".")
     }
     def inMap(y: Int, x: Int) : Boolean = {
-        if (0 <= y && y < H && 0 <= x && x < W){
+        if (0 <= y && y < h && 0 <= x && x < w){
             return noObject(y, x)
         } else {
             return false
@@ -57,30 +47,22 @@ object Main extends App {
         nextPlot(nowdir, y, x)
     }
 
-    def mainFunc(): Unit = {
-        var m = "N"
-        var y = sy
-        var x = sx
-        for (i <- 0 until 100){
-            val d = if (tdN.contains(i)){
-                tdN(i)
-            } else {
-                "N"
-            }
+    def mainFuncion(cnt: Int, m: String, y: Int, x: Int): Unit = {
+        if (cnt == 100){
+            Sh(y)(x) = "*"
+            return
+        } else {
+            val d = tdN.getOrElse(cnt, "N")
             val (newY, newX, dir) = headDir(m, d, y, x)
             if (!(inMap(newY, newX))){
                 Sh(y)(x) = "*"
-                return 
             } else {
                 Sh(y)(x) = "*"
-                m = dir
-                y = newY
-                x = newX
+                mainFuncion(cnt+1, dir, newY, newX)
             }
         }
-        Sh(y)(x) = "*"
     }
-    mainFunc()
+    mainFuncion(0, "N", sy, sx)
     for (i <- Sh){
         println(i.mkString(""))
     }

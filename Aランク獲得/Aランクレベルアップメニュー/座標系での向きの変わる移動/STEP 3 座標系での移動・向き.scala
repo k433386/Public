@@ -2,57 +2,48 @@ import scala.io.StdIn._
 
 object Main extends App {
     
-    val YXD = readLine().split(" ")
-    var Y = YXD(0).toInt
-    var X = YXD(1).toInt
-    val D = YXD(2)
-    val d = readLine()
+    val line = readLine().split(" ")
+    val y = line(0).toInt
+    val x = line(1).toInt
+    val d = line(2)
+    val lr = readLine()
 
-    turning(D, d, Y, X)
-    println(s"${Y} ${X}")
-
-    def moving(dir: String, y: Int, x: Int) : Unit = {
+    def moving(dir: String, y: Int, x: Int) : (Int, Int) = {
         if (dir == "N"){
-            Y = y-1
-            X = x
-        }
-        if (dir == "S"){
-            Y = y+1
-            X = x
-        }
-        if (dir == "E"){
-            Y = y
-            X = x+1
-        }
-        if (dir == "W"){
-            Y = y
-            X = x-1
-        }
+            return (y-1, x)
+        } else if (dir == "S"){
+            return (y+1, x)
+        } else if (dir == "E"){
+            return (y, x+1)
+        } else {
+            return (y, x-1)
+        } 
     }
-    def turning(dir: String, rl: String, y: Int, x: Int) : Unit = {
-        var newdir = ""
-        if (rl == "R"){
+    def turning(dir: String, rl: String, y: Int, x: Int):(Int, Int) = {
+        val newdir = if (rl == "R"){
             if(dir == "N"){
-                newdir = "E"
+                "E"
             } else if(dir == "S"){
-                newdir = "W"
+                "W"
             } else if(dir == "E"){
-                newdir = "S"
-            } else if(dir == "W"){
-                newdir = "N"
+                "S"
+            } else {
+                "N"
+            }
+        } else {
+            if(dir == "N"){
+                "W"
+            } else if(dir == "S"){
+                "E"
+            } else if(dir == "E"){
+                "N"
+            } else {
+                "S"
             }
         }
-        if (rl == "L"){
-            if(dir == "N"){
-                newdir = "W"
-            } else if(dir == "S"){
-                newdir = "E"
-            } else if(dir == "E"){
-                newdir = "N"
-            } else if(dir == "W"){
-                newdir = "S"
-            }
-        }
-        moving(newdir, y, x)
+        return moving(newdir, y, x)
     }
+
+    val (resY, resX) = turning(d, lr, y, x)
+    println(s"${resY} ${resX}")
 }

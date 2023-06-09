@@ -2,12 +2,12 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    val S = readLine()
-    var result : Array[Int] = Array.empty
+    val n = readLine().toInt
+    val s = readLine().trim()
 
-    for (i <- 'a' to 'z'){
-        result = result ++ Array(S.count(x => x == i))
+    val result: Array[String] = ('a' to 'z').foldLeft(Array.empty[String]) { (array, i) =>
+        array :+ s.count(x => x == i).toString
     }
+
     println(result.mkString(" "))
 }

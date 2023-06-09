@@ -2,27 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
  
-    val line = readLine().split(" ")
-    val H = line(0).toInt
-    val W = line(1).toInt
-    val sy = line(2).toInt
-    val sx = line(3).toInt
-    val N = line(4).toInt
-    val Sh = Array.ofDim[String](H, W)
-    val Dn = Array.ofDim[String](N)
-    
-    for (i <- 0 until H){
-        Sh(i) = readLine().split("")
-    }
-    for (i <- 0 until N){
-        Dn(i) = readLine()
-    }
+    val Array(h, w, sy, sx, n) = readLine().trim().split(" ").map(_.toInt)
+    val Sh = Array.fill(h)(readLine().trim().split(""))
 
     def noObject(y: Int, x: Int) : Boolean = {
         return (Sh(y)(x) != "#")
     }
     def inMap(y: Int, x: Int) : Boolean = {
-        if (0 <= y && y < H && 0 <= x && x < W){
+        if (0 <= y && y < h && 0 <= x && x < w){
             return noObject(y, x)
         } else {
             return false
@@ -54,23 +41,19 @@ object Main extends App {
         }
         nextPlot(nowdir, y, x)
     }
-
-    def mainFunc(): Unit = {
-        var m = "N"
-        var y = sy
-        var x = sx
-        for (d <- Dn){
+    def mainFuncion(cnt: Int, m: String, y: Int, x: Int): Unit = {
+        if (cnt == n){
+            return
+        } else {
+            val d = readLine().trim()
             val (newY, newX, dir) = headDir(m, d, y, x)
             if (!(inMap(newY, newX))){
                 println("Stop")
-                return
             } else {
                 println(s"${newY} ${newX}")
-                m = dir
-                y = newY
-                x = newX
+                mainFuncion(cnt+1, dir, newY, newX)
             }
         }
     }
-    mainFunc()
+    mainFuncion(0, "N", sy, sx)
 }

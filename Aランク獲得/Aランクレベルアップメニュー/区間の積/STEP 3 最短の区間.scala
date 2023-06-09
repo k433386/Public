@@ -2,39 +2,26 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ").map(_.toInt)
-    val N = line(0)
-    val M = line(1)
-    val An = readLine.split(" ").map(_.toInt)
+    val Array(n, m) = readLine().trim().split(" ").map(_.toInt)
+    val a = readLine.trim().split(" ").map(_.toInt)
 
-    def loopMain(N: Int, M: Int, An: Array[Int]): Int = {
-        var sum = An(0)
-        var ans = N+1
-        var l = 0
-        var u = 0
-        while (true) {
-            if (M <= sum) {
-                sum = sum - An(l)
-                ans = Array(ans, u - l + 1).min
-                l = l + 1
+    def mainFunction(sum: Int, ans: Int, l: Int, u: Int): Int = {
+        if (m <= sum){
+            mainFunction(sum-a(l), Array(ans, u-l+1).min, l+1, u)
+        } else {
+            if (u + 1 == n){
+                return ans
             } else {
-                u = u + 1
-                if (u == N) {
-                    return ans
-                } else {
-                    sum = sum + An(u)
-                }
+                mainFunction(sum+a(u+1), ans, l, u+1)
             }
         }
-        return ans        
     }
     
-    val ans = loopMain(N, M, An)
-    if (ans == N+1) {
+    val answer = mainFunction(a(0), n+1, 0, 0)
+    if (answer == n+1) {
         println(-1)
     } else {
-        println(ans)
+        println(answer)
     }
 }
-
 //解答例使用済み

@@ -2,27 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
  
-    val line = readLine().split(" ")
-    val H = line(0).toInt
-    val W = line(1).toInt
-    val sy = line(2).toInt
-    val sx = line(3).toInt
-    val N = line(4).toInt
-    val Sh = Array.ofDim[String](H, W)
-    val Dn = Array.ofDim[String](N, 2)
-    
-    for (i <- 0 until H){
-        Sh(i) = readLine().split("")
-    }
-    for (i <- 0 until N){
-        Dn(i) = readLine().split(" ")
-    }
+    val Array(h, w, sy, sx, n) = readLine().trim().split(" ").map(_.toInt)
+    val Sh = Array.fill(h)(readLine().trim().split(""))
 
     def noObject(y: Int, x: Int) : Boolean = {
         return (Sh(y)(x) != "#")
     }
     def inMap(y: Int, x: Int) : Boolean = {
-        if (0 <= y && y < H && 0 <= x && x < W){
+        if (0 <= y && y < h && 0 <= x && x < w){
             return noObject(y, x)
         } else {
             return false
@@ -55,27 +42,35 @@ object Main extends App {
         nextPlot(nowdir, y, x)
     }
 
-    def mainFunc(): Unit = {
-        var m = "N"
-        var y = sy
-        var x = sx
-        var dir = ""
-        for (Array(d, step) <- Dn){
-            var tmp = true
-            for (_ <- 0 until step.toInt){
-                val (newY, newX, newDir) = headDir(m, d, y, x)
-                if (!(inMap(newY, newX))){
-                    println(s"${y} ${x}")
-                    println("Stop")
-                    return
+    def mainFuncion(cnt: Int, m: String, y: Int, x: Int): Unit = {
+        if (cnt == n){
+            return
+        } else {
+            val Array(d, step) = readLine().trim().split(" ")
+
+            def innerStep(i: Int, y: Int, x: Int, dir: String): (Int, Int, String) = {
+                if (i == step.toInt){
+                    return (y, x, dir)
+                } else {
+                    val (newY, newX, newDir) = headDir(m, d, y, x)
+                    if (!(inMap(newY, newX))){
+                        println(s"${y} ${x}")
+                        println("Stop")
+                        return (-1, -1, "")
+                    } else {
+                        innerStep(i+1, newY, newX, newDir)
+                    }                       
                 }
-                y = newY
-                x = newX
-                dir = newDir             
             }
-            println(s"${y} ${x}")
-            m = dir
-        }                
+            val (newY, newX, newDir) = innerStep(0, y, x, "")
+
+            if (newY == -1 && newX == -1 && newDir == ""){
+                return
+            } else {
+                println(s"${newY} ${newX}")
+                mainFuncion(cnt+1, newDir, newY, newX)
+            }      
+        }
     }
-    mainFunc() 
+    mainFuncion(0, "N", sy, sx)
 }
