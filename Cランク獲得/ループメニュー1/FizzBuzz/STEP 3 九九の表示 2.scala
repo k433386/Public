@@ -4,14 +4,10 @@ object Main extends App {
 
     val num = readLine().toInt
     val key = 9
-    var result = ""
+    val result = Array.ofDim[String](key)
 
     for (i <- 0 until key){
-        result = result + s"${num*(i.toInt+1)}"
-
-        if (i < key-1){
-            result = result + " "
-        }
+        result(i) = s"${num*(i.toInt+1)}"
     }
-    println(result)
+    println(result.mkString(" "))
 }

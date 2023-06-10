@@ -1,19 +1,18 @@
-import scala.io.StdIn._
+import scala.io.StdIn
 
 object Main extends App {
 
-    val n = readLine().toInt
-    val ab = readLine().split(" ")
-    val a = ab(0).toInt
-    val b = ab(1).toInt
-    var aP = 1
-    var bP = 1
-    var count = 0
+    val n = StdIn.readLine().toInt
+    val Array(a, b) = StdIn.readLine().split(" ").map(_.toInt)
 
-    while (n >= bP){
-        bP = bP + aP * a
-        aP = aP + bP % b
-        count = count + 1
+    def loop(times: Int, kyoko: Int, paiza: Int): Int = {
+        val newKyoko = kyoko + paiza * a
+        if (newKyoko > n) {
+            return times+1
+        }
+        val newPaiza = paiza + newKyoko % b
+        loop(times+1, newKyoko, newPaiza)   
     }
-    println(count)
+
+    println(loop(0, 1, 1))
 }

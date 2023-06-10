@@ -2,42 +2,29 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var TA : Array[String] = Array.empty
-    var TB : Array[String] = Array.empty
-    var TC : Array[String] = Array.empty
-    var TD : Array[String] = Array.empty
+    val n = readLine().toInt
+    val tmp = Array.fill(n)( readLine().trim().split(" "))
+    val TA = tmp.collect { case Array("TA", value) => value }.toArray
+    val TB = tmp.collect { case Array("TB", value) => value }.toArray
+    val TC = tmp.collect { case Array("TC", value) => value }.toArray
+    val TD = tmp.collect { case Array("TD", value) => value }.toArray
 
-    for (i <- 0 until N){
-        val io = readLine().split(" ")
-        if (io(0) == "TA"){
-            TA = TA ++ Array(io(1))
-        } else if (io(0) == "TB"){
-            TB = TB ++ Array(io(1))
-        } else if (io(0) == "TC"){
-            TC = TC ++ Array(io(1))
-        } else if (io(0) == "TD"){
-            TD = TD ++ Array(io(1))
-        }
-    }
-
-    def TestFun(test: Array[String]) : Int = {
-        var ok = 0
-        var ng = 0
-        for (i <- test){
+    def testFunction(test: Array[String], ok: Int, ng: Int) : Int = {
+        if (ok == 2 && ng < 2){
+            return 1
+        } else if (ok + ng == test.length){
+            return 0
+        } else {
+            val i = test(ok+ng)
             if (i == "ok"){
-                ok = ok + 1
-            } else if (i == "ng"){
-                ng = ng + 1        
-            }
-
-            if (ok == 2 && ng < 2){
-                return 1
+                testFunction(test, ok+1, ng)
+            } else if(i == "ng"){
+                testFunction(test, ok, ng+1)
+            } else {
+                return -1
             }
         }
-        return 0
     }
-
     def printOut(rA:Int, rB:Int, rC:Int, rD:Int) = {
         if (rA == 1){
             println("A")
@@ -51,5 +38,6 @@ object Main extends App {
             println("E")
         }
     }
-    printOut(TestFun(TA), TestFun(TB), TestFun(TC), TestFun(TD))
+
+    printOut(testFunction(TA, 0, 0), testFunction(TB, 0, 0), testFunction(TC, 0, 0), testFunction(TD, 0, 0))
 }

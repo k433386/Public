@@ -3,14 +3,15 @@ import math._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var Nx = 1
-    var count = 0
+    val n = readLine().toInt
 
-    while (pow(2, Nx) <= N){
-        val tmp = (N / pow(2, Nx)).toInt
-        count = count + tmp
-        Nx = Nx + 1
+    def whileLoop(nx: Int, count: Int): Int = {
+        if (pow(2, nx) > n){
+            return count
+        } else {
+            val tmp = (n / pow(2, nx)).toInt
+            whileLoop(nx+1, count+tmp)
+        }
     }
-    println(count)
+    println(whileLoop(1, 0))
 }

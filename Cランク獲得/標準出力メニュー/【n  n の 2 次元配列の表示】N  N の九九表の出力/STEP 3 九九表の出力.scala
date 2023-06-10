@@ -4,13 +4,10 @@ object Main extends App {
     val column = 9
 
     for (i <- 0 until row){
-        var result = ""
+        val result = Array.ofDim[String](column)
         for (j <- 0 until column){
-            result = result + s"${(i+1)*(j+1)}"
-            if (j < column-1){
-                result = result + " "
-            }
+            result(j) = s"${(i+1)*(j+1)}"
         }
-        println(result)
+        println(result.mkString(" "))
     }
 }

@@ -2,65 +2,34 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    var H = readLine.toInt
-    var paiza = Array[Int](0)
-    var monster = Array[Int](0)
-    var count = 0
+    val h = readLine.toInt
+    val paiza = Array[Int](0)
+    val monster = Array[Int](0)
 
-    def PaizaAttack(x: Int): Unit = {
+    def paizaAttack(x: Int, paiza: Array[Int], monster: Array[Int]): Array[Int] = {
         if (x == 1 || x == 2){
-            paiza = paiza ++ Array(1)
+            paiza ++ Array(1)
         } else {
-            paiza = paiza ++ Array(monster(x-1) + monster(x-2))
+            paiza ++ Array(monster(x-1) + monster(x-2))
         }
     }
-    def MonsterAttack(x: Int): Unit = {
+    def monsterAttack(x: Int, paiza: Array[Int], monster: Array[Int]): Array[Int] = {
         if (x == 1 || x == 2){
-            monster = monster ++ Array(1)
+            monster ++ Array(1)
         } else {
-            monster = monster ++ Array(paiza(x-1)*2 + paiza(x-2))
+            monster ++ Array(paiza(x-1)*2 + paiza(x-2))
+        }
+    }
+    def loop(count: Int, hp: Int, paiza: Array[Int], monster: Array[Int]): Int = {
+        if (hp <= 0){
+            return count
+        } else {
+            val newPaiza = paizaAttack(count+1, paiza, monster)
+            val newMonster = monsterAttack(count+1, paiza, monster)
+            val newHP = hp - newMonster(count+1)
+            loop(count+1, newHP, newPaiza, newMonster)
         }
     }
 
-    while (H > 0){
-        count = count + 1
-        PaizaAttack(count)
-        MonsterAttack(count)
-        H = H - monster(count)
-    }
-    println(count)
+    println(loop(0, h, paiza, monster))
 }
-
-
-/*
-
-import scala.io.StdIn._
-
-object Main extends App {
-
-    var H = readLine.toInt
-    var count = 1
-
-    def PaizaAttack(x: Int): Int = {
-        if (x == 1 || x == 2){
-            1
-        } else {
-            MonsterAttack(x-1) + MonsterAttack(x-2)
-        }
-    }
-    def MonsterAttack(x: Int): Int = {
-        if (x == 1 || x == 2){
-            1
-        } else {
-            PaizaAttack(x-1)*2 + PaizaAttack(x-2)
-        }
-    } 
-
-    while (H > MonsterAttack(count)){
-        H = H - MonsterAttack(count)
-        count = count - 1
-    }
-    println(count)
-}
-
-*/

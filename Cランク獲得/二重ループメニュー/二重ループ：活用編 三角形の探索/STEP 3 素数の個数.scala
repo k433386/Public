@@ -2,19 +2,12 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var result = 0
+    val n = readLine().toInt
 
-    for (i <- 2 to N){
-        var count = 0
-        for (j <- 1 to N){
-            if(i % j == 0){
-                count = count + 1
-            }
-        }
-        if(count == 2){
-            result = result + 1
-        }
+    val result = (2 to n).count { i =>
+        val number = (1 to n).count(j => i % j == 0)
+        number == 2
     }
+
     println(result)
 }

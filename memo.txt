@@ -47,6 +47,12 @@ Integer.parseInt(String, X) //X進数を十進数に
 .contains //要素が存在することを確認する
 .getOrElse　//存在しない場合に、デフォルトを返す
 
+.collect //特定の要素が一致するものを取り出す
+
+.map(_(0)) //Arrayの列切り出し
+
+.flatMap
+
 for (X <- Array) // 配列の要素を直接取り出す
 for ((name, amount) <- result) //複数を同時に取ることもある (タプル)
 

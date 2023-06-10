@@ -2,7 +2,7 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
+    val n = readLine().toInt
     val lineA = readLine().split(" ")
     val lineB = readLine().split(" ")
 

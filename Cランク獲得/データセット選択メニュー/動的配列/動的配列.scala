@@ -2,31 +2,37 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val N = line(0).toInt
-    val Q = line(1).toInt
-    var Aline = readLine().split(" ").map(_.toInt)
-    var query = Array.ofDim[Int](Q, 2)
+    val Array(n, q) = readLine().split(" ").map(_.toInt)
+    val a = readLine().split(" ").map(_.toInt)
 
-    for (i <- 0 until Q){
-        var tmp = readLine()
-        if (tmp == "1"){
-            query(i) = Array(1, 0)
-        } else if (tmp == "2"){
-            query(i) = Array(2, 0)
+    val query: Array[Array[Int]] = (0 until q).foldLeft(Array.empty[Array[Int]]) { (array, _) =>
+        val tmp = readLine().trim().split(" ").map(_.toInt)
+        tmp(0) match {
+            case 1 => 
+                array :+ Array(1, 0)
+            case 2 =>
+                array :+ Array(2, 0)
+            case _ =>
+                array :+ Array(0, tmp(1))
+        }
+    }
+
+    def operation(cnt: Int, query: Array[Array[Int]], a: Array[Int]):Unit = {
+        if (cnt == query.length){
+            return
         } else {
-            query(i) = tmp.split(" ").map(_.toInt)
+            val i = query(cnt)
+            val newA = i(0) match {
+                case 1 => 
+                    a.dropRight(1)
+                case 2 => 
+                    println(a.mkString(" "))
+                    a
+                case _ => 
+                    a :+ i(1)
+            }
+            operation(cnt+1, query, newA) 
         }
     }
-    for (i <- query){
-        if (i(0) == 0){
-            Aline = Aline ++ Array(i(1))
-
-        } else if (i(0) == 1){
-            Aline = Aline.take(Aline.length-1)
-
-        } else if (i(0) == 2){
-            println(Aline.mkString(" "))
-        }
-    }
+    operation(0, query, a)
 }

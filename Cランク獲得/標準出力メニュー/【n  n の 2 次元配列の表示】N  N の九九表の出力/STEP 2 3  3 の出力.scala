@@ -7,13 +7,10 @@ object Main extends App {
     val column = 3
 
     for (i <- 0 until row){
-        var result = ""
+        val result = Array.ofDim[String](column)
         for (j <- 0 until column){
-            result = result + s"${line(i*column+j)}"
-            if (j < column-1){
-                result = result + " "
-            }
+            result(j) = line(i*column+j)
         }
-        println(result)
+        println(result.mkString(" "))
     }
 }

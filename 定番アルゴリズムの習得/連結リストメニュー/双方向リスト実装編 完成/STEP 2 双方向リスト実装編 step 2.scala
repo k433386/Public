@@ -2,70 +2,43 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class node(a: Int, b: Int, c: Int, d: Int){
-        var value = a
-        var prev = b
-        var now = c
-        var next = d
+    class Node(val value: Int, val prev: Int, val next: Int){
 
-        def getValue() : Int = {
-            value
+        def updateValue(x: Int): Node = {
+            new Node(x, prev, next)
         }
-        def getNext() : Int = {
-            next
+        def updatePrev(x: Int): Node = {
+            new Node(value, x, next)
         }
-        def getNow() : Int = {
-            now
-        }
-        def getPrev() : Int = {
-            prev
-        }
-        def updateValue(x: Int) = {
-            value = x
-        }
-        def updateNext(x: Int) = {
-            next = x
-        }
-        def updateNow(x: Int) = {
-            now = x
-        }
-        def updatePrev(x: Int) = {
-            prev = x
+        def updateNext(x: Int): Node = {
+            new Node(value, prev, x)
         }
     }
 
     val n = readLine().trim().toInt
-    val list = Array.ofDim[node](1024)
+    val list: List[Node] = List(new Node(-1, -1, 1), new Node(-1, 0, -1))
 
-    list(0) = new node(-1, -1, 0, 1023)
-    list(1023) = new node(-1, 0, 1023, -1)
-    var emptyMinIndex = 1
-
-    def addTail() = {
-        val data = readLine().trim().toInt
-        list(emptyMinIndex) = new node(data, list(1023).getPrev, emptyMinIndex, 1023)
-        list(list(emptyMinIndex).getPrev).updateNext(emptyMinIndex)
-        list(1023).updatePrev(emptyMinIndex)
-        emptyMinIndex = emptyMinIndex + 1
-    }
-    def addTop() = {
-        val data = readLine().trim().toInt
-        list(emptyMinIndex) = new node(data, 0, emptyMinIndex, list(0).getNext)
-        list(list(emptyMinIndex).getNext).updatePrev(emptyMinIndex)
-        list(0).updateNext(emptyMinIndex)
-        emptyMinIndex = emptyMinIndex + 1
-    }
-
-    for (i <- 0 until n){
-        addTop()
-    }
-
-    def printOut(list: Array[node]) = {
-        var next = list(0).getNext
-        while (next != 1023){
-            println(list(next).getValue)
-            next = list(next).getNext
+    def addNodeHead(cnt: Int, current: Node, list: List[Node]): List[Node] = {
+        if (cnt == n){
+            return list 
+        } else {
+            val tmp = readLine().trim().toInt
+            val newNode = new Node(tmp, 0, list(0).next)
+            val newList = list :+ newNode
+            val tmpList = newList.updated(newList.indexOf(current), current.updatePrev(newList.indexOf(newNode)))
+            val updatedList = tmpList.updated(0, tmpList(0).updateNext(tmpList.indexOf(newNode)))
+            addNodeHead(cnt+1, newNode, updatedList)
         }
     }
-    printOut(list)
+    def printOut(current: Int, list: List[Node]): Unit = {
+        if (current == 1){
+            return
+        } else {
+            println(list(current).value)
+            printOut(list(current).next, list)
+        }
+    }
+    
+    val finalList = addNodeHead(0, list(0), list)
+    printOut(finalList(0).next, finalList)
 }

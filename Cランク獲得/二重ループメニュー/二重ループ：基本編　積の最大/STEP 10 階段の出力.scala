@@ -2,13 +2,13 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var Aline = Array.ofDim[Int](N, N)
+    val n = readLine().toInt
 
-    for (i <- 0 until N){
-        Aline(i) = (1 to i+1).toArray
+    val result: Array[Array[Int]] = (1 to n).foldLeft(Array.empty[Array[Int]]) { (array, i) =>
+        array :+ (1 to i).toArray
     }
-    for (i <- Aline){
+
+    for (i <- result){
         println(i.mkString(" "))
     }
 }

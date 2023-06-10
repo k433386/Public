@@ -2,28 +2,28 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val S = readLine()
+    val s = readLine()
 
-    def leet(S : String) : Boolean = {
-        var line = S.split("")
+    def leet(s : String) : Boolean = {
+        val tmp = s.split("")
+        val fromTo = Array(Array("4", "a"), Array("@", "a"), Array("1", "i"), Array("!", "i"), Array("2", "z"))
 
-        def replace(Sen: Array[String], From: String, To: String) : Array[String] = {
-            val result = Array.ofDim[String](Sen.length)
-            for (i <- 0 until Sen.length){
-                if (Sen(i) == From){
-                    result(i) = To 
-                } else {
-                    result(i) = Sen(i)
+        def replace(cnt: Int, sen: Array[String]) : Array[String] = {
+            if (cnt == fromTo.length){
+                return sen
+            } else {
+                val result: Array[String] = (0 until sen.length).foldLeft(Array.empty[String]) { (array, i) =>
+                    if (sen(i) == fromTo(cnt)(0)){
+                        array :+ fromTo(cnt)(1)
+                    } else {
+                        array :+ sen(i)
+                    }
                 }
+                replace(cnt+1, result)
             }
-            return result
         }
-        line = replace(line, "4", "a")
-        line = replace(line, "@", "a")
-        line = replace(line, "1", "i")
-        line = replace(line, "!", "i")
-        line = replace(line, "2", "z")
-        
+
+        val line = replace(0, tmp)        
         if (line.mkString("").contains("paiza")){
             return true
         } else {
@@ -31,9 +31,9 @@ object Main extends App {
         }
     }
 
-    if (S.contains("paiza")){
+    if (s.contains("paiza")){
         println("paiza")
-    } else if (leet(S)){
+    } else if (leet(s)){
         println("leet")
     } else {
         println("nothing")

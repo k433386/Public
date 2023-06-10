@@ -2,15 +2,10 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val N = line(0).toInt
-    val K = line(1).toInt
-    var Aline = Array.ofDim[String](N, K)
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
+    val a = Array.fill(n)(readLine().split(" "))
 
-    for (i <- 0 until N){
-        Aline(i) = readLine().split(" ")
-    }
-    for (i <- Aline){
+    for (i <- a){
         println(i.mkString(" "))
     }
 }

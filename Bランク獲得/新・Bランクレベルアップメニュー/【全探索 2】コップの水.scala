@@ -2,22 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val NX = readLine().split(" ").map(_.toInt)
-    val N = NX(0)
-    val X = NX(1)
-    val w = Array.ofDim[Int](N)
-    var comb : Array[Int] = Array.empty
-
-    for (i <- 0 until N){
-        w(i) = readLine().toInt
-    }
+    val Array(n, x) = readLine().split(" ").map(_.toInt)
+    val w = Array.fill(n)(readLine().trim().toInt)
     
-    for (i <- 1 to N){
+    val comb: Array[Int] = (1 to n).foldLeft(Array.empty[Int]) { (array, i) =>
         val tmp = w.combinations(i)
-        for (j <- tmp){
-            comb = comb ++ Array(j.sum)
-        }
+        val sums = tmp.map(_.sum)
+        array ++ sums
     }
 
-    println(comb.filter(_ <= X).max)
+    println(comb.filter(_ <= x).max)
 }

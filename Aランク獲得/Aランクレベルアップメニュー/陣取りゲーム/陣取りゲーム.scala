@@ -6,52 +6,53 @@ object Main extends App {
     val H = HW(0)
     val W = HW(1)
     val s = Array.ofDim[String](H, W)
-    var count = 0
-    var aadd = 0
     var sums = Array(1, 1)
-    var flag_pass = true
-    val ab_point = Array.fill(2)(List.empty[(Int, Int, Int)])
+    var flagPass = true
+    val abPoint = Array.fill(2)(List.empty[(Int, Int, Int)])
 
-    if (readLine() == "B") {
-        count = 1
-        aadd = 1
+    val (count, aadd) = {
+        if (readLine() == "B") {
+            (1, 1)
+        } else {
+            (0, 0)
+        }
     }
 
     for (y <- 0 until H) {
         s(y) = readLine().split("")
         for (x <- 0 until W) {
             if (s(y)(x) == "A") {
-                ab_point(0) = ab_point(0) ++ List((y, x, aadd))
+                abPoint(0) = abPoint(0) ++ List((y, x, aadd))
             }
             if (s(y)(x) == "B") {
-                ab_point(1) = ab_point(1) ++ List((y, x, 0))
+                abPoint(1) = abPoint(1) ++ List((y, x, 0))
             }
         }
     }
 
-    while (ab_point(0).nonEmpty || ab_point(1).nonEmpty) {
-        if (ab_point(count % 2).isEmpty) {
+    while (abPoint(0).nonEmpty || abPoint(1).nonEmpty) {
+        if (abPoint(count % 2).isEmpty) {
             count = count + 1
-            flag_pass = false
+            flagPass = false
         }
 
-        var (y, x, n) = ab_point(count % 2).head
-        if (count / 2 < n && flag_pass) {
+        var (y, x, n) = abPoint(count % 2).head
+        if (count / 2 < n && flagPass) {
             count = count + 1
-            val tmp = ab_point(count % 2).head
+            val tmp = abPoint(count % 2).head
             y = tmp(0)
             x = tmp(1)
             n = tmp(2)
         }
 
-        ab_point(count % 2) = ab_point(count % 2).tail
+        abPoint(count % 2) = abPoint(count % 2).tail
         val ab = if (count % 2 == 0) "A" else "B"
 
         def addToAbPoint(y: Int, x: Int, n: Int): Unit = {
             if (y >= 0 && y < H && x >= 0 && x < W && s(y)(x) == ".") {
                 s(y)(x) = ab
                 sums(count % 2) = sums(count % 2) + 1
-                ab_point(count % 2) = ab_point(count % 2) ++ List((y, x, n + 1))
+                abPoint(count % 2) = abPoint(count % 2) ++ List((y, x, n + 1))
             }
         }
 

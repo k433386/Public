@@ -3,24 +3,24 @@ import math._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var flag = 0
+    val n = readLine().toInt
     
-    for (a <- 1 to 1000) {
-        for (b <- 1 to 1000) {
-            if (a > b && flag == 0){
+    def loop(): Boolean = {
+        for (a <- 1 to 1000; b <- 1 to 1000) {
+            if (a > b){
                 for (c <- 1 to 1000) {
-                    if (N == a+b+c && flag == 0){
+                    if (n == a+b+c){
                         if (pow(a, 2) == pow(b, 2) + pow(c, 2)){
-                            flag = 1
+                            return false
                         }
                     }
                 }
             }
-
         }
+        return true
     }
-    if (flag == 0){
+
+    if (loop()){
         println("NO")
     } else {
         println("YES")  

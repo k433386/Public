@@ -1,9 +1,5 @@
 object Main extends App {
 
-    var result = ""
-
-    for (i <- 1 until 11){
-        result = s"${result}" + s"${i}" + " "
-    }
-    println(result)
+    val result = (1 to 10)
+    println(result.mkString(" ")+ " ")
 }
