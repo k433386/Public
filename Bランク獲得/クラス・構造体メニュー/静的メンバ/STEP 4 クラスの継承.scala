@@ -2,9 +2,7 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class basic(){
-        var amount = 0
-        var past = ""
+    class basic(val amount: Int, val past: String){
 
         def check(menu: String, price: Int) : Int = {
             if (menu == "alcohol"){
@@ -13,58 +11,47 @@ object Main extends App {
                 price
             }
         }
-        def orderPass(menu: String, price: Int) = {
-            var result = check(menu: String, price: Int)
-            amount = amount + result
+        def orderPass(menu: String, price: Int): basic = {
+            new basic(amount + check(menu, price), "")
         }
-        def printout() = {
+        def printOut() = {
             println(amount)
         }
     }
-    class plus() extends basic {
-        amount = 0 
-        past = ""
+    class plus(override val amount: Int, override val past: String) extends basic(amount, past) {
 
-        def discount(menu: String, price: Int) : Int = {
-            past = past + menu
-            if (past.contains("alcohol") && menu == "food"){
-                price - 200
+        def discount(menu: String, price: Int) : (Int, String) = {
+            val latest = past + menu
+            if (latest.contains("alcohol") && menu == "food"){
+                (price - 200, latest)
             } else {
-                price
+                (price, latest)
             }
         }
-        override def orderPass(menu: String, price: Int) = {
-            var result = discount(menu, price)
-            amount = amount + result
+        override def orderPass(menu: String, price: Int): plus = {
+            val (p, latest) = discount(menu, price)
+            new plus(amount + p, latest)
         }
     }
 
-    var customers : Array[basic] = Array.empty    
-    
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-
-    for(i <- 0 until N){
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
+    val customersList: Array[basic] = (0 until n).foldLeft(Array.empty[basic]) { (customers, _) =>
         val age = readLine().toInt
-        var customer = 
-        if (age >= 20 ){
-            val customer = new plus()
-            customers = customers ++ Array(customer)
-        } else {
-            val customer = new basic()
-            customers = customers ++ Array(customer)
+        val customer = {
+            if (age >= 20 ){
+                new plus(0, "")
+            } else {
+                new basic(0, "")
+            }
         }
-    }
+        customers :+ customer
+    }    
 
-    for(i <- 0 until K){
+    for(_ <- 0 until k){
         val line = readLine().split(" ")
         val index = line(0).toInt - 1
-
-        customers(index).orderPass(line(1), line(2).toInt) 
+        customersList(index) = customersList(index).orderPass(line(1), line(2).toInt)
     }
 
-    for (i <- customers){
-        i.printout
-    }
+    customersList.foreach(_.printOut)
 }

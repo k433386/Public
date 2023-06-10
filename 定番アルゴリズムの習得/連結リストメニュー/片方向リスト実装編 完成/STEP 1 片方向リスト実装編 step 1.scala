@@ -17,8 +17,7 @@ object Main extends App {
     list(0) = new node(-1, 1023)
     list(1023) = new node(-1, -1)
 
-    var back = 0
-    var emptyMinIndex = 1
+    val listKey: Map[String, Int] = Map("back" -> 0, "empty" -> 1)
 
     for (i <- 0 until n){
         println(readLine().trim().toInt)

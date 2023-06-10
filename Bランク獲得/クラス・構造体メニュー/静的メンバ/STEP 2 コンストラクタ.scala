@@ -2,37 +2,44 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class Employee(var number: Int, var name: String){
-        def getnum() : Int = {
+    class Employee(val number: Int, val name: String){
+        def getNum() : Int = {
             number
         }
-        def getname() : String = {
+        def getName() : String = {
             name
         }
-        def change_num(cNum: Int) = {
-            number = cNum
+        def changeNum(cNum: Int): Employee = {
+            new Employee(cNum, name)
         }        
-        def change_name(cName: String) = {
-            name = cName
+        def changeName(cName: String): Employee = {
+            new Employee(number, cName)
         }
     }
-    var employees : Array[Employee] = Array.empty    
-    
-    val N = readLine().toInt
 
-    for(i <- 0 until N){
+    val n = readLine().toInt
+    val employeesList: Array[Employee] = (0 until n).foldLeft(Array.empty[Employee]) { (employees, _) =>
         val line = readLine().split(" ")
-        if (line(0) == "make"){
-            val employee = new Employee(line(1).toInt, line(2))
-            employees = employees ++ Array(employee)  
-        } else if (line(0) == "getnum"){
-            println(employees(line(1).toInt-1).getnum())
-        } else if (line(0) == "getname"){
-            println(employees(line(1).toInt-1).getname())
-        } else if (line(0) == "change_num"){
-            employees(line(1).toInt-1).change_num(line(2).toInt)
-        } else if (line(0) == "change_name"){
-            employees(line(1).toInt-1).change_name(line(2))
+        line(0) match {
+            case "make" =>
+                val newEmployee = new Employee(line(1).toInt, line(2))
+                employees :+ newEmployee
+            case "getnum" =>
+                println(employees(line(1).toInt-1).getNum())
+                employees
+            case "getname" =>
+                println(employees(line(1).toInt-1).getName())
+                employees
+            case "change_num" =>
+                val tmp = employees(line(1).toInt-1).changeNum(line(2).toInt)
+                employees(line(1).toInt-1) = tmp
+                employees
+            case "change_name" =>
+                val tmp = employees(line(1).toInt-1).changeName(line(2))
+                employees(line(1).toInt-1) = tmp
+                employees
+            case _ => 
+                employees
         }
     }
 }

@@ -2,32 +2,27 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class User(var nickname: String, val old: Int, val birth: String, val state: String){
+    class User(val nickname: String, val old: Int, val birth: String, val state: String){
         def printOut = {
             println(s"${nickname} ${old} ${birth} ${state}")
         }
-        def changeName(cName: String) = {
-            nickname = cName
+        def copyNewNameUser(cName: String):User  = {
+            new User(cName, old, birth, state)
         }
     }
-    var users : Array[User] = Array.empty    
     
-    val NK = readLine().split(" ").map(_.toInt)
-    val N = NK(0)
-    val K = NK(1)
-
-    for(i <- 0 until N){
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
+    val usersList: Array[User] = (0 until n).foldLeft(Array.empty[User]) { (users, _) =>
         val rl = readLine().split(" ")
         val user = new User(rl(0), rl(1).toInt, rl(2), rl(3))
-        users = users ++ Array(user)
-    }
+        users :+ user
+    }    
 
-    for (i <- 0 until K){
+    for (i <- 0 until k){
         val ann = readLine().split(" ")
-        users(ann(0).toInt-1).changeName(ann(1))
+        val tmp = usersList(ann(0).toInt-1).copyNewNameUser(ann(1))
+        usersList(ann(0).toInt-1) = tmp
     }
 
-    for(i <- users){
-        i.printOut
-    }
+    usersList.foreach(_.printOut)
 }

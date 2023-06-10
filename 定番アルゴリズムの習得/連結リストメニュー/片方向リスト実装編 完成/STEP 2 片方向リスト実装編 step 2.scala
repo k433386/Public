@@ -2,46 +2,39 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class node(i: Int, j: Int){
-        var value = i
-        var next = j
-        def getValue() : Int = {
-            value
+    class Node(val value: Int, val next: Int){
+
+        def updateValue(x: Int): Node = {
+            new Node(x, next)
         }
-        def getNext() : Int = {
-            next
-        }
-        def updateValue(x: Int) = {
-            value = x
-        }
-        def updateNext(x: Int) = {
-            next = x
+        def updateNext(x: Int): Node = {
+            new Node(value, x)
         }
     }
 
     val n = readLine().trim().toInt
-    val list = Array.ofDim[node](1024)
+    val list: List[Node] = List(new Node(-1, 1), new Node(-1, -1))
 
-    list(0) = new node(-1, 1023)
-    list(1023) = new node(-1, -1)
-
-    var back = 0
-    var emptyMinIndex = 1
-
-    for (i <- 0 until n){
-        val tmp = readLine().trim().toInt
-        list(emptyMinIndex) = new node(tmp, list(emptyMinIndex-1).getNext)
-        list(emptyMinIndex-1).updateNext(emptyMinIndex)
-        back = emptyMinIndex
-        emptyMinIndex = emptyMinIndex + 1
-    }
-
-    def printOut(list: Array[node]) = {
-        var next = list(0).getNext
-        while (next != 1023){
-            println(list(next).getValue)
-            next = list(next).getNext
+    def addNodeTail(cnt: Int, current: Node, list: List[Node]): List[Node] = {
+        if (cnt == n){
+            return list 
+        } else {
+            val tmp = readLine().trim().toInt
+            val newNode = new Node(tmp, current.next)
+            val newList = list :+ newNode
+            val updatedList = newList.updated(newList.indexOf(current), current.updateNext(newList.indexOf(newNode)))
+            addNodeTail(cnt+1, newNode, updatedList)
         }
     }
-    printOut(list)
+    def printOut(current: Int, list: List[Node]): Unit = {
+        if (current == 1){
+            return
+        } else {
+            println(list(current).value)
+            printOut(list(current).next, list)
+        }
+    }
+    
+    val finalList = addNodeTail(0, list(0), list)
+    printOut(finalList(0).next, finalList)
 }

@@ -2,9 +2,9 @@ import scala.io.StdIn._
 
 object Main extends App {
    
-    val N = readLine().toInt
+    val n = readLine().toInt
 
-    for(i <- 0 until N){
+    for(i <- 0 until n){
         val line = readLine().split(" ")
         println("User{")
         println(s"nickname : ${line(0)}")

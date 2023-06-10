@@ -2,10 +2,7 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    class basic(){
-        var amount = 0
-        var past = ""
-        var leaving = 0
+    class basic(val amount: Int, val past: String, val leaving: Int){
 
         def check(menu: String, price: Int) : Int = {
             if (menu == "alcohol" || menu == "0"){
@@ -14,74 +11,68 @@ object Main extends App {
                 price
             }
         }
-        def orderPass(menu: String, price: Int) = {
-            if (menu == "A"){
-                leaving = 1
-                println(amount)
-                0
-            } else {
-                var result = check(menu: String, price: Int)
-                amount = amount + result                
+        def orderPass(menu: String, price: Int): basic = {
+            menu match {
+                case "A" => 
+                    println(amount)
+                    new basic(amount, past, 1)
+                case _ =>
+                    new basic(amount + check(menu, price), "", leaving)
             }
         }
-        def printout() = {
+        def printOut() = {
             println(amount)
         }
     }
-    class plus() extends basic {
-        amount = 0 
-        past = ""
-        leaving = 0
+    class plus(override val amount: Int, override val past: String, override val leaving: Int) extends basic(amount, past, leaving) {
 
-        def discount(menu: String, price: Int) : Int = {
-            past = past + menu
+        def discount(menu: String, price: Int) : (Int, String) = {
+            val latest = past + menu
             if ((past.contains("alcohol") || past.contains("0")) && menu == "food"){
-                price - 200
+                (price - 200, latest)
             } else if (menu == "0") {
-                500
+                (500, latest)
             } else {
-                price
+                (price, latest)
             }
         }
-        override def orderPass(menu: String, price: Int) = {
-            if (menu == "A"){
-                leaving = 1
-                println(amount)
-                0
-            } else {
-                var result = discount(menu: String, price: Int)
-                amount = amount + result                
+        override def orderPass(menu: String, price: Int): plus = {
+            menu match {
+                case "A" => 
+                    println(amount)
+                    new plus(amount, past, 1)
+                case _ =>
+                    val (p, latest) = discount(menu, price)
+                    new plus(amount + p, latest, leaving)
             }
         }
     }
 
-    var customers : Array[basic] = Array.empty    
-    
-    val NK = readLine().split(" ")
-    val N = NK(0).toInt
-    val K = NK(1).toInt
-
-    for(i <- 0 until N){
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
+    val customersList: Array[basic] = (0 until n).foldLeft(Array.empty[basic]) { (customers, _) =>
         val age = readLine().toInt
-        if (age >= 20 ){
-            val customer = new plus()
-            customers = customers ++ Array(customer)
-        } else {
-            val customer = new basic()
-            customers = customers ++ Array(customer)
+        val customer = {
+            if (age >= 20 ){
+                new plus(0, "", 0)
+            } else {
+                new basic(0, "", 0)
+            }
         }
-    }
+        customers :+ customer
+    }    
 
-    for(i <- 0 until K){
+    for(i <- 0 until k){
         val line = readLine().split(" ")
         val index = line(0).toInt - 1
         val readMenu = line(1)
-        var readPrice = 0
-        if (line.length == 3){
-            readPrice = line(2).toInt
+        val readPrice = {
+            if (line.length == 3){
+                line(2).toInt
+            } else {
+                0
+            }
         }
-        customers(index).orderPass(readMenu, readPrice) 
+        customersList(index) = customersList(index).orderPass(readMenu, readPrice) 
     }
-
-    println(customers.count(_.leaving == 1))
+    println(customersList.count(_.leaving == 1))
 }

@@ -7,17 +7,13 @@ object Main extends App {
             println(s"${nickname} ${old} ${birth} ${state}")
         }
     }
-    var users : Array[User] = Array.empty    
-    
-    val N = readLine().toInt
-    for(i <- 0 until N){
+    val n = readLine().toInt
+    val usersList: Array[User] = (0 until n).foldLeft(Array.empty[User]) { (users, _) =>
         val rl = readLine().split(" ")
         val user = new User(rl(0), rl(1).toInt, rl(2), rl(3))
-        users = users ++ Array(user)
-    }
+        users :+ user
+    }    
     
-    val result = users.sortBy(_.old)
-    for(i <- result){
-        i.printOut
-    }
+    val result = usersList.sortBy(_.old)
+    result.foreach(_.printOut)
 }
