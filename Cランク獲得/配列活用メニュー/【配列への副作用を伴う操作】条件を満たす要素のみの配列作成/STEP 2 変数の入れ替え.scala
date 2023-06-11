@@ -2,14 +2,7 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    var numX = num(0).toInt
-    var numY = num(1).toInt
-    var tmp = 0
+    val Array(x, y) = readLine().split(" ").map(_.toInt)
 
-    tmp = numX
-    numX = numY
-    numY = tmp
-
-    println(s"${numX} ${numY}")    
+    println(s"${y} ${x}")
 }

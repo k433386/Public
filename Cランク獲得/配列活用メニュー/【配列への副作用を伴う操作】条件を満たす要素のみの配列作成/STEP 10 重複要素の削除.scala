@@ -2,17 +2,10 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    var Aline = Array.ofDim[Int](num)
+    val n = readLine().trim().toInt
+    val a = Array.fill(n)(readLine().trim().toInt)
 
-    for (i <- 0 until num){
-        val Anum = readLine().toInt
-        Aline(i) = Anum
-    }
-
-    var Bline = Aline.distinct
+    val b = a.distinct
     
-    for (i <- Bline){
-        println(i)
-    }
+    b.foreach(println)
 }

@@ -5,14 +5,17 @@ object Main extends App {
     val Array(n, x, k) = readLine().split(" ").map(_.toInt)
     val an = readLine().split(" ").map(_.toInt)
 
-    def countUp() = {
-        var count = 0
-        for (i <- an.sliding(k).toList){
-            if (i.length == i.count(_ == x)){
-                count = count + 1
+    def countUp(i: Int, line: List[Array[Int]], count: Int): Int = {
+        if (i == line.length){
+            return count
+        } else {
+            if (line(i)(.length == line(i)(.count(_ == x)){
+                countUp(i+1, line, count+1)
+            } else {
+                countUp(i+1, line, count)
             }
         }
-        println(count)
     }
-    countUp()
+
+    println(countUp(0, an.sliding(k).toList, 0))
 }

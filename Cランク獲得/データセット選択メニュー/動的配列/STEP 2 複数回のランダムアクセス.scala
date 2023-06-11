@@ -2,12 +2,12 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var Aline = readLine().split(" ").map(_.toInt)
-    val Q = readLine().toInt
-    var Bline = readLine().split(" ").map(_.toInt)
+    val n = readLine().toInt
+    val a = readLine().split(" ").map(_.toInt)
+    val q = readLine().toInt
+    val b = readLine().split(" ").map(_.toInt)
 
-    for (i <- 0 until Q){
-        println(Aline(Bline(i)-1))
+    for (i <- 0 until q){
+        println(a(b(i)-1))
     }
 }

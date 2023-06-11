@@ -2,19 +2,10 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    val numN = num(0).toInt
-    val numK = num(1).toInt
-    var Aline = Array.ofDim[Int](numN)
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
+    val a = Array.fill(n)(readLine().trim().toInt)
 
-    for (i <- 0 until numN){
-        val Anum = readLine().toInt
-        Aline(i) = Anum
-    }
-
-    val Bline = Aline.filter(_ >= numK)
+    val b = a.filter(_ >= k)
     
-    for (i <- Bline){
-        println(i)
-    }
+    b.foreach(println)
 }

@@ -2,24 +2,14 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    var Aline = Array.ofDim[Int](num)
-
-    for (i <- 0 until num){
-        val Anum = readLine().toInt
-        Aline(i) = Anum
-    }
+    val n = readLine().trim().toInt
+    val a = Array.fill(n)(readLine().trim().toInt)
     
-    val numXY = readLine().split(" ")
-    val numX = numXY(0).toInt
-    val numY = numXY(1).toInt
-    var tmp = 0
+    val Array(x, y) = readLine().split(" ").map(_.toInt)
 
-    tmp = Aline(numX-1)
-    Aline(numX-1) = Aline(numY-1)
-    Aline(numY-1) = tmp
+    val tmp = a(x-1)
+    a(x-1) = a(y-1)
+    a(y-1) = tmp
 
-    for (i <- Aline){
-        println(i)
-    }
+    a.foreach(println)
 }

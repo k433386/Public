@@ -3,19 +3,17 @@ import scala.io.StdIn._
 object Main extends App {
 
     val Array(n, x) = readLine().split(" ").map(_.toLong)
-    val a = readLine().split(" ").map(_.toLong)
+    val a = readLine().split(" ").map(_.toLong).sorted.reverse
 
-    def searchSumMinCount(line: Array[Long], target: Long): Long = {
-        var count = 0L
-        var tmp = 0L
-        for (i <- line){
-            tmp = tmp + i
-            count = count + 1
-            if (tmp >= target){
-                return count
-            }
+    def searchSumMinCount(cnt: Int, sum: Long): Long = {
+        if (cnt == a.length){
+            return -1L
+        } else if (sum+a(cnt) >= x){
+            return cnt + 1
+        } else {
+            searchSumMinCount(cnt+1, sum+a(cnt))
         }
-        return -1L
     }
-    println(searchSumMinCount(a.sorted.reverse, x))
+
+    println(searchSumMinCount(0, 0L))
 }

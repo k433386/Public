@@ -5,21 +5,15 @@ object Main extends App {
     val Array(n, x) = readLine().split(" ").map(_.toInt)
     val a = readLine().split(" ").map(_.toInt)
 
-    def maxLength(a: Array[Int], x: Int): Int = {
-        var max = 0
-        var current = 0
-
-        for (num <- a) {
-            if (num < x) {
-                current = current + 1
-                max = Array(max, current).max
-            } else {
-                current = 0
-            }
+    def maxLength(cnt: Int, max: Int, current: Int): Int = {
+        if (cnt == n){
+            return max
+        } else if (a(cnt) < x){
+            maxLength(cnt+1, Array(max, current+1).max, current+1)
+        } else {
+            maxLength(cnt+1, max, 0)
         }
-        return max
     }
 
-    val result = maxLength(a, x)
-    println(result)
+    println(maxLength(0, 0, 0))
 }

@@ -3,18 +3,19 @@ import scala.io.StdIn._
 object Main extends App {
 
     val n = readLine().toInt
-    val a = readLine().split(" ").map(_.toInt)
-    var level = 1
-    var flag = true
+    val a = readLine().split(" ").map(_.toLong).sorted
 
-    for (i <- a.sorted){
-        if (i <= level){
-            level = i + 1
+    def loop(cnt: Int, level: Long):Boolean = {
+        if (cnt == n){
+            return true
+        } else if (a(cnt) <= level) {
+            loop(cnt+1, a(cnt)+1)
         } else {
-            flag = false
+            return false
         }
     }
-    if (flag) {
+
+    if (loop(0, 1L)) {
         println("Yes")
     } else {
         println("No")

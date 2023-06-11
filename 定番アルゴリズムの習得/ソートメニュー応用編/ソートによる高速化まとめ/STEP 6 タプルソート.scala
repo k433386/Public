@@ -3,23 +3,23 @@ import scala.io.StdIn._
 object Main extends App {
 
     val Array(n, m, k) = readLine().split(" ").map(_.toInt)
-    val a = Array.ofDim[Int](n, m)
+    val a = Array.fill(n)(readLine().split(" ").map(_.toInt))
 
-    for (i <- 0 until n){
-        a(i) = readLine().split(" ").map(_.toInt)
-    }
-
-    def withSort(x: Array[Array[Int]]): Array[Array[Int]] = {
+    def withSort(): Array[Array[Int]] = {
         val m = a(0).length
 
         val sorted = a.sortWith { (row1, row2) =>
             if (row1(k - 1) != row2(k - 1)) {
                 row1(k - 1) < row2(k - 1)
             } else {
-                var i = 0
-                while (i < m && row1(i) == row2(i)) {
-                    i = i + 1
+                def findMismatchIndex(row1: Array[Int], row2: Array[Int], index: Int): Int = {
+                    if (index >= row1.length || row1(index) != row2(index)) {
+                        return index
+                    } else {
+                        findMismatchIndex(row1, row2, index + 1)
+                    }
                 }
+                val i = findMismatchIndex(row1, row2, 0)
                 if (i == m) {
                     false
                 } else {
@@ -30,7 +30,7 @@ object Main extends App {
         return sorted
     }
 
-    val result = withSort(a)
+    val result = withSort()
     for (line <- result){
         println(line.mkString(" "))
     }

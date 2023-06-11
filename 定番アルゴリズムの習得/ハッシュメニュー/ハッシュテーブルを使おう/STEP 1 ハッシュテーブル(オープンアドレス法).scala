@@ -7,23 +7,19 @@ object Main extends App {
 
     for (_ <- 0 until n) {
         val x = readLine().toInt
-        var tmp = x % 10
-        if (H(tmp) == -1){
-            H(tmp) = x
+        if (H(x % 10) == -1){
+            H(x % 10) = x
         } else {
-            var flag = true
-            var i = 0
-            while (flag){
-                i = i + 1
-                val retmp = (x+i) % 10
+            def inner(cnt: Int): Unit = {
+                val retmp = (x+cnt+1) % 10
                 if (H(retmp) == -1){
                     H(retmp) = x
-                    flag = false
+                    return
                 }
+                inner(cnt+1)
             }
+            inner(0)
         }
     }
-    for (i <- H){
-        println(i)
-    }
+    H.foreach(println)
 }

@@ -6,8 +6,8 @@ object Main extends App {
     
     def extGCD(a: Long, b: Long): (Long, Long, Long) = {
         if (b != 0){
-            var (c, y, x) = extGCD(b, a%b)
-            y = y - (a/b) * x
+            val (c, tmp, x) = extGCD(b, a%b)
+            val y = tmp - (a/b) * x
             return (c, x, y)
         }
         return (a, 1, 0)

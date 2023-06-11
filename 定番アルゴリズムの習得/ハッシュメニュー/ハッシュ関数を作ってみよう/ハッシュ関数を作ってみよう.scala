@@ -6,11 +6,11 @@ object Main extends App {
 
     for (_ <- 0 until n) {
         val x = readLine().split("")
-        var tmp = 0
-
-        for ((i, j) <- ('a' to 'z').zip(1 to 26)){
-            tmp = tmp + x.count(_ == i.toString) * x.indexOf(i.toString) * j  
+        val result = ('a' to 'z').zip(1 to 26).foldLeft(Array.empty[Int]) { case (acc, (char, index)) =>
+            val charCount = x.count(_ == char)
+            val tmp = charCount * x.indexOf(char.toString) * index
+            acc :+ tmp
         }
-        println(tmp % 100)
+        println(result.sum % 100)
     }
 }
