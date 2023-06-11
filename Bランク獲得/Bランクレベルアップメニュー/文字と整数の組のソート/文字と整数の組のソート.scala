@@ -3,17 +3,12 @@ import scala.io.StdIn._
 object Main extends App {
 
     val n = readLine().toInt
-    val key = Array.ofDim[Int](n)
-    var SD = Map.empty[Int, String]
-
-    for (i <- 0 until n){
+    val sd: Map[Int, String] = (0 until n).foldLeft(Map.empty[Int, String]) { (map, _) =>
         val line = readLine.split(" ")
-        SD = SD + (line(1).toInt -> line(0))
-        key(i) = line(1).toInt
+        map + (line(1).toInt -> line(0))
     }
-
-    val result = key.sorted
-    for (i <- result){
-        println(SD(i))
+    val key = sd.keys.toList
+    for (i <- key.sorted){
+        println(sd(i))
     }
 }

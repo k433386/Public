@@ -2,17 +2,9 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val NXP = readLine().split(" ").map(_.toInt)
-    val N = NXP(0)
-    val X = NXP(1)
-    val P = NXP(2)
-    val An = Array.ofDim[Int](N+2)
+    val Array(n, x, p) = readLine().split(" ").map(_.toInt)
+    val line = Array.fill(n)(readLine().toInt)
 
-    An(0) = P
-    for (i <- 1 until N+1){
-        An(i) = readLine().toInt
-    }
-    An(N+1) = X
-
-    println(An.sorted.indexOf(P)+1)
+    val result = Array(p) ++ line ++ Array(x) 
+    println(result.sorted.indexOf(p)+1)
 }

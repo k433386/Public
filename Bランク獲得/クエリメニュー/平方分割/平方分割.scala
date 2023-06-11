@@ -2,39 +2,46 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val K = readLine().toInt
-    val A = Array.ofDim[Int](100, 100)
-    val B = Array.ofDim[Int](10000)
+    val k = readLine().toInt
+    val a = Array.ofDim[Int](100, 100)
+    val b = Array.ofDim[Int](10000)
     val rangeMax = Array.ofDim[Int](100)
-    var ans = 0
 
     for (i <- 0 until 100; j <- 0 until 100){
-        A(i)(j) = readLine().toInt
-        B(i*100+j) = A(i)(j)
+        a(i)(j) = readLine().toInt
+        b(i*100+j) = a(i)(j)
     }
-
     for (i <- 0 until 100){
-        rangeMax(i) = A(i).max
+        rangeMax(i) = a(i).max
     }
 
-    for (i <- 0 until K){
-        val line = readLine().split(" ").map(_.toInt)
-        val l = line(0)-1
-        val r = line(1)-1
-        var now = l
-        ans = B(l)
+    for (i <- 0 until k){
+        val Array(l, r) = readLine().split(" ").map(_.toInt - 1)
+
+        def innerLoop(now: Int, ans: Int): Int = {
+            if (now > r){
+                return ans
+            } else if (now % 100 == 0 && now + 99 <= r) {
+                val newAns = List(ans, rangeMax(now / 100)).max
+                val newNow = now + 100
+                innerLoop(newNow, newAns)
+            } else {
+                val newAns = List(ans, b(now)).max
+                val newNow = now + 1
+                innerLoop(newNow, newAns)
+            }
+        }
+        println(innerLoop(l, b(l)))
+    }
+}
+//解答例使用済み
 
         while (now <= r) {
             if (now % 100 == 0 && now + 99 <= r) {
                 ans = List(ans, rangeMax(now / 100)).max
                 now = now + 100
             } else {
-                ans = List(ans, B(now)).max
+                ans = List(ans, b(now)).max
                 now = now + 1
             }
         }
-        println(ans)
-    }
-}
-
-//解答例使用済み

@@ -2,73 +2,28 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val X = readLine().toInt
-    val F = readLine().split(" ")
-    val F1 = F(0).toInt
-    val F2 = F(1).toInt
-    val LN = readLine().split(" ")
-    val L = LN(0).toInt
-    val N = LN(1).toInt
-    val sline = readLine().split(" ").map(_.toInt)
+    val x = readLine().toInt
+    val Array(f1, f2) = readLine().split(" ").map(_.toInt)
+    val Array(l, n) = readLine().split(" ").map(_.toInt)
+    val tmp = readLine().split(" ").map(_.toInt)
+    val s = tmp :+ l
 
-    var nowP = 0
-    var FUEL : Array[Int] = Array.empty
-
-    for (dis <- sline){
-        val dest = dis - nowP
-        if (dest <= X){
-            FUEL = FUEL ++ Array(dest * F1)
+    def calculateCost(i: Int, now: Long, cost: Long): Long = {
+        if (i > n) {
+            return cost
         } else {
-            FUEL = FUEL ++ Array(X * F1)
-            FUEL = FUEL ++ Array((dest-X) * F2)            
+            val diff = s(i) - now
+            val updatedCost = {
+                if (x < diff) {
+                    cost + f1 * x + f2 * (diff - x)
+                } else {
+                    cost + f1 * diff
+                }
+            }
+            calculateCost(i + 1, s(i), updatedCost)
         }
-        nowP = dis
-    }
-    if (L-nowP <= X){
-        FUEL = FUEL ++ Array((L-nowP) * F1)
-    } else {
-        FUEL = FUEL ++ Array(X * F1)
-        FUEL = FUEL ++ Array((L-nowP-X) * F2)
     }
 
-    println(FUEL.sum)
+    val totalCost = calculateCost(0, 0L, 0L)
+    println(totalCost)
 }
-
-/*
-import scala.io.StdIn._
-
-object Main extends App {
-
-    val X = readLine().toLong
-    val F = readLine().split(" ").map(_.toLong)
-    val F1 = F(0)
-    val F2 = F(1)
-    val LN = readLine().split(" ").map(_.toLong)
-    val L = LN(0)
-    val N = LN(1)
-    val sline = readLine().split(" ").map(_.toLong)
-
-    var nowP = 0L
-    var FUEL = 0L
-
-    for (dis <- sline){
-        val dest = dis - nowP
-        if (dest <= X){
-            FUEL = FUEL + dest * F1
-        } else {
-            FUEL = FUEL + X * F1
-            FUEL = FUEL + (dest-X) * F2            
-        }
-        nowP = dis
-    }
-    if (L-nowP <= X){
-        FUEL = FUEL + (L-nowP) * F1
-    } else {
-        FUEL = FUEL + X * F1
-        FUEL = FUEL + (L-nowP-X) * F2
-    }
-
-    println(FUEL)
-}
-
-*/

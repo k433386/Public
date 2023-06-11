@@ -3,18 +3,9 @@ import math._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    val X = Array.ofDim[Int](N)
-    var all : Array[Int] = Array.empty
-
-    for (i <- 0 until N){
-        X(i) = readLine().toInt
-    }
-    
-    val pair = X.combinations(2)
-    for (j <- pair){
-        all = all ++ Array(operation(j(0), j(1)))
-    }
+    val n = readLine().toInt
+    val x = Array.fill(n)(readLine().toInt)
+    val pair = x.combinations(2).toList
 
     def operation(x: Int, y: Int) : Int = {
 
@@ -34,14 +25,19 @@ object Main extends App {
             return num
         }
 
-        var XY : Array[Int] = Array.empty
         val rx = Array(plus(x), minus(x), head(x), tail(x), none(x))
         val ry = Array(plus(y), minus(y), head(y), tail(y), none(y))
+
+        val XY = for {
+            i <- rx
+            j <- ry
+        } yield abs(i - j)
         
-        for (i <- rx; j <- ry){
-            XY = XY ++ Array(abs(i - j))
-        }
         return XY.min
+    }
+
+    val all: Array[Int] = (0 until pair.length).foldLeft(Array.empty[Int]) { (array, j) =>
+        array :+ operation(pair(j)(0), pair(j)(1))
     }
     println(all.min)
 }

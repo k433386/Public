@@ -2,31 +2,22 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val NKP = readLine().split(" ").map(_.toInt)
-    val N = NKP(0)
-    val K = NKP(1)
-    val P = NKP(2)
-    val An = Array.ofDim[Int](N)
-    val Evek = Array.ofDim[String](K)
-    var All : Array[Int] = Array.empty
- 
-    All = All ++ Array(P)
-    for (i <- 0 until N){
-        An(i) = readLine().toInt
-    }
-    All = All ++ An
+    val Array(n, k, p) = readLine().split(" ").map(_.toInt)
+    val line = Array(p) ++ Array.fill(n)(readLine().toInt)
 
-    for (i <- 0 until K){
-        Evek(i) = readLine()
-    }
-
-    for (i <- Evek){
-        val data = i.split(" ")
+    def loop(cnt: Int, line: Array[Int]): Unit = {
+        if (cnt == k){
+            return 
+        }
+        val data = readLine().split(" ")
         if (data(0) == "join"){
-            All = All ++ Array(data(1).toInt)
+            val newArray = line :+ data(1).toInt
+            loop(cnt+1, newArray)
         } else {
-            All = All.sorted
-            println(All.indexOf(P)+1)
+            val newArray = line.sorted
+            println(newArray.indexOf(p)+1)
+            loop(cnt+1, newArray)
         }
     }
+    loop(0, line)
 }

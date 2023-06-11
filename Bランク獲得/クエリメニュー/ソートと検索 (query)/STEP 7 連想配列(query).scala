@@ -2,24 +2,29 @@ import scala.io.StdIn._
 
 object Main extends App {
      
-    val NK = readLine().split(" ").map(_.toInt)
-    val N = NK(0)
-    val K = NK(1)
-    var numID : Map[Int, String] = Map.empty
-    val Sk = Array.ofDim[String](K)
+    val Array(n, k) = readLine().split(" ").map(_.toInt)
 
-    for (i <- 0 until N){
+    val numID: Map[Int, String] = (0 until n).foldLeft(Map.empty[Int, String]) { (map, _) =>
         val data = readLine().split(" ")
-        numID = numID ++ Map(data(0).toInt -> data(1))
+        map + (data(0).toInt -> data(1)) 
     }
-    for (i <- 0 until K){
+
+    def loop(cnt: Int, numID: Map[Int, String]): Unit = {
+        if (cnt == k){
+            return 
+        }
         val op = readLine().split(" ")
+
         if (op(0) == "join"){
-            numID = numID ++ Map(op(1).toInt -> op(2))
+            val newMap = numID + (op(1).toInt -> op(2))
+            loop(cnt+1, newMap)
         } else if (op(0) == "leave"){
-            numID = numID - op(1).toInt
+            val newMap = numID - op(1).toInt
+            loop(cnt+1, newMap)
         } else if (op(0) == "call"){
             println(numID(op(1).toInt))
+            loop(cnt+1, numID)
         }
     }
+    loop(0, numID)
 }
