@@ -2,26 +2,15 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    var S = readLine().split(":").map(_.toInt)
-    
-    if (S(1) < 30){
-        S(1) = S(1) + 30
-    } else {
-        S(0) = S(0) + 1
-        S(1) = S(1) - 30
+    val s = readLine().split(":").map(_.toInt)
+    val (resH, resM) = {
+        if (s(1) < 30){
+            (s(0), s(1)+30)
+        } else {
+            (s(0)+1, s(1)-30)
+        }
     }
 
-    if (S(0) < 10){
-        if (S(1) < 10){
-            println(s"0${S(0)}:0${S(1)}")
-        } else {
-            println(s"0${S(0)}:${S(1)}")
-        }
-    } else {
-        if (S(1) < 10){
-            println(s"${S(0)}:0${S(1)}")
-        } else {
-            println(s"${S(0)}:${S(1)}")
-        }
-    }
+    val result = String.format("%2s", resH).replace(" ", "0") + ":" + String.format("%2s", resM).replace(" ", "0")
+    println(result)
 }

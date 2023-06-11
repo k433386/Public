@@ -1,9 +1,4 @@
 object Main extends App {
 
-    var numN = 0
-
-    numN = numN + 3286
-    numN = numN * 4736
-    numN = numN % 12312
-    println(numN)  
+    println(((0+3286)*4736)% 12312)  
 }

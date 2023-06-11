@@ -2,14 +2,8 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val line = readLine().split(" ")
-    val numA = line(0).toInt
-    val numB = line(1).toInt
-    val numC = line(2).toInt
-    var numN = 0
+    val Array(a, b, c) = readLine().trim().split(" ").map(_.toInt)
+    val result = ((0+a) * b) % c
 
-    numN = numN + numA
-    numN = numN * numB
-    numN = numN % numC
-    println(numN)  
+    println(result)  
 }

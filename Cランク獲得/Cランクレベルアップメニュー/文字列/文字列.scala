@@ -2,19 +2,13 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt
-    var tL = Array.ofDim[Int](N, 2)
-    var hL = Array.ofDim[Int](N)
-    var mL = Array.ofDim[Int](N)
+    val n = readLine().toInt
+    val tmp = Array.fill(n)(readLine().split(" "))
+    val tL = tmp.map(_(0).split(":").map(_.toInt))
+    val hL = tmp.map(_(1).toInt)
+    val mL = tmp.map(_(2).toInt)
 
-    for (i <- 0 until N){
-        var tmp = readLine().split(" ")
-        tL(i) = tmp(0).split(":").map(_.toInt)
-        hL(i) = tmp(1).toInt
-        mL(i) = tmp(2).toInt
-    }
-
-    for (i <- 0 until N){
+    for (i <- 0 until n){
         tL(i)(0) = tL(i)(0) + hL(i)
         tL(i)(1) = tL(i)(1) + mL(i)
 
@@ -26,18 +20,7 @@ object Main extends App {
             tL(i)(0) = tL(i)(0) - 24
         }
     
-        if (tL(i)(0) < 10){
-            if (tL(i)(1) < 10){
-                println(s"0${tL(i)(0)}:0${tL(i)(1)}")
-            } else {
-                println(s"0${tL(i)(0)}:${tL(i)(1)}")
-            }
-        } else {
-            if (tL(i)(1) < 10){
-                println(s"${tL(i)(0)}:0${tL(i)(1)}")
-            } else {
-                println(s"${tL(i)(0)}:${tL(i)(1)}")
-            }
-        }
+        val result = String.format("%2s", tL(i)(0)).replace(" ", "0") + ":" + String.format("%2s", tL(i)(1)).replace(" ", "0")
+        println(result)
     }
 }

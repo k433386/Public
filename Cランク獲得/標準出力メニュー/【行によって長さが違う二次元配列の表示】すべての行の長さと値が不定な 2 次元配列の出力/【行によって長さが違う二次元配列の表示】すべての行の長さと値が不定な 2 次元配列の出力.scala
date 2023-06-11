@@ -2,26 +2,18 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().split(" ")
-    val numN = num(0).toInt
-    val numM = num(1).toInt
+    val Array(n, m) = readLine().split(" ").map(_.toInt)
 
-    val lineA = readLine().split(" ")
-    val lineB = readLine().split(" ")
+    val a = readLine().trim().split(" ").map(_.toInt)
+    val b = readLine().trim().split(" ").map(_.toInt)
     
-    var result = ""
-    var tmp = 0
-
-    for (j <- 0 until numM){
-        for (i <- 0 until lineB(j).toInt){
-            result = result + s"${lineA(tmp+i)}"
-            if (i < lineB(j).toInt-1){
-                result = result + " "
-            } else {
-                tmp = tmp + lineB(j).toInt
-            }
+    def loop(cnt: Int, a: Array[Int]): Unit = {
+        if (cnt == m){
+            return
+        } else {
+            println(a.take(b(cnt)).mkString(" "))
+            loop(cnt+1, a.drop(b(cnt)))
         }
-        println(result)
-        result = ""
     }
+    loop(0, a)
 }

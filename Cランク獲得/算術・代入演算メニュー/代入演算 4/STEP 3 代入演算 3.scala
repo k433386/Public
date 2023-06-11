@@ -1,10 +1,7 @@
-import Math._
+import scala.io.StdIn._
 
 object Main extends App {
 
-    var numN = 10000
-
-    numN = (numN / 361).round
-    numN = numN % 28
-    println(numN)  
+    val result = ((10000/361).round %28)
+    println(result)  
 }

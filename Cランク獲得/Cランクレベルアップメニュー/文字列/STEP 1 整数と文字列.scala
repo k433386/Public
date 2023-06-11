@@ -2,13 +2,8 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val N = readLine().toInt 
-    var Aline = Array.ofDim[String](N)
+    val n = readLine().toInt 
+    val a = Array.fill(n)(readLine().trim().length)
 
-    for (i <- 0 until N){
-        Aline(i) = readLine()
-    }
-    for (i <- Aline){
-        println(s"${i.length}")
-    }
+    a.foreach(println)
 }

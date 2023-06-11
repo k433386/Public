@@ -2,13 +2,8 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val num = readLine().toInt
-    var count = 0
+    val n = readLine().trim().toInt
+    val result = (1 to n).count(x => n%x == 0)
 
-    for (i <- 1 to num){
-        if (num % i == 0){
-            count = count + 1
-        }
-    }
-    println(count)
+    println(result)
 }

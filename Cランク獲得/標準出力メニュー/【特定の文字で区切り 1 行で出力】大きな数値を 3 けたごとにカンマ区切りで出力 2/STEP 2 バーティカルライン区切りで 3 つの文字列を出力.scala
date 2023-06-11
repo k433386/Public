@@ -2,15 +2,7 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val key = 3
-    var result = ""
+    val line = Array.fill(3)(readLine().trim())
 
-    for (i <- 0 until key){
-        val line = readLine()
-        result = result + line
-        if (i < key-1){
-            result = result + "|"
-        }
-    }
-    println(result)
+    println(line.mkString("|"))
 }
