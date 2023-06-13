@@ -4,63 +4,52 @@ import scala.collection.mutable.Queue
 object Main extends App {
 
     val Array(n, x, y) = readLine().split(" ").map(_.toInt)
-    val xIndex = x - 1
-    val yIndex = y - 1
-
     val graph = Array.fill(n)(List.empty[Int])
     for (_ <- 0 until n - 1) {
-        val Array(a, b) = readLine().split(" ").map(_.toInt)
-        graph(a - 1) ::= b - 1
-        graph(b - 1) ::= a - 1
+        val Array(a, b) = readLine().split(" ").map(_.toInt - 1)
+        graph(a) = b :: graph(a)
+        graph(b) = a :: graph(b)
     }
-
     for (i <- 0 until n) {
         graph(i) = graph(i).sorted
     }
 
-    val dfs_unvisited = Array.fill(n)(true)
-    val bfs_unvisited = Array.fill(n)(true)
-    var bfs_count = 0
-    var dfs_count = 0
+    val dfsUnvisited = Array.fill(n)(true)
+    val bfsUnvisited = Array.fill(n)(true)
+    var bfsCount = 0
+    var dfsCount = 0
 
     def dfs(now: Int): Unit = {
-        dfs_unvisited(now) = false
-        if (dfs_unvisited(yIndex)) {
-            dfs_count += 1
-        }
-        for (i <- 0 until graph(now).length) {
-            if (dfs_unvisited(graph(now)(i))) {
-                dfs(graph(now)(i))
-            }
+        dfsUnvisited(now) = false
+        if (dfsUnvisited(y-1)) dfsCount += 1
+
+        for (nxt <- graph(now)) {
+            if (dfsUnvisited(nxt)) dfs(nxt)
         }
     }
-
     def bfs(): Unit = {
-        val q = Queue[Int]()
-        q.enqueue(xIndex)
-        bfs_unvisited(xIndex) = false
+        val q = Queue[Int](x-1)
+        bfsUnvisited(x-1) = false
         while (q.nonEmpty) {
             val now = q.dequeue()
-            if (now == yIndex) {
-                return
-            } else {
-                bfs_count += 1
-            }
+            if (now == y-1) return
+            else bfsCount += 1
+
             for (nxt <- graph(now)) {
-                if (bfs_unvisited(nxt)) {
-                    bfs_unvisited(nxt) = false
+                if (bfsUnvisited(nxt)) {
+                    bfsUnvisited(nxt) = false
                     q.enqueue(nxt)
                 }
             }
         }
     }
 
-    dfs(xIndex)
+    dfs(x-1)
     bfs()
 
-    if (bfs_count < dfs_count) {
+    if (bfsCount < dfsCount) {
         println("bfs")
-    } else if (bfs_count == dfs_count) {
+    } else if (bfsCount == dfsCount) {
         println("same")
     } else {
         println("dfs")

@@ -1,42 +1,27 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Stack
 
 object Main extends App {
- 
-    def dfs(graph: Array[Array[Int]], size: Array[Long], now: Int): Unit = {
-        val stack = Stack[Int]()
-        stack.push(now)
-
-        while (stack.nonEmpty) {
-            val curr = stack.pop()
-
-            for (next <- graph(curr)) {
-                stack.push(next)
-                size(curr) += size(next)
-            }
-        }
-    }
 
     val n = readLine().trim().toInt
-    val graph = Array.ofDim[Int](n, n)
-    val name = Array.ofDim[String](n)
-    val size = Array.ofDim[Long](n)
+    val line = Array.fill(n)(readLine().trim().split(" "))
 
-    for (i <- 0 until n) {
-        val input = readLine().trim().split(" ")
-        name(i) = input(0)
-        size(i) = input(1).toLong
-        val num = input(2).toInt
+    val name = line.map(_(0))
+    val size = line.map(_(1).toLong)
+    val num = line.map(_(2).toInt)
+    val child = Array.fill(n)(List.empty[Int])
 
-        for (j <- 0 until num) {
-            graph(i)(j) = input(j+3).toInt
+    for (i <- 0 until n; j <- 0 until num(i)) {
+        child(i) = line(i)(j + 3).toInt - 1 :: child(i)
+    }
+
+    for (i <- (n - 1) to 0 by -1) {
+        for (next <- child(i)) {
+            size(i) += size(next)
         }
     }
 
-    dfs(graph, size, 0)
-    for (i <- 0 until n) {
-        println(name(i) + " " + size(i))
-    }
+    (0 until n).foreach(i => println(s"${name(i)} ${size(i)}"))
 }
-
-//再帰はオーバーフロー
+//解答例使用済み
+//Exception in thread "main" java.lang.StackOverflowError
+//再帰は無理

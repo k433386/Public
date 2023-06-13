@@ -1,53 +1,42 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Queue
 
 object Main extends App {
  
-    val Array(h, w) = readLine().split(" ").map(_.toInt)
-    val Array(y, x) = readLine().split(" ").map(_.toInt)
-    val Sh = Array.ofDim[String](h, w)
-    val dataQueue = Queue[(Int, Int)]()
+    val n = readLine().trim().toInt
+    val recipe = Array.fill(n)(readLine().trim().split(" ").map(_.toInt))
+    val price = recipe.map(_(0).toLong)
+    val enable = recipe.map(_(1))
+    val parts = Array.fill(n)(List.empty[Int])
+    val minValue = price
+    val confirm = Array.fill(n)(false)
 
-    for (i <- 0 until h; j <- 0 until w){
-        Sh(i)(j) = "."
-    }
-
-    def inMap(y: Int, x: Int) : Boolean = {
-        (0 <= y && y < h && 0 <= x && x < w)
-    }
-    def nextToPlot(board: Array[Array[String]], yx: (Int, Int)) = {
-        val (y, x) = yx
-        if (inMap(y-1, x)){
-            board(y-1)(x) = "*"
-            dataQueue.enqueue((y-1, x))
-        }
-        if (inMap(y+1, x)){
-            board(y+1)(x) = "*"
-            dataQueue.enqueue((y+1, x))
-        }
-        if (inMap(y, x+1)){
-            board(y)(x+1) = "*"
-            dataQueue.enqueue((y, x+1))
-        }
-        if (inMap(y, x-1)){
-            board(y)(x-1) = "*"
-            dataQueue.enqueue((y, x-1))
-        }
-    }
-    def printOut(board: Array[Array[String]]) = {
-        for (i <- board){
-            println(i.mkString(""))
-        }            
+    for (i <- 0 until n; j <- 0 until enable(i)) {
+        parts(i) = recipe(i)(j + 2) - 1 :: parts(i)
     }
 
-    Sh(y)(x) = "*"    
-    dataQueue.enqueue((y, x))
-    for (_ <- 0 until 3){
-        val len = dataQueue.length
-        for (i <- 0 until len){
-            val data = dataQueue.dequeue()
-            nextToPlot(Sh, data)
+    @scala.annotation.tailrec
+    def dfs(stack: List[Int]): Unit = {
+        if (stack.nonEmpty) {
+        val now = stack.head
+        val rest = stack.tail
+
+        if (!confirm(now)) {
+            if (parts(now).isEmpty) {
+            confirm(now) = true
+            } else {
+            val allConfirmed = parts(now).forall(next => confirm(next))
+            if (allConfirmed) {
+                val purchase = parts(now).map(next => minValue(next)).sum
+                minValue(now) = purchase.min(price(now))
+                confirm(now) = true
+            }
+            }
+        }
+
+        dfs(parts(now) ::: rest)
         }
     }
-    printOut(Sh)
+
+    dfs(parts(0))
+    println(minValue(0))
 }
