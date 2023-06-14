@@ -22,6 +22,8 @@ X = X.min(newX) //XとnewXで最小値
 .update
 .updated
 
+.updated(Xindex, Y).updated(Yindex, X) //一時変数なしでswapもできる
+
 .sorted //配列を昇順で並び替える
 .sortBy(_(X)) //指定した列でn次元配列を並び替える
 .sortBy { case (x, _, _) => x } //指定した場所でタプル入り配列を並び替える
@@ -121,7 +123,7 @@ def withSort(x: Array[Array[Int]]): Array[Array[Int]] = {
 } //sortのmasterpiece
 
 val X: Map[String, String] = (0 until k).foldLeft(Map.empty[String, String]) { (map, _) =>
-        
+
 }
 //ミュータブルなコレクションを置換し得るmasterpiece
 
@@ -172,5 +174,5 @@ BigIntが大きい
 アルゴリズムとして、コレクションの先頭から取り出すのが良い
 カリー化を学ぶこと
 
-末尾再帰最適化
+末尾再帰最適化　TailCalls　+　カリー化
 @scala.annotation.tailrec

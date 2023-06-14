@@ -2,26 +2,17 @@ import scala.io.StdIn._
 
 object Main extends App {
 
-    val n = readLine().trim().toInt
-    val line = Array.fill(n)(readLine().trim().split(" "))
-
-    val name = line.map(_(0))
-    val size = line.map(_(1).toLong)
-    val num = line.map(_(2).toInt)
-    val child = Array.fill(n)(List.empty[Int])
-
-    for (i <- 0 until n; j <- 0 until num(i)) {
-        child(i) = line(i)(j + 3).toInt - 1 :: child(i)
-    }
-
-    for (i <- (n - 1) to 0 by -1) {
-        for (next <- child(i)) {
-            size(i) += size(next)
+    def fiboCps(n: Int)(cont: BigInt => BigInt): BigInt = {
+        @scala.annotation.tailrec
+        def fiboHelper(n: Int, a: BigInt, b: BigInt): BigInt = {
+            if (n <= 0) cont(a)
+            else fiboHelper(n - 1, b, a + b)
         }
+        fiboHelper(n, 0, 1)
     }
 
-    (0 until n).foreach(i => println(s"${name(i)} ${size(i)}"))
+    val n = readLine().trim().toInt
+    println(fib(n))
 }
-//解答例使用済み
-//Exception in thread "main" java.lang.StackOverflowError
-//再帰は無理
+
+//メモ化最適はスタックオーバーフロー

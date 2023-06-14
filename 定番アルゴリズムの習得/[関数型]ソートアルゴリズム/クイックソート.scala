@@ -12,8 +12,8 @@ object Main extends App {
             quickSort(less)(smaller) ::: pivot :: quickSort(less)(greater)
         }
     }
-    val descendingOrder = quickSort((x: Int, y: Int) => x < y)(list)
-    val ascendingOrder = quickSort((x: Int, y: Int) => x > y)(list)
+    val descendingOrder = quickSort((x: Int, y: Int) => x > y)(list)
+    val ascendingOrder = quickSort((x: Int, y: Int) => x < y)(list)
     println(descendingOrder.mkString(" "))
     println(ascendingOrder.mkString(" "))
 }
