@@ -1,32 +1,66 @@
+import scala.collection.mutable.Stack
 import scala.io.StdIn._
-import scala.collection.mutable.Queue
+
 object Main extends App {
 
-    val Array(n, m, x) = readLine().split(" ").map(_.toInt)
-    val graph = Array.fill(n)(Array.empty[Int])
-    for (_ <- 0 until m) {
-        val Array(a, b) = readLine().split(" ").map(_.toInt)
-        graph(a - 1) = graph(a - 1) ++ Array(b - 1)
-        graph(b - 1) = graph(b - 1) ++ Array(a - 1)
-    }
-    for (i <- 0 until n){
-        graph(i) = graph(i).sorted
+    val n = readLine().toInt
+    val graph = Array.fill(n)(List.empty[Int])
+    val visited = Array.fill(n)(false)
+    for (_ <- 0 until n - 1) {
+        val Array(a, b) = readLine().split(" ").map(_.toInt - 1)
+        graph(a) = b :: graph(a)
+        graph(b) = a :: graph(b)
     }
 
-    val q = Queue[Int]()
-    q.enqueue(x - 1)
-    val unvisited = Array.fill(n)(true)
-    unvisited(x - 1) = false
-    
-    while (q.nonEmpty) {
-        val now = q.dequeue()
-        println(now + 1)
-        for (nxt <- graph(now)) {
-            if (unvisited(nxt)) {
-                unvisited(nxt) = false
-                q.enqueue(nxt)
+    dfs(graph, visited, 0)
+    println(2)
+    visited.foreach(if (_) println(1) else println(2))
+
+    def dfs(graph: Array[List[Int]], visited: Array[Boolean], start: Int): Unit = {
+        val stack = Stack(start)
+        visited(start) = true
+
+        while (stack.nonEmpty) {
+            val now = stack.pop()
+            for (next <- graph(now)) {
+                if (!visited(next)) {
+                    visited(next) = !visited(now)
+                    stack.push(next)
+                }
             }
         }
     }
-}   
-//解答例使用済み
+}
+
+//再帰限界テストケース
+
+/*
+import scala.io.StdIn._
+import scala.annotation.tailrec
+
+object Main extends App {
+
+    val n = readLine().toInt
+    val graph = Array.fill(n)(List.empty[Int])
+    val visited = Array.fill(n)(false)
+    for (_ <- 0 until n - 1) {
+        val Array(a, b) = readLine().split(" ").map(_.toInt - 1)
+        graph(a) = b :: graph(a)
+        graph(b) = a :: graph(b)
+    }
+    
+    visited(0) = true
+    dfs(graph, visited, 0)
+    println(2)
+    visited.foreach(if(_) println(1) else println(2))
+    
+    def dfs(graph: Array[List[Int]], visited: Array[Boolean], now: Int): Unit = {
+        for (next <- graph(now)){
+            if (!visited(next)) {
+                visited(next) = !visited(now)
+                dfs(graph, visited, next)
+            }
+        }
+    }
+}
+*/
