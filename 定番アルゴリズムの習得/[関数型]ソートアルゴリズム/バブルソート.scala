@@ -9,15 +9,15 @@ object Main extends App {
         if (n <= 1) xs
         else {
             val swappedList = (0 until n-1).foldLeft(xs) { (tmp, i) =>
-            if (less(tmp(i), tmp(i+1))) tmp.updated(i, tmp(i+1)).updated(i+1, tmp(i))
-            else tmp
+                if (less(tmp(i+1), tmp(i))) tmp.updated(i, tmp(i+1)).updated(i+1, tmp(i))
+                else tmp
             }
             bubbleSort(less)(swappedList, n-1)
         }
     }
 
-    val descendingOrder = bubbleSort((x: Int, y: Int) => x < y)(line, line.length)
-    val ascendingOrder = bubbleSort((x: Int, y: Int) => x > y)(line, line.length)
-    println(descendingOrder == line.sorted.reverse)
-    println(ascendingOrder == line.sorted)
+    val descendingOrder = bubbleSort((x: Int, y: Int) => x > y)(line, line.length)
+    val ascendingOrder = bubbleSort((x: Int, y: Int) => x < y)(line, line.length)
+    println(descendingOrder.mkString(" "))
+    println(ascendingOrder.mkString(" "))
 }
