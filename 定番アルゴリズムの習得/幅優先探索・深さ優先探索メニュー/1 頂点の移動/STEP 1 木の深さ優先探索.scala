@@ -24,5 +24,3 @@ object Main extends App {
     }
     dfs(x - 1)
 }
-
-//解答例使用済み

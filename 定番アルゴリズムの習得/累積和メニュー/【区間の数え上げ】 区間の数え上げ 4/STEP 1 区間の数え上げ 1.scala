@@ -29,4 +29,3 @@ object Main extends App {
     val result = twoPointersCount(an, n)
     println(result)
 }
-//解答例使用済み

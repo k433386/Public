@@ -9,11 +9,9 @@ object Main extends App {
             c3 <- 'a' to 'z'
         } yield s"$c1$c2$c3"
 
-        combinations.lift(k - 1).getOrElse("")
+        combinations(k - 1)
     }
 
     val k = readLine().toInt
-    val result = findKString(k)
-    println(result)
+    println(findKString(k))
 }
-//解答例使用済み

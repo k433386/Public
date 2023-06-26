@@ -9,7 +9,7 @@ object Main extends App {
         if (i == line.length){
             return count
         } else {
-            if (line(i)(.length == line(i)(.count(_ == x)){
+            if (line(i).length == line(i).count(_ == x)){
                 countUp(i+1, line, count+1)
             } else {
                 countUp(i+1, line, count)

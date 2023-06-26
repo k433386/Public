@@ -17,4 +17,3 @@ object Main extends App {
     println(result._1)
 }
 //解答例使用済み
-//断念

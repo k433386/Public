@@ -1,5 +1,4 @@
 import scala.io.StdIn._
-import math._
 
 object Main extends App {
 

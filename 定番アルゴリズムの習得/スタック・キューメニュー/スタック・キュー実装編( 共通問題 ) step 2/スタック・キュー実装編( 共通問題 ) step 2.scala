@@ -3,18 +3,18 @@ import scala.collection.mutable.Queue
 
 object Main extends App {
 
-    val Q = readLine().toInt
-    val A = Queue[Int]()
+    val q = readLine().toInt
+    val queue = Queue[Int]()
 
-    for (_ <- 0 until Q){
+    for (_ <- 0 until q){
         val line = readLine().split(" ")
         if (line(0) == "1"){
-            A.enqueue(line(1).toInt)
+            queue.enqueue(line(1).toInt)
         }
     }
 
-    println(A.length)
-    while (A.nonEmpty){
-        println(A.dequeue())
+    println(queue.length)
+    while (queue.nonEmpty){
+        println(queue.dequeue())
     }
 }

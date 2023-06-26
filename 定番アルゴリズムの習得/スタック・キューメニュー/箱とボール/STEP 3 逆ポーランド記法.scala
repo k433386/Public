@@ -4,7 +4,7 @@ import scala.collection.mutable.Stack
 object Main extends App {
 
     val n = readLine().toInt
-    val An = readLine().split(" ")
+    val an = readLine().split(" ")
 
     def safetoInt(x: String): Boolean = {
         try {
@@ -17,7 +17,7 @@ object Main extends App {
 
     val q = Stack[Int]()
     var sum = 0
-    for (i <- An){
+    for (i <- an){
         safetoInt(i) match {
             case true => q.push(i.toInt)
             case false => i match {

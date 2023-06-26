@@ -18,15 +18,3 @@ object Main extends App {
     val result = countUp(0, 0, 0)
     println(result)
 }
-
-
-
-    def countUp() = {
-        var count = 0
-        for (i <- 0 until h; j <- 0 until n){
-            count = count + readLine().split(" ").map(_.toInt).count(_ == x)
-        }
-        println(count)
-    }
-    countUp()
-}

@@ -4,13 +4,13 @@ import scala.collection.mutable.Queue
 object Main extends App {
 
     val n = readLine().toInt
-    val A = Queue[Int]()
+    val queue = Queue[Int]()
     
-    A.enqueue(n)
+    queue.enqueue(n)
     for (_ <- 0 until n){
-        A.enqueue(readLine().toInt)
+        queue.enqueue(readLine().toInt)
     }
-    while (A.nonEmpty){
-        println(A.dequeue())
+    while (queue.nonEmpty){
+        println(queue.dequeue())
     }
 }

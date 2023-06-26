@@ -48,4 +48,4 @@ object Main extends App {
 }
 
 //解答例使用済み
-//Longでも精度が足りないらしい?
+//Longでも精度が足りない?原因不明

@@ -41,38 +41,3 @@ object Main extends App {
     println(bookStack.sum)
 }
 //解答例使用済み
-//断念
-
-/*
-import scala.io.StdIn._
-import scala.collection.mutable.Stack
-
-object Main extends App {
-
-    val n = readLine().trim().toInt
-    val Q = Stack[Int]()
-
-    for (_ <- 0 until n){
-        val q = readLine().split(" ")
-        q(0) match {
-            case "buy_book" => Q.push(q(1).toInt)
-            case "read" => {
-                var read = q(1).toInt
-                while (read != 0){
-                    val page = Q.pop()
-                    if (read <= page){
-                        Q.push(page - read)
-                        read = 0
-                    }
-                    else {
-                        read = read - page
-                    }
-                }
-            }
-        }
-    }
-
-    println(Q.length)
-    println(Q.sum)
-}
-*/

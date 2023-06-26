@@ -4,24 +4,21 @@ import scala.collection.mutable.Queue
 object Main extends App {
 
     val Array(n, x) = readLine().split(" ").map(_.toInt)
-    val An = readLine().split(" ").map(_.toInt)
+    val an = readLine().split(" ").map(_.toInt)
 
-    var left_num = An(0)
-    var max_sum = 0 
-    for (i <- 0 until x) {
-        max_sum = max_sum + An(i)
-    }
-    var tmp_sum = max_sum
-
+    var leftNum = an(0)
+    var maxSum = an.take(x).sum
+    var tmpSum = maxSum
     for (i <- 0 until (n-x)) {
-        tmp_sum = tmp_sum - An(i)
-        tmp_sum = tmp_sum + An(i+x)
-        if (tmp_sum > max_sum) {
-            left_num = An(i+1)
-            max_sum = tmp_sum
+        tmpSum -= an(i)
+        tmpSum += an(i+x)
+
+        if (tmpSum > maxSum) {
+            leftNum = an(i+1)
+            maxSum = tmpSum
         }
     }
 
-    println(s"$max_sum $left_num")
+    println(s"$maxSum $leftNum")
 }
 //解答例使用済み
