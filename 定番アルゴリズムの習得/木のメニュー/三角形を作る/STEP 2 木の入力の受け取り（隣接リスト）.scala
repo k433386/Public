@@ -1,15 +1,13 @@
 import scala.io.StdIn._
-import scala.collection.mutable.Queue
 
 object Main extends App {
 
-    val N = readLine().toInt
-    val matrix = Array.fill(N)(Queue[Int]())
-    
-    for (i <- 1 until N){
-        val Array(a, b) = readLine().split(" ").map(_.toInt)
-        matrix(a-1).enqueue(b)
-        matrix(b-1).enqueue(a)
+    val n = readLine().toInt
+    val matrix = Array.fill(n)(List.empty[Int])
+    for (_ <- 0 until n - 1) {
+        val Array(a, b) = readLine().split(" ").map(_.toInt - 1)
+        matrix(a) = b+1 :: matrix(a)
+        matrix(b) = a+1 :: matrix(b)
     }
 
     for (i <- matrix){

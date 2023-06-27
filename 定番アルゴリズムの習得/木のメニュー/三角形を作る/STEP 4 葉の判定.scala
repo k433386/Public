@@ -5,20 +5,19 @@ object Main extends App {
     val n = readLine().toInt
     val matrix = Array.fill[Int](n, n)(0)
     
-    for (i <- 1 until n){
-        val Array(a, b) = readLine().split(" ").map(_.toInt)
-        matrix(a-1)(b-1) = 1
-        matrix(b-1)(a-1) = 1
+    for (_ <- 0 until n-1){
+        val Array(a, b) = readLine().split(" ").map(_.toInt - 1)
+        matrix(a)(b) = 1
+        matrix(b)(a) = 1
     }
 
-    def printLeafnode(count: Int, n: Int, mat: Array[Array[Int]]): Unit = {
+    @scala.annotation.tailrec
+    def printLeafNode(count: Int, n: Int, matrix: Array[Array[Int]]): Unit = {
         if (count < n){
-            if (mat(count).sum == 1){
-                println(count+1)
-            }
-            printLeafnode(count+1, n, mat)
+            if (matrix(count).sum == 1) println(count+1)
+            printLeafNode(count+1, n, matrix)
         }
     }
 
-    printLeafnode(0, n, matrix)
+    printLeafNode(0, n, matrix)
 }

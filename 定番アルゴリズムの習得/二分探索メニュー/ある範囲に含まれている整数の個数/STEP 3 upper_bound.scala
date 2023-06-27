@@ -3,27 +3,21 @@ import scala.io.StdIn._
 object Main extends App {
 
     val n = readLine().toInt
-    val A = readLine().split(" ").map(_.toInt).sorted
+    val an = readLine().split(" ").map(_.toInt).sorted
     val q = readLine().toInt
 
     for (i <- 0 until q){
         val target = readLine().toInt
-        println(n - binarySearch(A, n, target+1))
+        println(n - binarySearch((l: Int, r: Int) => l >= r)(an, 0, n, target+1))
     }
 
-    def binarySearch(A: Array[Int], n: Int, target: Int): Int = {
-        var left = 0
-        var right = n
-        while (left < right){
+    @scala.annotation.tailrec
+    def binarySearch(exit: (Int, Int) => Boolean)(an: Array[Int], left: Int, right: Int, target: Int): Int = {
+        if (exit(left, right)) right
+        else {
             val mid = (left + right) / 2
-
-            if (A(mid) < target){
-                left = mid + 1 
-            } else {
-                right = mid
-            }
+            if (an(mid) < target) binarySearch(exit)(an, mid + 1, right, target) 
+            else binarySearch(exit)(an, left, mid, target)
         }
-        return right 
     }
 }
-//解答例使用済み

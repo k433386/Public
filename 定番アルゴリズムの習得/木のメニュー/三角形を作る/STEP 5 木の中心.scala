@@ -1,60 +1,50 @@
 import scala.io.StdIn._
-import scala.collection.mutable.ArrayBuffer
 
 object Main extends App {
 
     val n = readLine().toInt
-    val matrix = Array.fill[Int](n, n+1)(0)
+    val matrix = makeAdjacencyMatrix(n)    
 
-    for (i <- 0 until n){
-        matrix(i)(n) = i+1
-    }
-    
-    for (i <- 1 until n){
-        val Array(a, b) = readLine().split(" ").map(_.toInt)
-        matrix(a-1)(b-1) = 1
-        matrix(b-1)(a-1) = 1
+    def makeAdjacencyMatrix(n: Int): Array[Array[Int]] = {
+        val matrix = Array.fill[Int](n, n+1)(0)
+        for (i <- 0 until n){
+            matrix(i)(n) = i+1
+        }
+        for (_ <- 0 until n-1){
+            val Array(a, b) = readLine().split(" ").map(_.toInt - 1)
+            matrix(a)(b) = 1
+            matrix(b)(a) = 1
+        }
+        matrix
     }
 
-    def searchCenternode(n: Int, mat: Array[Array[Int]]): Array[Int] = {
-        def removeMat(list: Array[Int], tmp: Array[Array[Int]]): Array[Array[Int]] = {
-            tmp.zipWithIndex
+    @scala.annotation.tailrec
+    def searchCenterNode(n: Int, matrix: Array[Array[Int]]): Array[Int] = {
+        def removeMat(list: Array[Int], tmp: Array[Array[Int]]): Array[Array[Int]] = { //leafNodesの行と列を削除
+            tmp.zipWithIndex 
             .filterNot(index => list.contains(index._2))
             .map { case (index, _) => index.zipWithIndex.filterNot(index => list.contains(index._2)).map(_._1) }
         }
 
-        val leafNodes = mat.zipWithIndex.filter(row => row._1.dropRight(1).sum == 1).map(_._2)   
-        if (mat.length > 2) {
-            val newMat = removeMat(leafNodes, mat)
-            return searchCenternode(newMat.length, newMat)
-        } else {
-            return mat.map(_.last)
-        } 
+        if (matrix.length <= 2) matrix.map(_.last)
+        else {
+            val leafNodes = matrix.zipWithIndex.filter(row => row._1.dropRight(1).sum == 1).map(_._2) //インデックス
+            val newMatrix = removeMat(leafNodes, matrix)
+            searchCenterNode(newMatrix.length, newMatrix)
+        }
     }
 
-    searchCenternode(n, matrix).sorted.foreach(println)
+    searchCenterNode(n, matrix).sorted.foreach(println)
 }
 
-        /*
-        def removeMat(list: Array[Int], tmp: Array[Array[Int]]): Array[Array[Int]] = {
-            val (index, nList) = {
-                if (list.length > 1){
-                    (list(0), list.drop(1))
-                } else {
-                    (list(0), Array.empty[Int])
-                }
-            }
+/*
+matrix
+0 1 1 1 1 1
+1 0 0 0 0 2
+1 0 0 0 0 3
+1 0 0 0 0 4
+1 0 0 0 0 5
 
-            val newArray = ArrayBuffer.empty[Array[Int]]
-            for (i <- tmp.indices) {
-                if (i != index) {
-                    newArray+= tmp(i).patch(index, Nil, 1)
-                }
-            }
-
-            if (nList.isEmpty){
-                return newArray.toArray
-            } else {
-                return removeMat(nList, newArray.toArray)
-            }
-        }*/
+leafNodes
+1 2 3 4
+*/
